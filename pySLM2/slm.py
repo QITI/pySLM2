@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
 from scipy.constants import micro
-
+from .profile import FunctionProfile
+from .lib import *
 
 class SLM(object):
     """Main class for any spatial light modulators."""
@@ -93,7 +94,7 @@ class DMD(SLM):
         j : float or :obj:numpy.ndarray
 
         Returns
-        -------
+        -------1
         x: float or :obj:numpy.ndarray
 
         y: float or :obj:numpy.ndarray
@@ -128,17 +129,25 @@ class DMD(SLM):
         i = self._Ny - i
         return i, j
 
+    @property
     def fourier_plane_grid(self):
-        pix_x = tf.range(self.Nx)
-        pix_y = tf.range(self.Ny)
+        pix_x = tf.range(self.Nx, dtype=tf.float32)
+        pix_y = tf.range(self.Ny, dtype=tf.float32)
         x_dmd, y_dmd = self._convert_pixel_index_to_dmd_coordinate(pix_y, pix_x)
         xx_d, yy_d = np.meshgrid(x_dmd, y_dmd)
         return xx_d, yy_d
+
+    def set_dmd_grating_state(self, phase_in=0, phase_out=0, method="random", negative_order=False):
+        px, py = self.fourier_plane_grid
+        self.dmd_state = np.array(calculate_dmd_grating(1, phase_in, phase_out, px, py, self.p, self.theta,
+                                                        method=method, negative_order=negative_order))
 
     def image_plane_grid(self):
         pass
 
     def _calculate_dmd_grating(self, amp, phase_in, phase_out):
+        pass
+
 
 
 

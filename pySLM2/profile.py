@@ -27,7 +27,8 @@ class FunctionProfile(object):
         func_profile = FunctionProfile()
         if isinstance(other, FunctionProfile):
             func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other._func(x, y))
-        else: # TODO: check availabe types
+        else:
+            # TODO: check availabe types
             func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other)
         return func_profile
 
