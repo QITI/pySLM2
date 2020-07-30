@@ -15,9 +15,10 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
 
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
-
     elif method == "random":
-        return _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order, r=1)
+        r = kwargs.get("r", 1)
+        return _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order,
+                                             r=r)
     else:
         raise ValueError("{0} is not a valid method!".format(method))
 
@@ -52,6 +53,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
 
     return patch_state
 
+
 @tf.function
 def _ifta_correct_profile(profile, profile_ideal, signal_window):
     # return tf.where(signal_window, profile_ideal, profile)
@@ -78,3 +80,5 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
                                                  negative_order=negative_order)
     profile_ideal = tf.signal.fft2d(input_profile * grating_ideal)
     grating = tf.identity(grating_ideal)
+    for i in range(N):
+        pass

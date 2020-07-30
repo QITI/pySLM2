@@ -1,8 +1,12 @@
 import tensorflow as tf
 import numpy as np
 from scipy.constants import micro
+from functools import lru_cache
 from .profile import FunctionProfile
 from .lib import *
+
+__all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
+
 
 class SLM(object):
     """Main class for any spatial light modulators."""
@@ -66,7 +70,6 @@ class DMD(SLM):
 
         self._micromirror_size = micromirror_size
 
-        # TODO: adjust for differences in x/y size
         self.p = periodicity * micromirror_size
         self.theta = theta
         self.negative_order = negative_order
@@ -129,26 +132,59 @@ class DMD(SLM):
         i = self._Ny - i
         return i, j
 
+    @lru_cache()
+    def _fourier_plane_pixel_grid(self):
+        pix_j = tf.range(self.Nx, dtype=tf.float32)
+        pix_i = tf.range(self.Ny, dtype=tf.float32)
+        return tf.meshgrid(pix_i, pix_j, indexing="ij")
+
+    @lru_cache()
+    def _fourier_plane_grid(self):
+        pix_ii, pix_jj = self._fourier_plane_pixel_grid()
+        return self._convert_pixel_index_to_dmd_coordinate(pix_ii, pix_jj)
+
     @property
     def fourier_plane_grid(self):
-        pix_x = tf.range(self.Nx, dtype=tf.float32)
-        pix_y = tf.range(self.Ny, dtype=tf.float32)
-        x_dmd, y_dmd = self._convert_pixel_index_to_dmd_coordinate(pix_y, pix_x)
-        xx_d, yy_d = np.meshgrid(x_dmd, y_dmd)
-        return xx_d, yy_d
+        return np.array(self._fourier_plane_grid())
 
-    def set_dmd_grating_state(self, phase_in=0, phase_out=0, method="random", negative_order=False):
-        px, py = self.fourier_plane_grid
+    def set_dmd_grating_state(self, phase_in=0, phase_out=0, method="random", negative_order=False, **kwargs):
+        px, py = self._fourier_plane_grid()
         self.dmd_state = np.array(calculate_dmd_grating(1, phase_in, phase_out, px, py, self.p, self.theta,
-                                                        method=method, negative_order=negative_order))
+                                                        method=method, negative_order=negative_order, **kwargs))
+
+    def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", negative_order=False, **kwargs):
+        """
+
+        Parameters
+        ----------
+        i
+        j
+        amp
+        phase_out
+        phase_in
+        d
+        binarize
+        kwargs
+
+        Returns
+        -------
+
+        """
+
+        pix_yy, pix_xx = self._fourier_plane_pixel_grid()
+        pix_rr = tf.sqrt((pix_xx - j) ** 2 + (pix_yy - i) ** 2)
+        mask = pix_rr < d / 2
+
+        xx, yy = self._fourier_plane_grid()
+
+        # TODO mask the array before passing them into the function
+        dmd_state = np.array(calculate_dmd_grating(amp, phase_in, phase_out, xx, yy, self.p, self.theta, method=method,
+                                                   negative_order=negative_order, **kwargs))
+
+        self.dmd_state[mask] = dmd_state[mask]
 
     def image_plane_grid(self):
-        pass
-
-    def _calculate_dmd_grating(self, amp, phase_in, phase_out):
-        pass
-
-
+        raise NotImplementedError
 
 
 class DLP9500(DMD):
@@ -156,8 +192,8 @@ class DLP9500(DMD):
         super(DLP9500, self).__init__(wavelength, focal_length, periodicity, theta,
                                       1920, 1080, 10.8 * micro, negative_order=negative_order)
 
+
 class DLP7000(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super(DLP7000, self).__init__(wavelength, focal_length, periodicity, theta,
                                       1024, 768, 13.6 * micro, negative_order=negative_order)
-
