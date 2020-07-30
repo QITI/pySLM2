@@ -3,7 +3,8 @@ import numpy as np
 from scipy.constants import micro
 from functools import lru_cache
 from .profile import FunctionProfile
-from .lib import *
+from ._lib import *
+from ._backend import DTYPE
 
 __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 
@@ -134,8 +135,8 @@ class DMD(SLM):
 
     @lru_cache()
     def _fourier_plane_pixel_grid(self):
-        pix_j = tf.range(self.Nx, dtype=tf.float32)
-        pix_i = tf.range(self.Ny, dtype=tf.float32)
+        pix_j = tf.range(self.Nx, dtype=DTYPE)
+        pix_i = tf.range(self.Ny, dtype=DTYPE)
         return tf.meshgrid(pix_i, pix_j, indexing="ij")
 
     @lru_cache()
@@ -147,10 +148,27 @@ class DMD(SLM):
     def fourier_plane_grid(self):
         return np.array(self._fourier_plane_grid())
 
-    def set_dmd_grating_state(self, phase_in=0, phase_out=0, method="random", negative_order=False, **kwargs):
-        px, py = self._fourier_plane_grid()
-        self.dmd_state = np.array(calculate_dmd_grating(1, phase_in, phase_out, px, py, self.p, self.theta,
+    def _profile_to_tensor(self, profile, at_fourier_plane=True):
+        if isinstance(profile, FunctionProfile):
+            grid = self._fourier_plane_grid() if at_fourier_plane else self._image_plane_grid()
+            return profile._func(grid)
+        else:
+            return tf.constant(profile, dtype=DTYPE)
+
+    def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", negative_order=False, **kwargs):
+        amp = self._profile_to_tensor(amp)
+        phase_in = self._profile_to_tensor(phase_in)
+        phase_out = self._profile_to_tensor(phase_out)
+
+        x, y = self._fourier_plane_grid()
+        self.dmd_state = np.array(calculate_dmd_grating(amp, phase_in, phase_out, x, y, self.p, self.theta,
                                                         method=method, negative_order=negative_order, **kwargs))
+
+    @tf.function
+    def _circular_mask(self, i, j, pix_ii, pix_jj, d):
+        pix_rr2 = (pix_jj - j) ** 2 + (pix_ii - i) ** 2
+        mask = pix_rr2 < (d / 2) ** 2
+        return mask
 
     def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", negative_order=False, **kwargs):
         """
@@ -171,9 +189,14 @@ class DMD(SLM):
 
         """
 
-        pix_yy, pix_xx = self._fourier_plane_pixel_grid()
-        pix_rr = tf.sqrt((pix_xx - j) ** 2 + (pix_yy - i) ** 2)
-        mask = pix_rr < d / 2
+        amp = self._profile_to_tensor(amp)
+        phase_in = self._profile_to_tensor(phase_in)
+        phase_out = self._profile_to_tensor(phase_out)
+
+        pix_ii, pix_jj = self._fourier_plane_pixel_grid()
+        mask = self._circular_mask(i, j, pix_ii, pix_jj, d)
+        # pix_rr = tf.sqrt((pix_jj - j) ** 2 + (pix_ii - i) ** 2)
+        # mask = pix_rr < d / 2
 
         xx, yy = self._fourier_plane_grid()
 
@@ -183,7 +206,7 @@ class DMD(SLM):
 
         self.dmd_state[mask] = dmd_state[mask]
 
-    def image_plane_grid(self):
+    def _image_plane_grid(self):
         raise NotImplementedError
 
 

@@ -1,8 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from scipy.special import hermite
-
-DTYPE = tf.float32
+from ._backend import DTYPE
 
 
 class FunctionProfile(object):

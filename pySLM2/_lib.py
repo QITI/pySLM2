@@ -1,18 +1,12 @@
 import tensorflow as tf
 import numpy as np
 import math
+from ._backend import DTYPE
 
 pi = tf.constant(math.pi)
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
-    if isinstance(amp, int):
-        amp = float(amp)
-    if isinstance(phase_in, int):
-        phase_in = float(phase_in)
-    if isinstance(phase_out, int):
-        phase_out = float(phase_out)
-
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
@@ -46,8 +40,8 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
     p = tf.acos(tf.cos(grating_phase - (phase_out - phase_in)))
     # TODO more efficient expression for phase extraction?
 
-    w = tf.math.asin(amp) + pi/2
-    patch_state = (tf.math.tanh(r*(p+w/2)) - tf.math.tanh(r*(p-w/2)))
+    w = tf.math.asin(amp) + pi / 2
+    patch_state = (tf.math.tanh(r * (p + w / 2)) - tf.math.tanh(r * (p - w / 2)))
     threshold = tf.random.uniform(shape=patch_state.shape)
     patch_state = (patch_state > threshold)
 
