@@ -40,7 +40,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
     p = tf.acos(tf.cos(grating_phase - (phase_out - phase_in)))
     # TODO more efficient expression for phase extraction?
 
-    w = tf.math.asin(amp) + pi / 2
+    w = tf.math.asin(amp) #+ pi / 2
     patch_state = (tf.math.tanh(r * (p + w / 2)) - tf.math.tanh(r * (p - w / 2)))
     threshold = tf.random.uniform(shape=patch_state.shape)
     patch_state = (patch_state > threshold)

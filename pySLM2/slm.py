@@ -4,7 +4,7 @@ from scipy.constants import micro
 from functools import lru_cache
 from .profile import FunctionProfile
 from ._lib import *
-from ._backend import DTYPE
+from ._backend import DTYPE, backend
 
 __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 
@@ -206,8 +206,28 @@ class DMD(SLM):
 
         self.dmd_state[mask] = dmd_state[mask]
 
-    def _image_plane_grid(self):
+    def calculate_dmd_state(self, input_profile, target_profile, binarize=True, analytic=False, **kwargs):
         raise NotImplementedError
+
+    def _fourier_transform(self, profile_tensor):
+        if backend["fft"] == "numpy":
+            return np.fft.fft2(profile_tensor)
+        else:
+            return tf.signal.fft2d(profile_tensor)
+
+    @lru_cache()
+    def _image_plane_grid(self):
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self.micromirror_size), dtype=DTYPE), tf.constant(
+            -np.fft.fftfreq(self.Ny, self.micromirror_size), dtype=DTYPE)
+
+        kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
+        x_atom = kx_atom * self.scaling_factor
+        y_atom = ky_atom * self.scaling_factor
+        return tf.meshgrid(x_atom, y_atom)
+
+    @property
+    def image_plane_grid(self):
+        return np.array(self._image_plane_grid())
 
 
 class DLP9500(DMD):
