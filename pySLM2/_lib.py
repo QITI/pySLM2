@@ -1,9 +1,23 @@
 import tensorflow as tf
 import numpy as np
 import math
-from ._backend import DTYPE
+from ._backend import BACKEND
 
-pi = tf.constant(math.pi)
+
+def _numpy_fft2(profile_array):
+    transformed_array = np.fft.fft2(profile_array)
+    if BACKEND.dtype_complex == tf.complex64:
+        transformed_array = transformed_array.astype(np.complex64)
+    return transformed_array
+
+
+def _fourier_transform(profile_tensor):
+    if BACKEND._fft_backend == BACKEND.FFT_BACKEND_NUMPY:
+        transformed_tensor = tf.numpy_function(_numpy_fft2, [profile_tensor], BACKEND.dtype_complex)
+        transformed_tensor = tf.reshape(transformed_tensor, profile_tensor.shape)
+        return transformed_tensor
+    else:
+        return tf.signal.fft2d(profile_tensor)
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
@@ -19,7 +33,7 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
 
 @tf.function
 def _grating_phase(x, y, theta, p):
-    return (2 * pi / p) * (tf.cos(theta) * x + tf.sin(theta) * y)
+    return (2 * math.pi / p) * (tf.cos(theta) * x + tf.sin(theta) * y)
 
 
 @tf.function
@@ -40,7 +54,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
     p = tf.acos(tf.cos(grating_phase - (phase_out - phase_in)))
     # TODO more efficient expression for phase extraction?
 
-    w = tf.math.asin(amp) #+ pi / 2
+    w = tf.math.asin(amp)  # + pi / 2
     patch_state = (tf.math.tanh(r * (p + w / 2)) - tf.math.tanh(r * (p - w / 2)))
     threshold = tf.random.uniform(shape=patch_state.shape)
     patch_state = (patch_state > threshold)

@@ -3,8 +3,9 @@ import numpy as np
 from scipy.constants import micro
 from functools import lru_cache
 from .profile import FunctionProfile
-from ._lib import *
-from ._backend import DTYPE, backend
+from . import _lib
+from ._backend import BACKEND
+import matplotlib.pyplot as plt
 
 __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 
@@ -135,8 +136,8 @@ class DMD(SLM):
 
     @lru_cache()
     def _fourier_plane_pixel_grid(self):
-        pix_j = tf.range(self.Nx, dtype=DTYPE)
-        pix_i = tf.range(self.Ny, dtype=DTYPE)
+        pix_j = tf.range(self.Nx, dtype=BACKEND.dtype)
+        pix_i = tf.range(self.Ny, dtype=BACKEND.dtype)
         return tf.meshgrid(pix_i, pix_j, indexing="ij")
 
     @lru_cache()
@@ -146,23 +147,31 @@ class DMD(SLM):
 
     @property
     def fourier_plane_grid(self):
-        return np.array(self._fourier_plane_grid())
+        x, y = self._fourier_plane_grid()
+        return np.array(x), np.array(y)
 
-    def _profile_to_tensor(self, profile, at_fourier_plane=True):
+    def _profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
+        tensor_dtype = BACKEND.dtype_complex if complex else BACKEND.dtype
         if isinstance(profile, FunctionProfile):
             grid = self._fourier_plane_grid() if at_fourier_plane else self._image_plane_grid()
-            return profile._func(grid)
+            tensor = profile._func(*grid)
+        elif isinstance(profile, tf.Tensor):
+            tensor = profile
         else:
-            return tf.constant(profile, dtype=DTYPE)
+            tensor = tf.constant(profile, dtype=tensor_dtype)
+        if tensor.dtype != tensor_dtype:
+            tensor = tf.cast(tensor, dtype=tensor_dtype)
+        return tensor
 
-    def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", negative_order=False, **kwargs):
+    def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", **kwargs):
         amp = self._profile_to_tensor(amp)
         phase_in = self._profile_to_tensor(phase_in)
         phase_out = self._profile_to_tensor(phase_out)
 
         x, y = self._fourier_plane_grid()
-        self.dmd_state = np.array(calculate_dmd_grating(amp, phase_in, phase_out, x, y, self.p, self.theta,
-                                                        method=method, negative_order=negative_order, **kwargs))
+        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, x, y, self.p, self.theta,
+                                                             method=method, negative_order=self.negative_order,
+                                                             **kwargs))
 
     @tf.function
     def _circular_mask(self, i, j, pix_ii, pix_jj, d):
@@ -170,7 +179,7 @@ class DMD(SLM):
         mask = pix_rr2 < (d / 2) ** 2
         return mask
 
-    def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", negative_order=False, **kwargs):
+    def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", **kwargs):
         """
 
         Parameters
@@ -195,30 +204,45 @@ class DMD(SLM):
 
         pix_ii, pix_jj = self._fourier_plane_pixel_grid()
         mask = self._circular_mask(i, j, pix_ii, pix_jj, d)
-        # pix_rr = tf.sqrt((pix_jj - j) ** 2 + (pix_ii - i) ** 2)
-        # mask = pix_rr < d / 2
 
         xx, yy = self._fourier_plane_grid()
 
         # TODO mask the array before passing them into the function
-        dmd_state = np.array(calculate_dmd_grating(amp, phase_in, phase_out, xx, yy, self.p, self.theta, method=method,
-                                                   negative_order=negative_order, **kwargs))
+        dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, xx, yy, self.p, self.theta,
+                                                        method=method, negative_order=self.negative_order, **kwargs))
 
         self.dmd_state[mask] = dmd_state[mask]
 
-    def calculate_dmd_state(self, input_profile, target_profile, binarize=True, analytic=False, **kwargs):
-        raise NotImplementedError
+    @tf.function
+    def _calc_amp_phase(self, input_profile, target_profile):
+        target_profile_fp = _lib._fourier_transform(tf.signal.ifftshift(target_profile))
+        target_profile_fp = tf.signal.fftshift(target_profile_fp)
 
-    def _fourier_transform(self, profile_tensor):
-        if backend["fft"] == "numpy":
-            return np.fft.fft2(profile_tensor)
-        else:
-            return tf.signal.fft2d(profile_tensor)
+        phase_in = tf.math.angle(input_profile)
+        amp_in = tf.math.abs(input_profile)
+        phase_out = tf.math.angle(target_profile_fp)
+        amp_out = tf.math.abs(target_profile_fp)
+
+        amp_scaled = amp_out / amp_in
+        amp_scaled = amp_scaled / tf.math.reduce_max(amp_scaled)
+
+        return amp_scaled, phase_in, phase_out
+
+    def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
+        input_profile = self._profile_to_tensor(input_profile, complex=True)
+        target_profile = self._profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
+        amp_scaled, phase_in, phase_out = self._calc_amp_phase(input_profile, target_profile)
+
+        x, y = self._fourier_plane_grid()
+
+        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self.p, self.theta,
+                                                             method=method, negative_order=self.negative_order,
+                                                             **kwargs))
 
     @lru_cache()
     def _image_plane_grid(self):
-        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self.micromirror_size), dtype=DTYPE), tf.constant(
-            -np.fft.fftfreq(self.Ny, self.micromirror_size), dtype=DTYPE)
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self.micromirror_size), dtype=BACKEND.dtype), \
+                           tf.constant(-np.fft.fftfreq(self.Ny, self.micromirror_size), dtype=BACKEND.dtype)
 
         kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
         x_atom = kx_atom * self.scaling_factor
@@ -227,7 +251,8 @@ class DMD(SLM):
 
     @property
     def image_plane_grid(self):
-        return np.array(self._image_plane_grid())
+        x, y = self._image_plane_grid()
+        return np.array(x), np.array(y)
 
 
 class DLP9500(DMD):

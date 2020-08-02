@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
 from scipy.special import hermite
-from ._backend import DTYPE
+from ._backend import BACKEND
+import math
 
 
 class FunctionProfile(object):
@@ -10,15 +11,15 @@ class FunctionProfile(object):
         raise NotImplementedError
 
     def __call__(self, x, y):
-        x = tf.constant(x, dtype=DTYPE)
-        y = tf.constant(y, dtype=DTYPE)
+        x = tf.constant(x, dtype=BACKEND.dtype)
+        y = tf.constant(y, dtype=BACKEND.dtype)
         return np.array(self._func(x, y))
 
     def __add__(self, other):
         func_profile = FunctionProfile()
         if isinstance(other, FunctionProfile):
             func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other._func(x, y))
-        else: # TODO: check availabe types
+        else:  # TODO: check availabe types
             func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other)
         return func_profile
 
@@ -33,7 +34,7 @@ class FunctionProfile(object):
 
     def rotate(self, theta):
         # TODO: verify the theta direction (CW or CCW for positive theta?)
-        theta = tf.constant(theta, dtype=DTYPE)
+        theta = tf.constant(theta, dtype=BACKEND.dtype)
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: self._func(
             x=tf.cos(theta) * x - tf.sin(theta) * y,
@@ -42,36 +43,36 @@ class FunctionProfile(object):
         return func_profile
 
     def shift(self, dx, dy):
-        dx = tf.constant(dx, dtype=DTYPE)
-        dy = tf.constant(dy, dtype=DTYPE)
+        dx = tf.constant(dx, dtype=BACKEND.dtype)
+        dy = tf.constant(dy, dtype=BACKEND.dtype)
 
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: self._func(
-            x=x-dx,
-            y=y-dy
+            x=x - dx,
+            y=y - dy
         ))
         return func_profile
 
 
 class HermiteGaussian(FunctionProfile):
     def __init__(self, x0, y0, a, w, n=0, m=0):
-        self._x0 = tf.Variable(x0, dtype=DTYPE)
-        self._y0 = tf.Variable(y0, dtype=DTYPE)
-        self._a = tf.Variable(a, dtype=DTYPE)
-        self._w = tf.Variable(w, dtype=DTYPE)
-        self._n = n # read only for now
-        self._m = m # read only for now
+        self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
+        self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
+        self._a = tf.Variable(a, dtype=BACKEND.dtype)
+        self._w = tf.Variable(w, dtype=BACKEND.dtype)
+        self._n = n  # read only for now
+        self._m = m  # read only for now
 
-        self._hermite_n_coef = [tf.constant(c, dtype=DTYPE) for c in hermite(self._n).coef]
-        self._hermite_m_coef = [tf.constant(c, dtype=DTYPE) for c in hermite(self._m).coef]
+        self._hermite_n_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._n).coef]
+        self._hermite_m_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._m).coef]
 
     @tf.function
     def _func(self, x, y):
         x_norm = (x - self._x0) / self._w
         y_norm = (y - self._y0) / self._w
-        h_n = tf.math.polyval(coeffs=self._hermite_n_coef, x=tf.sqrt(2.0) * x_norm)
-        h_m = tf.math.polyval(coeffs=self._hermite_n_coef, x=tf.sqrt(2.0) * y_norm)
-        return self._a * h_n * h_m * tf.exp(-(x_norm**2 + y_norm**2))
+        h_n = tf.math.polyval(coeffs=self._hermite_n_coef, x=math.sqrt(2) * x_norm)
+        h_m = tf.math.polyval(coeffs=self._hermite_n_coef, x=math.sqrt(2) * y_norm)
+        return self._a * h_n * h_m * tf.exp(-(x_norm ** 2 + y_norm ** 2))
 
     @property
     def x0(self):
@@ -104,8 +105,3 @@ class HermiteGaussian(FunctionProfile):
     @property
     def m(self):
         return self._m
-
-
-
-
-
