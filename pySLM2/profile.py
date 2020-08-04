@@ -76,7 +76,7 @@ class HermiteGaussian(FunctionProfile):
 
     @property
     def x0(self):
-        return float(self._x0)
+        return self._x0.value()
 
     @x0.setter
     def x0(self, value):
@@ -84,7 +84,7 @@ class HermiteGaussian(FunctionProfile):
 
     @property
     def y0(self):
-        return float(self._y0)
+        return self._y0.value()
 
     @y0.setter
     def y0(self, value):
@@ -92,11 +92,19 @@ class HermiteGaussian(FunctionProfile):
 
     @property
     def a(self):
-        return float(self._a)
+        return self._a.value()
 
     @a.setter
     def a(self, value):
         self._a.assign(value)
+
+    @property
+    def w(self):
+        return self._w.value()
+
+    @w.setter
+    def w(self, value):
+        self._w.assign(value)
 
     @property
     def n(self):

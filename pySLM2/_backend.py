@@ -4,7 +4,9 @@ import tensorflow as tf
 class _BackEnd(object):
     FFT_BACKEND_TENSORFLOW = 0
     FFT_BACKEND_NUMPY = 1
-    FFT_BACKEND_FFTW = 2
+
+    TENSOR_32BITS = tf.float32
+    TENSOR_64BITS = tf.float64
 
     def __init__(self):
         self._dtype = tf.float32

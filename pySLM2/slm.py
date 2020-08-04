@@ -72,8 +72,9 @@ class DMD(SLM):
 
         self._micromirror_size = micromirror_size
 
-        self.p = periodicity * micromirror_size
-        self.theta = theta
+        self._p = tf.Variable(periodicity * micromirror_size, dtype=BACKEND.dtype)
+        self._theta = tf.Variable(theta, dtype=BACKEND.dtype)
+
         self.negative_order = negative_order
 
     @property
@@ -169,14 +170,14 @@ class DMD(SLM):
         phase_out = self._profile_to_tensor(phase_out)
 
         x, y = self._fourier_plane_grid()
-        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, x, y, self.p, self.theta,
+        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, x, y, self._p, self._theta,
                                                              method=method, negative_order=self.negative_order,
                                                              **kwargs))
 
     @tf.function
     def _circular_mask(self, i, j, pix_ii, pix_jj, d):
-        pix_rr2 = (pix_jj - j) ** 2 + (pix_ii - i) ** 2
-        mask = pix_rr2 < (d / 2) ** 2
+        pix_rr_square = (pix_jj - j) ** 2 + (pix_ii - i) ** 2
+        mask = pix_rr_square < (d / 2) ** 2
         return mask
 
     def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", **kwargs):
@@ -205,10 +206,10 @@ class DMD(SLM):
         pix_ii, pix_jj = self._fourier_plane_pixel_grid()
         mask = self._circular_mask(i, j, pix_ii, pix_jj, d)
 
-        xx, yy = self._fourier_plane_grid()
+        x, y = self._fourier_plane_grid()
 
         # TODO mask the array before passing them into the function
-        dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, xx, yy, self.p, self.theta,
+        dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, x, y, self._p, self._theta,
                                                         method=method, negative_order=self.negative_order, **kwargs))
 
         self.dmd_state[mask] = dmd_state[mask]
@@ -229,13 +230,20 @@ class DMD(SLM):
         return amp_scaled, phase_in, phase_out
 
     def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
+        #TODO check kwargs for different method
         input_profile = self._profile_to_tensor(input_profile, complex=True)
         target_profile = self._profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
         amp_scaled, phase_in, phase_out = self._calc_amp_phase(input_profile, target_profile)
 
         x, y = self._fourier_plane_grid()
 
-        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self.p, self.theta,
+        if method=="ifta":
+            kwargs["input_profile"] = input_profile
+            kwargs["signal_window"] = self._profile_to_tensor(kwargs["signal_window"], at_fourier_plane=False,
+                                                              complex=True)
+
+
+        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self._p, self._theta,
                                                              method=method, negative_order=self.negative_order,
                                                              **kwargs))
 
@@ -253,6 +261,29 @@ class DMD(SLM):
     def image_plane_grid(self):
         x, y = self._image_plane_grid()
         return np.array(x), np.array(y)
+
+    @property
+    def p(self):
+        return self._p.value()
+
+    @property
+    def theta(self):
+        return self._theta.value()
+
+    @property
+    def first_order_origin(self):
+        """Find the origin of the first order light in image plane.
+
+        Returns
+        -------
+        origin_x: float
+            The x coordinate of the origin of first order light in image plane.
+        origin_y: float
+            The y coordinate of the origin of first order light in image plane.
+        """
+        origin_x = np.cos(self.theta) * self.scaling_factor / self.p
+        origin_y = np.sin(self.theta) * self.scaling_factor / self.p
+        return origin_x, origin_y
 
 
 class DLP9500(DMD):
