@@ -113,3 +113,46 @@ class HermiteGaussian(FunctionProfile):
     @property
     def m(self):
         return self._m
+
+
+class Zernike(FunctionProfile):
+    def __init__(self, a, r, n=0, m=0):
+        self._n = n
+        self._m = m
+        self._r = tf.constant(r, dtype=BACKEND.dtype)
+        self._a = tf.Variable(a, dtype=BACKEND.dtype)
+
+        self._coef = [0.0 for _ in range(n + 1)]
+
+        for k in range(int((n - m) / 2) + 1):
+            self._coef[n - 2 * k] = (-1) ** k * math.factorial(n - k) / (
+                    math.factorial(k) * math.factorial((n + m) / 2. - k) * math.factorial((n - m) / 2. - k))
+
+    @tf.function
+    def _func(self, x, y):
+        rho = tf.sqrt(x ** 2 + y ** 2) / self._r
+        phi = tf.math.atan2(y, x)
+        R = tf.math.polyval(coeffs=self._coef, x=rho)
+        if self._m == 0:
+            return self._a * R
+        elif self._m > 0:
+            return self._a * R * tf.cos(self._m * phi)
+        else:
+            return self._a * R * tf.sin(self._m * phi)
+
+    @property
+    def a(self):
+        return self._a.value()
+
+    @a.setter
+    def a(self, value):
+        self._a.assign(value)
+
+    @property
+    def n(self):
+        return self._n
+
+    @property
+    def m(self):
+        return self._m
+
