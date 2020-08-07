@@ -139,6 +139,7 @@ class Zernike(FunctionProfile):
                     factorial(k) * factorial((n + m_abs) / 2. - k) * factorial((n - m_abs) / 2. - k))
 
         self._coef = [tf.constant(c, dtype=BACKEND.dtype) for c in self._coef]
+        self._coef.reverse() # reverse the list to fit the tf.math.polyval format
 
     @tf.function
     def _func(self, x, y):
