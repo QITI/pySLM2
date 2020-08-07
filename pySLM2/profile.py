@@ -136,6 +136,8 @@ class Zernike(FunctionProfile):
             self._coef[n - 2 * k] = (-1) ** k * factorial(n - k) / (
                     factorial(k) * factorial((n + m) / 2. - k) * factorial((n - m) / 2. - k))
 
+        self._coef = [tf.constant(c, dtype=BACKEND.dtype) for c in self._coef]
+
     @tf.function
     def _func(self, x, y):
         rho = tf.sqrt(x ** 2 + y ** 2) / self._r
