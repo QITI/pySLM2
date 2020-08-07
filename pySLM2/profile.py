@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-from scipy.special import hermite
+from scipy.special import hermite, factorial
 from ._backend import BACKEND
 import math
 
@@ -117,6 +117,12 @@ class HermiteGaussian(FunctionProfile):
 
 class Zernike(FunctionProfile):
     def __init__(self, a, r, n=0, m=0):
+        if not n >= m:
+            raise ValueError("Zernike index m must be >= index n")
+        if (n - m) % 2 != 0:
+            print("Radial polynomial is zero for these inputs: m={}, n={} " +
+                  "(are you sure you wanted this Zernike?)".format(m, n))
+
         self._n = n
         self._m = m
         self._r = tf.constant(r, dtype=BACKEND.dtype)
@@ -125,8 +131,8 @@ class Zernike(FunctionProfile):
         self._coef = [0.0 for _ in range(n + 1)]
 
         for k in range(int((n - m) / 2) + 1):
-            self._coef[n - 2 * k] = (-1) ** k * math.factorial(n - k) / (
-                    math.factorial(k) * math.factorial((n + m) / 2. - k) * math.factorial((n - m) / 2. - k))
+            self._coef[n - 2 * k] = (-1) ** k * factorial(n - k) / (
+                    factorial(k) * factorial((n + m) / 2. - k) * factorial((n - m) / 2. - k))
 
     @tf.function
     def _func(self, x, y):

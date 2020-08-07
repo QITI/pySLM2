@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import math
 from ._backend import BACKEND
-import matplotlib.pyplot as plt
+
 
 def _numpy_fft2(profile_array):
     transformed_array = np.fft.fft2(profile_array)
