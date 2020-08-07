@@ -116,7 +116,7 @@ class HermiteGaussian(FunctionProfile):
 
 
 class Zernike(FunctionProfile):
-    def __init__(self, a, r, n=0, m=0):
+    def __init__(self, a, r, n=0, m=0, normalize=True):
         if not n >= m:
             raise ValueError("Zernike index m must be >= index n")
         if (n - m) % 2 != 0:
@@ -130,6 +130,8 @@ class Zernike(FunctionProfile):
 
         self._coef = [0.0 for _ in range(n + 1)]
 
+        self._normalization = (math.sqrt(n+1) if m==0 else math.sqrt(2*n+2)) if normalize else None
+
         for k in range(int((n - m) / 2) + 1):
             self._coef[n - 2 * k] = (-1) ** k * factorial(n - k) / (
                     factorial(k) * factorial((n + m) / 2. - k) * factorial((n - m) / 2. - k))
@@ -139,12 +141,18 @@ class Zernike(FunctionProfile):
         rho = tf.sqrt(x ** 2 + y ** 2) / self._r
         phi = tf.math.atan2(y, x)
         R = tf.math.polyval(coeffs=self._coef, x=rho)
+
         if self._m == 0:
-            return self._a * R
+            Z_unnomalized = self._a * R
         elif self._m > 0:
-            return self._a * R * tf.cos(self._m * phi)
+            Z_unnomalized = self._a * R * tf.cos(self._m * phi)
         else:
-            return self._a * R * tf.sin(self._m * phi)
+            Z_unnomalized = self._a * R * tf.sin(self._m * phi)
+
+        if self.is_normalized():
+            return self._normalization * Z_unnomalized
+        else:
+            return Z_unnomalized
 
     @property
     def a(self):
@@ -155,10 +163,20 @@ class Zernike(FunctionProfile):
         self._a.assign(value)
 
     @property
+    def r(self):
+        return float(self._r)
+
+    def is_normalized(self):
+        return False if self._normalization is None else True
+
+    @property
+    def normalization(self):
+        return self._normalization
+
+    @property
     def n(self):
         return self._n
 
     @property
     def m(self):
         return self._m
-
