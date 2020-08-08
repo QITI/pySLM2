@@ -153,7 +153,7 @@ class Zernike(FunctionProfile):
         elif self._m > 0:
             Z_unnomalized = self._a * R * tf.cos(self._m * phi)
         else:
-            Z_unnomalized = self._a * R * tf.sin(self._m * phi)
+            Z_unnomalized = self._a * R * tf.sin(-self._m * phi)
 
         Z = self._normalization * Z_unnomalized if self.is_normalized() else Z_unnomalized
 
