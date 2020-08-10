@@ -29,7 +29,27 @@ class FunctionProfile(object):
             func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other._func(x, y))
         else:
             # TODO: check availabe types
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other)
+            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other)
+        return func_profile
+
+    def __rmul__(self, other):
+        # TODO: check availabe types
+        func_profile = FunctionProfile()
+        func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other)
+        return func_profile
+
+    def __truediv__(self, other):
+        func_profile = FunctionProfile()
+        if isinstance(other, FunctionProfile):
+            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) / other._func(x, y))
+        else:
+            # TODO: check availabe types
+            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) / other)
+        return func_profile
+
+    def __pow__(self, power, modulo=None):
+        func_profile = FunctionProfile()
+        func_profile._func = tf.function(func=lambda x, y: self._func(x, y) ** power)
         return func_profile
 
     def rotate(self, theta):

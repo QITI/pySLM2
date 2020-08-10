@@ -1,7 +1,47 @@
 import numpy as np
 import pytest
 import pySLM2
-import matplotlib.pyplot as plt
+
+try:
+    import matplotlib.pyplot as plt
+except:
+    pass
+
+radius = 10
+x, y = np.meshgrid(np.linspace(-radius, radius), np.linspace(-radius, radius))
+
+
+__test_arithmetic_profile = [(pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=3, m=4),
+                              pySLM2.HermiteGaussian(x0=-1, y0=1, a=1, w=2, n=3, m=4)),
+                             (pySLM2.Zernike(a=1, radius=radius, n=5, m=-3, extrapolate=True),
+                              pySLM2.Zernike(a=2, radius=radius, n=5, m=-3, extrapolate=True))]
+
+
+@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+def test_profile_add(profile, profile2):
+    np.testing.assert_array_almost_equal((profile + profile)(x, y), profile2(x, y))
+    np.testing.assert_array_almost_equal((profile + profile)(x, y), 2 * (profile(x, y)))
+    np.testing.assert_array_almost_equal((profile + 0.5)(x, y), profile(x, y) + 0.5)
+
+
+@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+def test_profile_multiply(profile, profile2):
+    # Test multiply
+    np.testing.assert_array_almost_equal((2 * profile)(x, y), profile2(x, y))
+    np.testing.assert_array_almost_equal((profile * 2)(x, y), profile2(x, y))
+    np.testing.assert_array_almost_equal((profile * profile)(x, y), (profile(x, y)) ** 2)
+
+
+@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+def test_profile_divide(profile, profile2):
+    # Test divide
+    np.testing.assert_array_almost_equal((profile2 / 2)(x, y), profile(x, y))
+    np.testing.assert_array_almost_equal((profile / profile)(x, y), np.ones_like(x))
+
+
+@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+def test_profile_power(profile, profile2):
+    np.testing.assert_array_almost_equal((profile ** 2)(x, y), (profile(x, y)) ** 2)
 
 
 @pytest.mark.parametrize("extrapolate", [False, True])
@@ -26,35 +66,31 @@ def test_zernike_function(extrapolate, visualize=False):
         (3, 3): lambda rho, phi: np.sqrt(8) * rho ** 3 * np.cos(3 * phi)
     }
 
-    radius = 10
-
-    x, y = np.meshgrid(np.linspace(-radius, radius), np.linspace(-radius, radius))
-
     for (n, m), function in zernike_function.items():
         z = pySLM2.Zernike(a=1, radius=radius, n=n, m=m, extrapolate=extrapolate)
 
-        # Defination of rho and phi at page 656
+        # Definition of rho and phi at page 656
         rho = np.sqrt(x ** 2 + y ** 2) / radius
         phi = np.arctan2(y, x)
         mask = (rho <= 1)
 
-        ANSI_zernike = (function(rho, phi))
+        OSA_zernike = (function(rho, phi))
         pySLM2_zernike = (z(x, y))
 
         if visualize:
             plt.figure()
             plt.subplot(121)
-            plt.imshow(ANSI_zernike)
+            plt.imshow(OSA_zernike)
             plt.subplot(122)
             plt.imshow(pySLM2_zernike)
             plt.show()
 
         if not extrapolate:
-            ANSI_zernike = ANSI_zernike[mask]
+            OSA_zernike = OSA_zernike[mask]
             pySLM2_zernike = pySLM2_zernike[mask]
 
         np.testing.assert_array_almost_equal(
-            ANSI_zernike,
+            OSA_zernike,
             pySLM2_zernike,
             decimal=4,
             err_msg="n={n}, ,m={m} failed the test!".format(n=n, m=m)
