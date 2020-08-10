@@ -1,14 +1,12 @@
-machine:
-  python:
-    version: 3.8
-
-dependencies:
-  override:
-    - pip install numpy scipy tensorflow matplotlib
-
-test:
-  override:
-    - pip install --upgrade pip setuptools wheel
-    - pip install --upgrade coveralls pytest pytest-cov
-    - pip install .
-    - cd test/; pytest -v
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.2-stretch-browsers
+    steps:
+      - checkout
+      - run: pip install --upgrade pip setuptools wheel
+      - run: pip install numpy scipy tensorflow matplotlib
+      - run: pip install --upgrade coveralls pytest pytest-cov
+      - run: pip install .
+      - run: cd test/; pytest -v
