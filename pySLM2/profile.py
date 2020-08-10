@@ -131,7 +131,7 @@ class Zernike(FunctionProfile):
         self._coef = [0.0 for _ in range(n + 1)]
 
         self._normalization = (math.sqrt(n+1) if m==0 else math.sqrt(2*n+2)) if normalize else None
-        self._extraoikate = extrapolate
+        self._extrapolate = extrapolate
 
         m_abs = np.abs(m)
         for k in range(int((n - m_abs) / 2) + 1):
@@ -144,6 +144,10 @@ class Zernike(FunctionProfile):
     @tf.function
     def _func(self, x, y):
         r = tf.sqrt(x ** 2 + y ** 2)
+
+        if self._n == 0 and self._m ==0:
+            return tf.ones_like(r)
+
         rho = r / self._radius
         phi = tf.math.atan2(y, x)
         R = tf.math.polyval(coeffs=self._coef, x=rho)
@@ -157,7 +161,7 @@ class Zernike(FunctionProfile):
 
         Z = self._normalization * Z_unnomalized if self.is_normalized() else Z_unnomalized
 
-        if not self._extraoikate:
+        if not self._extrapolate:
             Z = tf.where(rho > 1.0, tf.zeros_like(Z, dtype=BACKEND.dtype), Z)
 
         return Z
