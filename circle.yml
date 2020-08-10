@@ -11,10 +11,11 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install --upgrade pip setuptools wheel
-            pip install numpy scipy tensorflow matplotlib
+            pip install -r requirement.txt
             pip install --upgrade coveralls pytest pytest-cov
             pip install .
       - run:
           name: Test pySLM2
           command: |
-            cd test/; pytest -v
+            . venv/bin/activate
+            pytest -v test
