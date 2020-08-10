@@ -1,0 +1,14 @@
+machine:
+  python:
+    version: 3.8
+
+dependencies:
+  override:
+    - pip install numpy scipy tensorflow matplotlib
+
+test:
+  override:
+    - pip install --upgrade pip setuptools wheel
+    - pip install --upgrade coveralls pytest pytest-cov
+    - pip install .
+    - cd test/; pytest -v
