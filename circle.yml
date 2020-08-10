@@ -5,6 +5,8 @@ jobs:
       - image: circleci/python:3.6.2-stretch-browsers
     steps:
       - checkout
+      - run: python3 -m venv venv
+      - run: . venv/bin/activate
       - run: pip install --upgrade pip setuptools wheel
       - run: pip install numpy scipy tensorflow matplotlib
       - run: pip install --upgrade coveralls pytest pytest-cov
