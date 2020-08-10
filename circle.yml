@@ -6,6 +6,7 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies & pySLM2
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -13,4 +14,7 @@ jobs:
             pip install numpy scipy tensorflow matplotlib
             pip install --upgrade coveralls pytest pytest-cov
             pip install .
+      - run:
+          name: Test pySLM2
+          command: |
             cd test/; pytest -v
