@@ -1,0 +1,15 @@
+language: python
+sudo: false
+matrix:
+  include:
+  - python: '3.8'
+    env: DEPS="numpy scipy tensorflow matplotlib"
+    sudo: true
+    dist: xenial
+install:
+  - pip install --upgrade pip setuptools wheel
+  - "pip install ${DEPS}"
+  - pip install --upgrade coveralls pytest pytest-cov
+  - pip install .
+script:
+  - cd test/; pytest -v
