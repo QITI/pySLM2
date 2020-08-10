@@ -46,10 +46,11 @@ def test_profile_power(profile, profile2):
 
 @pytest.mark.parametrize("extrapolate", [False, True])
 def test_zernike_function(extrapolate, visualize=False):
-    """Test if the Zernike profile match the Zernike polynomials from the reference papser at different orderes.
+    """Test if the Zernike profile match the Zernike polynomials from the reference paper at different orders.
     References
     ----------
-    Thibos, L. N., Applegate, R. A., Schwiegerling, J. T., & Webb, R. (2002). Standards for reporting the optical aberrations of eyes. Journal of refractive surgery, 18(5), S652-S660.
+    Thibos, L. N., Applegate, R. A., Schwiegerling, J. T., & Webb, R. (2002). Standards for reporting the optical
+    aberrations of eyes. Journal of refractive surgery, 18(5), S652-S660.
     """
 
     # Zernike polynomials in table 2.
@@ -66,13 +67,14 @@ def test_zernike_function(extrapolate, visualize=False):
         (3, 3): lambda rho, phi: np.sqrt(8) * rho ** 3 * np.cos(3 * phi)
     }
 
+    # Definition of rho and phi is at page 656
+    rho = np.sqrt(x ** 2 + y ** 2) / radius
+    phi = np.arctan2(y, x)
+    mask = (rho <= 1)
+
     for (n, m), function in zernike_function.items():
         z = pySLM2.Zernike(a=1, radius=radius, n=n, m=m, extrapolate=extrapolate)
 
-        # Definition of rho and phi at page 656
-        rho = np.sqrt(x ** 2 + y ** 2) / radius
-        phi = np.arctan2(y, x)
-        mask = (rho <= 1)
 
         OSA_zernike = (function(rho, phi))
         pySLM2_zernike = (z(x, y))
