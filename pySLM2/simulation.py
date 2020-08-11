@@ -6,6 +6,7 @@ from ._backend import BACKEND
 
 __all__ = ["DMDSimulation"]
 
+
 class DMDSimulation(object):
     def __init__(self, dmd, padding_x=0, padding_y=0):
 
@@ -23,7 +24,6 @@ class DMDSimulation(object):
         self._padding_x = padding_x
         self._padding_y = padding_y
 
-
     @property
     def padding_x(self):
         return self._padding_x
@@ -34,8 +34,10 @@ class DMDSimulation(object):
 
     @lru_cache()
     def _image_plane_padded_grid(self):
-        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.dmd.Nx + 2 * self._padding_x, self.dmd.micromirror_size), dtype=BACKEND.dtype), \
-                           tf.constant(-np.fft.fftfreq(self.dmd.Ny + 2 * self._padding_y, self.dmd.micromirror_size), dtype=BACKEND.dtype)
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.dmd.Nx + 2 * self._padding_x, self.dmd.micromirror_size),
+                                       dtype=BACKEND.dtype), \
+                           tf.constant(-np.fft.fftfreq(self.dmd.Ny + 2 * self._padding_y, self.dmd.micromirror_size),
+                                       dtype=BACKEND.dtype)
 
         kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
         x_atom = kx_atom * self.dmd.scaling_factor
@@ -49,8 +51,8 @@ class DMDSimulation(object):
 
     @lru_cache()
     def _fourier_plane_padded_grid(self):
-        pix_j = tf.range(-self._padding_x, self.dmd.Nx+self._padding_x, dtype=BACKEND.dtype)
-        pix_i = tf.range(-self._padding_y, self.dmd.Ny+self._padding_y, dtype=BACKEND.dtype)
+        pix_j = tf.range(-self._padding_x, self.dmd.Nx + self._padding_x, dtype=BACKEND.dtype)
+        pix_i = tf.range(-self._padding_y, self.dmd.Ny + self._padding_y, dtype=BACKEND.dtype)
 
         pix_ii, pix_jj = tf.meshgrid(pix_i, pix_j, indexing="ij")
 
