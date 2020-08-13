@@ -12,6 +12,9 @@ class _BackEnd(object):
         self._dtype = tf.float32
         self._fft_backend = tf.Variable(self.FFT_BACKEND_NUMPY)
 
+        if tf.config.list_logical_devices("GPU"):
+            self._fft_backend.assign(self.FFT_BACKEND_TENSORFLOW)
+
     @property
     def dtype(self):
         return self._dtype
