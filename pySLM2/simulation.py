@@ -1,8 +1,12 @@
 from functools import lru_cache
+import math
+
 import numpy as np
 import tensorflow as tf
-from .slm import SLM, DMD
+
+from . import _lib
 from ._backend import BACKEND
+from .slm import SLM, DMD
 
 __all__ = ["SLMSimulation", "DMDSimulation"]
 
@@ -66,8 +70,7 @@ class SLMSimulation(object):
 
     @property
     def image_plane_pixel_area(self):
-        return self._slm.scaling_factor ** 2 / (self._slm.Nx + 2 * self._padding_x) / (
-                    self._slm.Ny + 2 * self._padding_y) / self._slm.pixel_size ** 2
+        return self._slm.scaling_factor ** 2 / (self.Nx * self.Ny) / self._slm.pixel_size ** 2
 
     @property
     def padding_x(self):
@@ -77,11 +80,19 @@ class SLMSimulation(object):
     def padding_y(self):
         return self._padding_y
 
+    @property
+    def Nx(self):
+        return self._slm.Nx + 2 * self._padding_x
+
+    @property
+    def Ny(self):
+        return self._slm.Ny + 2 * self._padding_y
+
     @lru_cache()
     def _image_plane_padded_grid(self):
-        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self._slm.Nx + 2 * self._padding_x, self._slm.pixel_size),
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self._slm.pixel_size),
                                        dtype=BACKEND.dtype), \
-                           tf.constant(-np.fft.fftfreq(self._slm.Ny + 2 * self._padding_y, self._slm.pixel_size),
+                           tf.constant(-np.fft.fftfreq(self.Ny, self._slm.pixel_size),
                                        dtype=BACKEND.dtype)
 
         kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
@@ -107,6 +118,68 @@ class SLMSimulation(object):
     def fourier_plane_padded_grid(self):
         x, y = self._fourier_plane_padded_grid()
         return np.array(x), np.array(y)
+
+    def propagate_to_image(self, input_profile):
+        # TODO use tf function to speed up
+        self._input_field = tf.zeros(shape=(self.Ny, self.Nx), dtype=BACKEND.dtype_complex)
+
+        input_profile = self._slm._profile_to_tensor(input_profile)
+
+        self._input_field[self._padding_y:-self._padding_y,
+                          self._padding_x:-self._padding_x] = input_profile
+
+        self._output_field[self._padding_y:-self._padding_y,
+                           self._padding_x:-self._padding_x] = input_profile * self._slm._state_tensor()
+
+        _image_plane_field_unormalized = tf.signal.fftshift(
+            _lib._inverse_fourier_transform(tf.signal.ifftshift(self._output_field)))
+
+        self._image_plane_field = _image_plane_field_unormalized * math.sqrt(
+            self.Nx * self.Ny) * self.fourier_plane_pixel_area / self.image_plane_pixel_area
+
+    @tf.function
+    def _field_to_intensity(self, field_tensor):
+        return tf.math.real(field_tensor)**2 + tf.math.imag(field_tensor)**2
+
+    @property
+    def _input_intensity(self):
+        return None if self._input_field is None else self._field_to_intensity(self._input_field)
+
+    @property
+    def _output_intensity(self):
+        return None if self._output_field is None else self._field_to_intensity(self._output_field)
+
+    @property
+    def _image_plane_intensity(self):
+        return None if self._image_plane_field is None else self._field_to_intensity(self._image_plane_field)
+
+    def _pack_tensor_to_array(self, tensor):
+        return None if tensor is None else np.array(tensor)
+
+    @property
+    def input_field(self):
+        return self._pack_tensor_to_array(self._input_field)
+
+    @property
+    def output_field(self):
+        return self._pack_tensor_to_array(self._output_field)
+
+    @property
+    def image_plane_field(self):
+        return self._pack_tensor_to_array(self._image_plane_field)
+
+    @property
+    def input_intensity(self):
+        return self._pack_tensor_to_array(self._input_intensity)
+
+    @property
+    def output_intensity(self):
+        return self._pack_tensor_to_array(self._output_intensity)
+
+    @property
+    def image_plane_intensity(self):
+        return self._pack_tensor_to_array(self._image_plane_intensity)
+
 
 
 class DMDSimulation(SLMSimulation):

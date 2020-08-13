@@ -135,6 +135,9 @@ class SLM(object):
             tensor = tf.cast(tensor, dtype=tensor_dtype)
         return tensor
 
+    def _state_tensor(self):
+        raise NotImplementedError
+
 
 class DMD(SLM):
     def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, micromirror_size,
@@ -301,6 +304,8 @@ class DMD(SLM):
         origin_y = np.sin(self.theta) * self.scaling_factor / self.p
         return origin_x, origin_y
 
+    def _state_tensor(self):
+        tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
 
 class DLP9500(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
