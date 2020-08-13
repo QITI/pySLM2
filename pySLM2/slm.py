@@ -13,13 +13,14 @@ __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 class SLM(object):
     """Main class for any spatial light modulators."""
 
-    def __init__(self, wavelength, focal_length, Nx, Ny):
+    def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
         # Read only
         self._wavelength = wavelength
         self._focal_length = focal_length
         self._Nx = Nx
         self._Ny = Ny
         self._scaling_factor = self._wavelength * self._focal_length
+        self._pixel_size = pixel_size
 
     @property
     def scaling_factor(self):
@@ -41,54 +42,6 @@ class SLM(object):
     def focal_length(self):
         return self._focal_length
 
-
-class DMD(SLM):
-    def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, micromirror_size,
-                 negative_order=False):
-        """
-
-        Parameters
-        ----------
-        wavelength: float
-            Wavelength of indicent light.
-        focal_length: float
-            Focal length of the focusing lens
-        periodicity: float.
-            The periodicity of the grating profile. Unit: pixel (micromirror size)
-        theta: float
-            Desired grating angle
-        Nx: int
-            Number of pixels in x direction
-        Ny: int
-            Number of pixels in y direction
-        micromirror_size: float
-            The size of one micromirror. Unit: m
-        negative_order: bool
-            True: use negative first order instead of first order diffraction beam.
-        """
-        super().__init__(wavelength, focal_length, Nx, Ny)
-
-        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
-
-        self._micromirror_size = micromirror_size
-
-        self._p = tf.Variable(periodicity * micromirror_size, dtype=BACKEND.dtype)
-        self._theta = tf.Variable(theta, dtype=BACKEND.dtype)
-
-        self.negative_order = negative_order
-
-    @property
-    def micromirror_size(self):
-        return self._micromirror_size
-
-    def set_dmd_state_off(self):
-        """ Reset dmd_state to be an array (Ny, Nx) of zeros."""
-        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
-
-    def set_dmd_state_on(self):
-        """Reset dmd_state to be an array (Ny, Nx) of ones."""
-        self.dmd_state = np.ones((self.Ny, self.Nx), dtype=np.bool)
-
     @tf.function
     def _convert_pixel_index_to_dmd_coordinate(self, i, j):
         """
@@ -109,10 +62,10 @@ class DMD(SLM):
         i = self._Ny - i
         j = j - self._Nx / 2
         i = i - self._Ny / 2
-        return j * self._micromirror_size, i * self._micromirror_size
+        return j * self._pixel_size, i * self._pixel_size
 
     @tf.function
-    def _convert_dmd_coordinate_to_pixel_index(self, x, y):
+    def _convert_slm_coordinate_to_pixel_index(self, x, y):
         """
 
         Parameters
@@ -128,8 +81,8 @@ class DMD(SLM):
         j: float or :obj:numpy.ndarray
 
         """
-        x = x / self._micromirror_size
-        y = y / self._micromirror_size
+        x = x / self._pixel_size
+        y = y / self._pixel_size
         i = y + self._Ny / 2
         j = x + self._Nx / 2
         i = self._Ny - i
@@ -150,6 +103,81 @@ class DMD(SLM):
     def fourier_plane_grid(self):
         x, y = self._fourier_plane_grid()
         return np.array(x), np.array(y)
+
+    @lru_cache()
+    def _image_plane_grid(self):
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self._pixel_size), dtype=BACKEND.dtype), \
+                           tf.constant(-np.fft.fftfreq(self.Ny, self._pixel_size), dtype=BACKEND.dtype)
+
+        kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
+        x_atom = kx_atom * self.scaling_factor
+        y_atom = ky_atom * self.scaling_factor
+        return tf.meshgrid(x_atom, y_atom)
+
+    @property
+    def image_plane_grid(self):
+        x, y = self._image_plane_grid()
+        return np.array(x), np.array(y)
+
+
+class DMD(SLM):
+    def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, micromirror_size,
+                 negative_order=False):
+        """
+
+
+
+
+               +----->  j
+
+         +     +------------------+
+         |     |        y         |
+         |     |        ^         |
+         v     |        |         |
+               |        0---> x   |
+         i     |                  |
+               |                  |
+               +------------------+
+
+        Parameters
+        ----------
+        wavelength: float
+            Wavelength of indicent light.
+        focal_length: float
+            Focal length of the focusing lens
+        periodicity: float.
+            The periodicity of the grating profile. Unit: pixel (micromirror size)
+        theta: float
+            Desired grating angle
+        Nx: int
+            Number of pixels in x direction
+        Ny: int
+            Number of pixels in y direction
+        micromirror_size: float
+            The size of one micromirror. Unit: m
+        negative_order: bool
+            True: use negative first order instead of first order diffraction beam.
+        """
+        super().__init__(wavelength, focal_length, Nx, Ny, micromirror_size)
+
+        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
+
+        self._p = tf.Variable(periodicity * self._pixel_size, dtype=BACKEND.dtype)
+        self._theta = tf.Variable(theta, dtype=BACKEND.dtype)
+
+        self.negative_order = negative_order
+
+    @property
+    def micromirror_size(self):
+        return self._pixel_size
+
+    def set_dmd_state_off(self):
+        """ Reset dmd_state to be an array (Ny, Nx) of zeros."""
+        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
+
+    def set_dmd_state_on(self):
+        """Reset dmd_state to be an array (Ny, Nx) of ones."""
+        self.dmd_state = np.ones((self.Ny, self.Nx), dtype=np.bool)
 
     def _profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
         tensor_dtype = BACKEND.dtype_complex if complex else BACKEND.dtype
@@ -230,37 +258,22 @@ class DMD(SLM):
         return amp_scaled, phase_in, phase_out
 
     def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
-        #TODO check kwargs for different method
+        # TODO check kwargs for different method
         input_profile = self._profile_to_tensor(input_profile, complex=True)
         target_profile = self._profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
         amp_scaled, phase_in, phase_out = self._calc_amp_phase(input_profile, target_profile)
 
         x, y = self._fourier_plane_grid()
 
-        if method=="ifta":
+        if method == "ifta":
             kwargs["input_profile"] = input_profile
             kwargs["signal_window"] = self._profile_to_tensor(kwargs["signal_window"], at_fourier_plane=False,
                                                               complex=True)
 
-
-        self.dmd_state = np.array(_lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self._p, self._theta,
-                                                             method=method, negative_order=self.negative_order,
-                                                             **kwargs))
-
-    @lru_cache()
-    def _image_plane_grid(self):
-        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self.Nx, self.micromirror_size), dtype=BACKEND.dtype), \
-                           tf.constant(-np.fft.fftfreq(self.Ny, self.micromirror_size), dtype=BACKEND.dtype)
-
-        kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
-        x_atom = kx_atom * self.scaling_factor
-        y_atom = ky_atom * self.scaling_factor
-        return tf.meshgrid(x_atom, y_atom)
-
-    @property
-    def image_plane_grid(self):
-        x, y = self._image_plane_grid()
-        return np.array(x), np.array(y)
+        self.dmd_state = np.array(
+            _lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self._p, self._theta,
+                                       method=method, negative_order=self.negative_order,
+                                       **kwargs))
 
     @property
     def p(self):
