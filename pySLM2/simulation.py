@@ -50,6 +50,25 @@ class SLMSimulation(object):
         self._padding_x = padding_x
         self._padding_y = padding_y
 
+        self._input_field = None
+        self._output_field = None
+        self._image_plane_field = None
+
+    def clear(self):
+        self._input_field = None
+        self._output_field = None
+        self._image_plane_field = None
+
+    @property
+    def fourier_plane_pixel_area(self):
+        """float"""
+        return self._slm._pixel_size ** 2
+
+    @property
+    def image_plane_pixel_area(self):
+        return self._slm.scaling_factor ** 2 / (self._slm.Nx + 2 * self._padding_x) / (
+                    self._slm.Ny + 2 * self._padding_y) / self._slm._pixel_size ** 2
+
     @property
     def padding_x(self):
         return self._padding_x
