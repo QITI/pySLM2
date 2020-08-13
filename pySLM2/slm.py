@@ -5,7 +5,6 @@ from functools import lru_cache
 from .profile import FunctionProfile
 from . import _lib
 from ._backend import BACKEND
-import matplotlib.pyplot as plt
 
 __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 
@@ -41,6 +40,10 @@ class SLM(object):
     @property
     def focal_length(self):
         return self._focal_length
+
+    @property
+    def pixel_size(self):
+        return self._pixel_size
 
     @tf.function
     def _convert_pixel_index_to_dmd_coordinate(self, i, j):
@@ -119,6 +122,19 @@ class SLM(object):
         x, y = self._image_plane_grid()
         return np.array(x), np.array(y)
 
+    def _profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
+        tensor_dtype = BACKEND.dtype_complex if complex else BACKEND.dtype
+        if isinstance(profile, FunctionProfile):
+            grid = self._fourier_plane_grid() if at_fourier_plane else self._image_plane_grid()
+            tensor = profile._func(*grid)
+        elif isinstance(profile, tf.Tensor):
+            tensor = profile
+        else:
+            tensor = tf.constant(profile, dtype=tensor_dtype)
+        if tensor.dtype != tensor_dtype:
+            tensor = tf.cast(tensor, dtype=tensor_dtype)
+        return tensor
+
 
 class DMD(SLM):
     def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, micromirror_size,
@@ -178,19 +194,6 @@ class DMD(SLM):
     def set_dmd_state_on(self):
         """Reset dmd_state to be an array (Ny, Nx) of ones."""
         self.dmd_state = np.ones((self.Ny, self.Nx), dtype=np.bool)
-
-    def _profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
-        tensor_dtype = BACKEND.dtype_complex if complex else BACKEND.dtype
-        if isinstance(profile, FunctionProfile):
-            grid = self._fourier_plane_grid() if at_fourier_plane else self._image_plane_grid()
-            tensor = profile._func(*grid)
-        elif isinstance(profile, tf.Tensor):
-            tensor = profile
-        else:
-            tensor = tf.constant(profile, dtype=tensor_dtype)
-        if tensor.dtype != tensor_dtype:
-            tensor = tf.cast(tensor, dtype=tensor_dtype)
-        return tensor
 
     def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", **kwargs):
         amp = self._profile_to_tensor(amp)
