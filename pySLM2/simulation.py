@@ -67,7 +67,7 @@ class SLMSimulation(object):
     @property
     def image_plane_pixel_area(self):
         return self._slm.scaling_factor ** 2 / (self._slm.Nx + 2 * self._padding_x) / (
-                    self._slm.Ny + 2 * self._padding_y) / self._slm._pixel_size ** 2
+                    self._slm.Ny + 2 * self._padding_y) / self._slm.pixel_size ** 2
 
     @property
     def padding_x(self):
@@ -79,9 +79,9 @@ class SLMSimulation(object):
 
     @lru_cache()
     def _image_plane_padded_grid(self):
-        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self._slm.Nx + 2 * self._padding_x, self._slm._pixel_size),
+        kx_atom, ky_atom = tf.constant(np.fft.fftfreq(self._slm.Nx + 2 * self._padding_x, self._slm.pixel_size),
                                        dtype=BACKEND.dtype), \
-                           tf.constant(-np.fft.fftfreq(self._slm.Ny + 2 * self._padding_y, self._slm._pixel_size),
+                           tf.constant(-np.fft.fftfreq(self._slm.Ny + 2 * self._padding_y, self._slm.pixel_size),
                                        dtype=BACKEND.dtype)
 
         kx_atom, ky_atom = tf.signal.fftshift(kx_atom), tf.signal.fftshift(ky_atom)
