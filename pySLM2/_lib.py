@@ -34,7 +34,7 @@ def _inverse_fourier_transform(profile_tensor):
         transformed_tensor = tf.reshape(transformed_tensor, profile_tensor.shape)
         return transformed_tensor
     else:
-        return tf.signal.fft2d(profile_tensor)
+        return tf.signal.ifft2d(profile_tensor)
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):

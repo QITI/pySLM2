@@ -56,7 +56,7 @@ class SLM(object):
         j : float or :obj:numpy.ndarray
 
         Returns
-        -------1
+        -------
         x: float or :obj:numpy.ndarray
 
         y: float or :obj:numpy.ndarray

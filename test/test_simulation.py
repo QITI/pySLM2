@@ -18,6 +18,7 @@ def test_padded_grid():
         np.testing.assert_array_equal(sim.image_plane_padded_grid[i][::2, ::2],
                                       dmd.image_plane_grid[i])
 
+
 def test_pixel_area():
     dmd = pySLM2.DLP9500(369 * nano, 37 * milli, 2, -np.pi / 4)
     sim1 = pySLM2.DMDSimulation(dmd=dmd, padding_x=0, padding_y=0)
@@ -52,7 +53,6 @@ def test_energy_conservation():
     sim1 = pySLM2.DMDSimulation(dmd, padding_x=0, padding_y=0)
     sim2 = pySLM2.DMDSimulation(dmd, padding_x=1000, padding_y=1000)
 
-
     a_i = 1.1
     w_i = 10 * milli
 
@@ -67,6 +67,5 @@ def test_energy_conservation():
     assert sim1.get_input_power() == pytest.approx(sim2.get_input_power())
 
     # test energy conservation
-
     assert sim2.get_input_power() == pytest.approx(sim2.get_output_power())
     assert sim2.get_input_power() == pytest.approx(sim2.get_image_plane_power())
