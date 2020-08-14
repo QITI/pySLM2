@@ -121,21 +121,22 @@ class SLMSimulation(object):
 
     def propagate_to_image(self, input_profile):
         # TODO use tf function to speed up
-        self._input_field = tf.zeros(shape=(self.Ny, self.Nx), dtype=BACKEND.dtype_complex)
 
-        input_profile = self._slm._profile_to_tensor(input_profile)
+        input_profile = self._slm._profile_to_tensor(input_profile, complex=True)
 
-        self._input_field[self._padding_y:-self._padding_y,
-                          self._padding_x:-self._padding_x] = input_profile
+        self._input_field = tf.pad(input_profile,
+                                   [[self._padding_y, self._padding_y], [self._padding_x, self._padding_x]])
 
-        self._output_field[self._padding_y:-self._padding_y,
-                           self._padding_x:-self._padding_x] = input_profile * self._slm._state_tensor()
+        output_profile = input_profile * self._slm._state_tensor()
+
+        self._output_field = tf.pad(output_profile,
+                                   [[self._padding_y, self._padding_y], [self._padding_x, self._padding_x]])
 
         _image_plane_field_unormalized = tf.signal.fftshift(
             _lib._inverse_fourier_transform(tf.signal.ifftshift(self._output_field)))
 
         self._image_plane_field = _image_plane_field_unormalized * math.sqrt(
-            self.Nx * self.Ny) * self.fourier_plane_pixel_area / self.image_plane_pixel_area
+            self.Nx * self.Ny * self.fourier_plane_pixel_area / self.image_plane_pixel_area)
 
     @tf.function
     def _field_to_intensity(self, field_tensor):
@@ -179,6 +180,38 @@ class SLMSimulation(object):
     @property
     def image_plane_intensity(self):
         return self._pack_tensor_to_array(self._image_plane_intensity)
+
+    def get_input_power(self):
+        """Calculates and returns the total power incident on the SLM.
+
+        Returns
+        -------
+        power: float
+            The total power incident on the SLM.
+        """
+        return np.sum(self.input_intensity) * self.fourier_plane_pixel_area
+
+    def get_output_power(self):
+        """Calculates and returns the total power output from the SLM.
+
+        Returns
+        -------
+        power: float
+            The total power output from the SLM.
+
+        """
+        return np.sum(self.output_intensity) * self.fourier_plane_pixel_area
+
+    def get_image_plane_power(self):
+        """
+
+        Returns
+        -------
+        power: float
+            The total power at image plane.
+        """
+
+        return np.sum(self.image_plane_intensity) * self.image_plane_pixel_area
 
 
 

@@ -10,21 +10,20 @@ except:
 radius = 10
 x, y = np.meshgrid(np.linspace(-radius, radius), np.linspace(-radius, radius))
 
+__test_cases_arithmetic_profile = [(pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=3, m=4),
+                                    pySLM2.HermiteGaussian(x0=-1, y0=1, a=1, w=2, n=3, m=4)),
+                                   (pySLM2.Zernike(a=1, radius=radius, n=5, m=-3, extrapolate=True),
+                                    pySLM2.Zernike(a=2, radius=radius, n=5, m=-3, extrapolate=True))]
 
-__test_arithmetic_profile = [(pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=3, m=4),
-                              pySLM2.HermiteGaussian(x0=-1, y0=1, a=1, w=2, n=3, m=4)),
-                             (pySLM2.Zernike(a=1, radius=radius, n=5, m=-3, extrapolate=True),
-                              pySLM2.Zernike(a=2, radius=radius, n=5, m=-3, extrapolate=True))]
 
-
-@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
 def test_profile_add(profile, profile2):
     np.testing.assert_array_almost_equal((profile + profile)(x, y), profile2(x, y))
     np.testing.assert_array_almost_equal((profile + profile)(x, y), 2 * (profile(x, y)))
     np.testing.assert_array_almost_equal((profile + 0.5)(x, y), profile(x, y) + 0.5)
 
 
-@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
 def test_profile_multiply(profile, profile2):
     # Test multiply
     np.testing.assert_array_almost_equal((2 * profile)(x, y), profile2(x, y))
@@ -32,14 +31,14 @@ def test_profile_multiply(profile, profile2):
     np.testing.assert_array_almost_equal((profile * profile)(x, y), (profile(x, y)) ** 2)
 
 
-@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
 def test_profile_divide(profile, profile2):
     # Test divide
     np.testing.assert_array_almost_equal((profile2 / 2)(x, y), profile(x, y))
     np.testing.assert_array_almost_equal((profile / profile)(x, y), np.ones_like(x))
 
 
-@pytest.mark.parametrize("profile, profile2", __test_arithmetic_profile)
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
 def test_profile_power(profile, profile2):
     np.testing.assert_array_almost_equal((profile ** 2)(x, y), (profile(x, y)) ** 2)
 

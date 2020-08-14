@@ -305,7 +305,7 @@ class DMD(SLM):
         return origin_x, origin_y
 
     def _state_tensor(self):
-        tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
+        return tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
 
 class DLP9500(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):

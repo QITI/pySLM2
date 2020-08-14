@@ -3,7 +3,6 @@ import numpy as np
 import math
 from ._backend import BACKEND
 
-
 def _numpy_fft2(profile_array):
     transformed_array = np.fft.fft2(profile_array)
     if BACKEND.dtype_complex == tf.complex64:
