@@ -208,8 +208,9 @@ class DMD(SLM):
                                                              method=method, negative_order=self.negative_order,
                                                              **kwargs))
 
+    @staticmethod
     @tf.function
-    def _circular_mask(self, i, j, pix_ii, pix_jj, d):
+    def _circular_mask(i, j, pix_ii, pix_jj, d):
         pix_rr_square = (pix_jj - j) ** 2 + (pix_ii - i) ** 2
         mask = pix_rr_square < (d / 2) ** 2
         return mask
@@ -248,8 +249,9 @@ class DMD(SLM):
 
         self.dmd_state[mask] = dmd_state[mask]
 
+    @staticmethod
     @tf.function
-    def _calc_amp_phase(self, input_profile, target_profile):
+    def _calc_amp_phase(input_profile, target_profile):
         target_profile_fp = _lib._fourier_transform(tf.signal.ifftshift(target_profile))
         target_profile_fp = tf.signal.fftshift(target_profile_fp)
 
