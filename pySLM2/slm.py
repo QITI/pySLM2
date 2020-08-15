@@ -307,6 +307,7 @@ class DMD(SLM):
     def _state_tensor(self):
         return tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
 
+
 class DLP9500(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super(DLP9500, self).__init__(wavelength, focal_length, periodicity, theta,
