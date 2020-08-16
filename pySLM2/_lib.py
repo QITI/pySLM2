@@ -111,7 +111,8 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
     signal_window = tf.signal.ifftshift(signal_window)
     step = 0.5 / tf.cast(N, dtype=BACKEND.dtype)
 
-    for i in tf.range(N, dtype=BACKEND.dtype):
+    for i in tf.range(N):
+        i = tf.cast(i, dtype=BACKEND.dtype)
         grating_binarized = _ifta_binarize_hologram(grating_unbinarized, (i+1) * step)
         modulated_profile = input_profile*tf.cast(grating_binarized, BACKEND.dtype_complex)
         profile = _inverse_fourier_transform(modulated_profile)
