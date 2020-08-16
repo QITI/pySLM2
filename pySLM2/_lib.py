@@ -38,11 +38,11 @@ def _inverse_fourier_transform(profile_tensor):
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
-    negative_order = tf.constant(negative_order,dtype=tf.bool)
+    negative_order = tf.constant(negative_order, dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
-        r = kwargs.get("r", 1)
+        r = kwargs.get("r", 1.0)
         r = tf.constant(r, dtype=BACKEND.dtype)
         return _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order,
                                              r=r)
@@ -84,7 +84,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
     w = tf.math.asin(amp)  # + pi / 2
 
     grating = (tf.math.tanh(r * (p + w / 2)) - tf.math.tanh(r * (p - w / 2)))
-    threshold = tf.random.uniform(shape=grating.shape)
+    threshold = tf.random.uniform(shape=grating.shape, dtype=BACKEND.dtype)
     grating = (grating > threshold)
 
     return grating

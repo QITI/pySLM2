@@ -11,4 +11,5 @@ install:
   - pip install --upgrade coveralls pytest pytest-cov
   - pip install .
 script:
-  - cd test/; pytest -v
+  - pytest -v test
+  - pytest -v test --backend64
