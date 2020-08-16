@@ -10,7 +10,7 @@ class RectWindow(FunctionProfile):
         self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
         self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
         self._wx = tf.Variable(wx, dtype=BACKEND.dtype)
-        self._wy = tf.Variable(wx, dtype=BACKEND.dtype)
+        self._wy = tf.Variable(wy, dtype=BACKEND.dtype)
 
     @tf.function
     def _func(self, x, y):
