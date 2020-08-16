@@ -38,18 +38,21 @@ def _inverse_fourier_transform(profile_tensor):
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
+    negative_order = tf.constant(negative_order,dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
         r = kwargs.get("r", 1)
+        r = tf.constant(r, dtype=BACKEND.dtype)
         return _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order,
                                              r=r)
     elif method == "ifta":
         input_profile = kwargs.get("input_profile")
         signal_window = kwargs.get("signal_window")
         N = kwargs.get("N", 200)
+        N = tf.constant(N, dtype=BACKEND.dtype_int)
         return _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
-                                    negative_order=False, N=N)
+                                    negative_order=negative_order, N=N)
 
     else:
         raise ValueError("{0} is not a valid method!".format(method))
@@ -106,7 +109,7 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
 
     profile_ideal = _inverse_fourier_transform(input_profile * tf.cast(grating_ideal, BACKEND.dtype_complex))
     signal_window = tf.signal.ifftshift(signal_window)
-    step = 0.5 / N
+    step = 0.5 / tf.cast(N, dtype=BACKEND.dtype)
 
     for i in tf.range(N, dtype=BACKEND.dtype):
         grating_binarized = _ifta_binarize_hologram(grating_unbinarized, (i+1) * step)

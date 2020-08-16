@@ -15,12 +15,20 @@ class _BackEnd(object):
         if tf.config.list_logical_devices("GPU"):
             self._fft_backend.assign(self.FFT_BACKEND_TENSORFLOW)
 
+        self._initialized = False
+
     @property
     def dtype(self):
+        self._initialized = True
         return self._dtype
 
     @dtype.setter
     def dtype(self, value):
+        if self._initialized:
+            # TODO: Not sure which error to raise
+            # TODO: More precise description.
+            raise AssertionError("Configure the backend at the beginning of your code!")
+
         if not (value == tf.float32 or value == tf.float64):
             raise ValueError()
         else:
@@ -28,8 +36,15 @@ class _BackEnd(object):
 
     @property
     def dtype_complex(self):
+        self._initialized = True
         _dtype_complex = tf.complex64 if self._dtype == tf.float32 else tf.complex128
         return _dtype_complex
+
+    @property
+    def dtype_int(self):
+        self._initialized = True
+        _dtype_int = tf.int32 if self._dtype == tf.float32 else tf.int64
+        return _dtype_int
 
     @property
     def fft_backend(self):

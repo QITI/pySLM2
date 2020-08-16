@@ -213,6 +213,9 @@ class SLMSimulation(object):
 
         return np.sum(self.image_plane_intensity) * self.image_plane_pixel_area
 
+    @property
+    def scaling_factor(self):
+        return self._slm.scaling_factor
 
 
 class DMDSimulation(SLMSimulation):
@@ -221,3 +224,24 @@ class DMDSimulation(SLMSimulation):
             raise TypeError("dmd must be a DMD object.")
 
         super(DMDSimulation, self).__init__(dmd, **kwargs)
+
+    @property
+    def first_order_origin(self):
+        assert isinstance(self._slm, DMD)
+        return self._slm.first_order_origin
+
+    def block_zeroth_order(self, r=None):
+        """On the DMDSimulation.image_plane array, set the centre values (0th order diffraction) to zero."""
+        assert isinstance(self._slm, DMD)
+        if self._output_field is None:
+            raise TypeError("Run propagate_to_image first to initialise image plane light field")
+
+        if r is None:
+            r = self.scaling_factor / self._slm.p / 2
+
+        x, y = self._image_plane_padded_grid()
+        r2 = x ** 2 + y ** 2
+        mask = r2 < r ** 2
+
+        self._image_plane_field = tf.where(mask, tf.zeros_like(self._image_plane_field, dtype=BACKEND.dtype_complex),
+                                           self._image_plane_field)
