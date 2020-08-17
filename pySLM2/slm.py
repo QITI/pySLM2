@@ -10,7 +10,40 @@ __all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
 
 
 class SLM(object):
-    """Main class for any spatial light modulators."""
+    """Base class for a spatial light modulators.
+
+    Parameters
+    ----------
+    wavelength: float
+        Wavelength of the laser.
+    focal_length: float
+        Effective focal length of the lens system.
+    Nx: int
+        Number of pixels in the x direction.
+    Ny: int
+        Number of pixels in the y direction.
+    pixel_size: float
+        Edge length of a single pixel.
+
+
+    .. Note::
+        Coordinate system::
+
+               +----->  j
+
+         +     +------------------+     ^
+         |     |        y         |     |
+         |     |        ^         |     |
+         v     |        |         |     | Ny * pixel_size
+               |        0---> x   |     |
+         i     |                  |     |
+               |                  |     |
+               +------------------+     v
+
+               <------------------>
+                  Nx * pixel_size
+
+    """
 
     def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
         # Read only
@@ -140,44 +173,33 @@ class SLM(object):
 
 
 class DMD(SLM):
-    def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, micromirror_size,
+    """Base class for a Digital Micromirror Device (DMD).
+
+    Parameters
+    ----------
+    wavelength: float
+        Wavelength of the laser.
+    focal_length: float
+        Effective focal length of the lens system.
+    periodicity: float
+        Periodicity of the grating in unit of pixels
+    theta: float
+        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
+    Nx: int
+        Number of pixels in the x direction.
+    Ny: int
+        Number of pixels in the y direction.
+    pixel_size: float
+        Edge length of a single pixel. In the context of the DMD, a pixel is a micromirror.
+    negative_order: bool
+        If this parameter is set to True, use negative first order instead of first order diffraction beam.
+
+
+
+    """
+    def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, pixel_size,
                  negative_order=False):
-        """
-
-
-
-
-               +----->  j
-
-         +     +------------------+
-         |     |        y         |
-         |     |        ^         |
-         v     |        |         |
-               |        0---> x   |
-         i     |                  |
-               |                  |
-               +------------------+
-
-        Parameters
-        ----------
-        wavelength: float
-            Wavelength of indicent light.
-        focal_length: float
-            Focal length of the focusing lens
-        periodicity: float.
-            The periodicity of the grating profile. Unit: pixel (micromirror size)
-        theta: float
-            Desired grating angle
-        Nx: int
-            Number of pixels in x direction
-        Ny: int
-            Number of pixels in y direction
-        micromirror_size: float
-            The size of one micromirror. Unit: m
-        negative_order: bool
-            True: use negative first order instead of first order diffraction beam.
-        """
-        super().__init__(wavelength, focal_length, Nx, Ny, micromirror_size)
+        super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
 
         self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
 
@@ -185,10 +207,6 @@ class DMD(SLM):
         self._theta = tf.Variable(theta, dtype=BACKEND.dtype)
 
         self.negative_order = negative_order
-
-    @property
-    def micromirror_size(self):
-        return self._pixel_size
 
     def set_dmd_state_off(self):
         """ Reset dmd_state to be an array (Ny, Nx) of zeros."""
@@ -284,37 +302,48 @@ class DMD(SLM):
                                        **kwargs))
 
     @property
-    def p(self):
-        return self._p.value()
-
-    @property
     def theta(self):
         return self._theta.value()
 
     @property
     def first_order_origin(self):
-        """Find the origin of the first order light in image plane.
-
-        Returns
-        -------
-        origin_x: float
-            The x coordinate of the origin of first order light in image plane.
-        origin_y: float
-            The y coordinate of the origin of first order light in image plane.
-        """
-        origin_x = np.cos(self.theta) * self.scaling_factor / self.p
-        origin_y = np.sin(self.theta) * self.scaling_factor / self.p
+        """(int, int): The origin of the first order beam in image plane."""
+        origin_x = np.cos(self.theta) * self.scaling_factor / self._p.value()
+        origin_y = np.sin(self.theta) * self.scaling_factor / self._p.value()
         return origin_x, origin_y
 
     def _state_tensor(self):
         return tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
 
+# TODO Find a way to reuse the docstring
 
 class DLP9500(DMD):
+    """This class implements the DLP9500 [1]_ model and DLP9500UV [2]_ model from Texas Instruments.
+
+    Parameters
+    ----------
+    wavelength: float
+        Wavelength of the laser.
+    focal_length: float
+        Effective focal length of the lens system.
+    periodicity: float
+        Periodicity of the grating in unit of pixels
+    theta: float
+        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
+    negative_order: bool
+        If this parameter is set to True, use negative first order instead of first order diffraction beam.
+
+    References
+    ----------
+    .. [1] https://www.ti.com/product/DLP9500
+    .. [2] https://www.ti.com/product/DLP9500UV
+    """
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
+
         super(DLP9500, self).__init__(wavelength, focal_length, periodicity, theta,
                                       1920, 1080, 10.8 * micro, negative_order=negative_order)
 
+# TODO List more dmd models here
 
 class DLP7000(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):

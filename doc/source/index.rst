@@ -6,7 +6,6 @@ Welcome to pySLM2's documentation!
    :caption: Contents:
 
    Intro
-   Convention_For_Coordinate
    pySLM2
 
 

@@ -3,6 +3,7 @@ import numpy as np
 import math
 from ._backend import BACKEND
 
+
 def _numpy_fft2(profile_array):
     transformed_array = np.fft.fft2(profile_array)
     if BACKEND.dtype_complex == tf.complex64:
@@ -52,7 +53,7 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
         N = kwargs.get("N", 200)
         N = tf.constant(N, dtype=BACKEND.dtype_int)
         return _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
-                                    negative_order=negative_order, N=N)
+                                           negative_order=negative_order, N=N)
 
     else:
         raise ValueError("{0} is not a valid method!".format(method))
@@ -99,6 +100,7 @@ def _ifta_binarize_hologram(hologram, threthold):
     hologram_binarized = tf.where(hologram < threthold, tf.zeros_like(hologram), hologram_binarized)
     return hologram_binarized
 
+
 @tf.function
 def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
                                 negative_order=False, N=200):
@@ -120,5 +122,3 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
         grating_unbinarized = tf.math.real(_fourier_transform(profile_corrected) / input_profile)
 
     return grating_unbinarized > 0.5
-
-
