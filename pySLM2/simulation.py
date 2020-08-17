@@ -237,7 +237,7 @@ class DMDSimulation(SLMSimulation):
             raise TypeError("Run propagate_to_image first to initialise image plane light field")
 
         if r is None:
-            r = self.scaling_factor / self._slm.p / 2
+            r = self.scaling_factor / self._slm._p.value() / 2
 
         x, y = self._image_plane_padded_grid()
         r2 = x ** 2 + y ** 2

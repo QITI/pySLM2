@@ -114,6 +114,6 @@ def test_zernike_function(extrapolate, visualize=False):
         np.testing.assert_array_almost_equal(
             OSA_zernike,
             pySLM2_zernike,
-            decimal=4,
+            decimal=5,
             err_msg="n={n}, ,m={m} failed the test!".format(n=n, m=m)
         )
