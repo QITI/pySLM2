@@ -15,42 +15,57 @@ class FunctionProfile(object):
         y = tf.constant(y, dtype=BACKEND.dtype)
         return np.array(self._func(x, y))
 
+    def _make_attribute_func(self, attribute, other):
+        if isinstance(other, FunctionProfile):
+            def func(x, y):
+                tensor1 = self._func(x, y)
+                tensor2 = other._func(x, y)
+                if tensor1.dtype is BACKEND.dtype_complex and tensor2 is BACKEND.dtype:
+                    tensor2 = tf.cast(tensor2, dtype=BACKEND.dtype_complex)
+                elif tensor1.dtype is BACKEND.dtype and tensor2 is BACKEND.dtype_complex:
+                    tensor1 = tf.cast(tensor1, dtype=BACKEND.dtype_complex)
+                return tensor1.__getattribute__(attribute)(tensor2)
+        elif isinstance(other, int) or isinstance(other, float):
+            func = lambda x, y: self._func(x, y).__getattribute__(attribute)(other)
+        elif isinstance(other, complex):
+            func = lambda x, y: tf.cast(self._func(x, y), dtype=BACKEND.dtype_complex).__getattribute__(attribute)(
+                other)
+        else:
+            raise NotImplementedError
+        return tf.function(func)
+
     def __add__(self, other):
         func_profile = FunctionProfile()
-        if isinstance(other, FunctionProfile):
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other._func(x, y))
-        else:  # TODO: check availabe types
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) + other)
+        func_profile._func = self._make_attribute_func("__add__", other)
+        return func_profile
+
+    def __sub__(self, other):
+        func_profile = FunctionProfile()
+        func_profile._func = self._make_attribute_func("__sub__", other)
         return func_profile
 
     def __mul__(self, other):
         func_profile = FunctionProfile()
-        if isinstance(other, FunctionProfile):
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other._func(x, y))
-        else:
-            # TODO: check availabe types
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other)
+        func_profile._func = self._make_attribute_func("__mul__", other)
         return func_profile
 
     def __rmul__(self, other):
-        # TODO: check availabe types
         func_profile = FunctionProfile()
-        func_profile._func = tf.function(func=lambda x, y: self._func(x, y) * other)
+        func_profile._func = self._make_attribute_func("__rmul__", other)
         return func_profile
 
     def __truediv__(self, other):
         func_profile = FunctionProfile()
-        if isinstance(other, FunctionProfile):
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) / other._func(x, y))
-        else:
-            # TODO: check availabe types
-            func_profile._func = tf.function(func=lambda x, y: self._func(x, y) / other)
+        func_profile._func = self._make_attribute_func("__truediv__", other)
         return func_profile
 
-    def __pow__(self, power, modulo=None):
+    def __pow__(self, power):
         func_profile = FunctionProfile()
-        func_profile._func = tf.function(func=lambda x, y: self._func(x, y) ** power)
+        func_profile._func = self._make_attribute_func("__pow__", power)
         return func_profile
+
+    def __neg__(self):
+        return self.__mul__(-1.0)
 
     def rotate(self, theta):
         # TODO: verify the theta direction (CW or CCW for positive theta?)
@@ -73,6 +88,12 @@ class FunctionProfile(object):
         ))
         return func_profile
 
+    def as_complex(self):
+        func_profile = FunctionProfile()
+        func_profile._func = tf.function(func=lambda x, y: tf.exp(1j*tf.cast(self._func(x, y),
+                                                                             dtype=BACKEND.dtype_complex)))
+        return func_profile
+
 
 class HermiteGaussian(FunctionProfile):
     def __init__(self, x0, y0, a, w, n=0, m=0):
@@ -85,6 +106,9 @@ class HermiteGaussian(FunctionProfile):
 
         self._hermite_n_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._n).coef]
         self._hermite_m_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._m).coef]
+
+        a = tf.function(lambda x: x)
+        print(a(1).dtype)
 
     @tf.function
     def _func(self, x, y):

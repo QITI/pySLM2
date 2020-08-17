@@ -20,7 +20,13 @@ __test_cases_arithmetic_profile = [(pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w
 def test_profile_add(profile, profile2):
     np.testing.assert_array_almost_equal((profile + profile)(x, y), profile2(x, y))
     np.testing.assert_array_almost_equal((profile + profile)(x, y), 2 * (profile(x, y)))
-    np.testing.assert_array_almost_equal((profile + 0.5)(x, y), profile(x, y) + 0.5)
+    np.testing.assert_array_almost_equal((profile + 1)(x, y), profile(x, y) + 1)
+
+
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
+def test_profile_sub(profile, profile2):
+    np.testing.assert_array_almost_equal((profile - profile)(x, y), np.zeros_like(x))
+    np.testing.assert_array_almost_equal((profile2 - profile)(x, y), profile(x, y))
 
 
 @pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
@@ -41,6 +47,21 @@ def test_profile_divide(profile, profile2):
 @pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
 def test_profile_power(profile, profile2):
     np.testing.assert_array_almost_equal((profile ** 2)(x, y), (profile(x, y)) ** 2)
+
+
+@pytest.mark.parametrize("profile, profile2", __test_cases_arithmetic_profile)
+def test_neg(profile, profile2):
+    np.testing.assert_array_almost_equal((profile(x, y) + (-profile)(x, y)), np.zeros_like(x))
+    np.testing.assert_array_almost_equal((profile + (-profile))(x, y), np.zeros_like(x))
+
+
+def test_as_complex():
+    phase = pySLM2.Zernike(a=1, radius=radius, n=5, m=-3, extrapolate=True)
+    np.testing.assert_array_almost_equal(phase.as_complex()(x, y), np.exp(1j * phase(x, y)))
+    np.testing.assert_array_almost_equal(
+        (phase.as_complex() * (-phase).as_complex())(x, y),
+        np.ones_like(x)
+    )
 
 
 @pytest.mark.parametrize("extrapolate", [False, True])
