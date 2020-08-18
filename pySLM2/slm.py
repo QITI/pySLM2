@@ -241,10 +241,10 @@ class DMD(SLM):
         i
         j
         amp
-        phase_out
         phase_in
+        phase_out
         d
-        binarize
+        method
         kwargs
 
         Returns

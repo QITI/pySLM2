@@ -4,6 +4,7 @@ from scipy.special import hermite, factorial
 from ._backend import BACKEND
 import math
 
+__all__ = ["FunctionProfile", "HermiteGaussian", "Zernike"]
 
 class FunctionProfile(object):
     @tf.function

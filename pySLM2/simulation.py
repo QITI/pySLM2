@@ -12,34 +12,34 @@ __all__ = ["SLMSimulation", "DMDSimulation"]
 
 
 class SLMSimulation(object):
+    """SLMSimulation Plane
+
+    Parameters
+    ----------
+    slm: pySLM2.slm.SLM
+    padding_x: int
+    padding_y: int
+
+
+    .. Note::
+        The padded Fourier plane is defined as following::
+
+         +----------------------+ ^
+         |                      | | padding_y * pixel_size
+         |                      | |
+         |    +------------+    | v
+         |    |            |    |
+         |    |   DMD      |    |
+         |    |            |    |
+         |    +------------+    |
+         |                      |
+         |      padded FP       |
+         +----------------------+
+                           <---->
+                            padding_x * pixel_size
+    """
+
     def __init__(self, slm, padding_x=0, padding_y=0):
-        """
-
-
-        Fourier Plane
-
-             +----------------------+ ^
-             |                      | | padding_y
-             |                      | |
-             |    +------------+    | v
-             |    |            |    |
-             |    | DMD grid   |    |
-             |    |            |    |
-             |    +------------+    |
-             |                      |
-             |   padded grid        |
-             +----------------------+
-                               <---->
-                                padding_x
-
-
-        Parameters
-        ----------
-        dmd
-        padding_x
-        padding_y
-        """
-
         if not isinstance(padding_x, int):
             raise TypeError("padding_x must be an integer.")
 
@@ -219,11 +219,20 @@ class SLMSimulation(object):
 
 
 class DMDSimulation(SLMSimulation):
-    def __init__(self, dmd, **kwargs):
+    """
+
+    Parameters
+    ----------
+    dmd: pySLM2.slm.DMD
+    padding_x
+    padding_y
+    """
+    def __init__(self, dmd, padding_x=0, padding_y=0):
+
         if not isinstance(dmd, DMD):
             raise TypeError("dmd must be a DMD object.")
 
-        super(DMDSimulation, self).__init__(dmd, **kwargs)
+        super(DMDSimulation, self).__init__(dmd, padding_x=padding_x, padding_y=padding_y)
 
     @property
     def first_order_origin(self):
