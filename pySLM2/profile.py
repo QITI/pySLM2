@@ -69,6 +69,20 @@ class FunctionProfile(object):
         return self.__mul__(-1.0)
 
     def rotate(self, theta):
+        """This function returns a rotated version of the original profile.
+
+        Parameters
+        ----------
+        theta: float
+            Rotation angle.
+
+        Returns
+        -------
+        rotated_profile: pySLM2.profile.FunctionProfile
+
+
+        .. note:: rotated_profile(x, y) = original_profile(cos(theta) * x - sin(theta) * y, sin(theta) * x + cos(theta) * y)
+        """
         # TODO: verify the theta direction (CW or CCW for positive theta?)
         theta = tf.constant(theta, dtype=BACKEND.dtype)
         func_profile = FunctionProfile()
@@ -79,6 +93,21 @@ class FunctionProfile(object):
         return func_profile
 
     def shift(self, dx, dy):
+        """This function returns a shifted version of the original profile.
+
+        Parameters
+        ----------
+        dx: float
+            Shift amount in x direction.
+        dy: float
+            Shift amount in y direction.
+        Returns
+        -------
+        shifted_profile: pySLM2.profile.FunctionProfile
+
+
+        .. note:: shifted_profile(x, y) = original_profile(x-dx, y-dy)
+        """
         dx = tf.constant(dx, dtype=BACKEND.dtype)
         dy = tf.constant(dy, dtype=BACKEND.dtype)
 
@@ -90,6 +119,16 @@ class FunctionProfile(object):
         return func_profile
 
     def as_complex(self):
+        """This function returns the complex form of the profile.
+
+        Returns
+        -------
+        complex_profile: pySLM2.profile.FunctionProfile
+
+
+        .. note:: complex_profile(x, y) = exp(1j * original_profile(x, y))
+        """
+        #TODO  Write a better docstring
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: tf.exp(1j*tf.cast(self._func(x, y),
                                                                              dtype=BACKEND.dtype_complex)))

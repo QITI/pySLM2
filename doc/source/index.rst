@@ -7,6 +7,7 @@ Welcome to pySLM2's documentation!
 
    Intro
    pySLM2
+   contributor
 
 
 
