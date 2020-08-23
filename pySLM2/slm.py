@@ -6,7 +6,7 @@ from .profile import FunctionProfile
 from . import _lib
 from ._backend import BACKEND
 
-__all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
+__all__ = ["SLM", "DMD", "DLP7000", "DLP9500", "LCOS_SLM", "PLUTO_2"]
 
 
 class SLM(object):
