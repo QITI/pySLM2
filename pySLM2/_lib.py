@@ -122,3 +122,31 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
         grating_unbinarized = tf.math.real(_fourier_transform(profile_corrected) / input_profile)
 
     return grating_unbinarized > 0.5
+
+
+def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", **kwargs):
+    if method=="gs":
+        N = kwargs.get("N", 200)
+        N = tf.constant(N, dtype=BACKEND.dtype_int)
+        return _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N)
+    else:
+        raise ValueError("{0} is not a valid method!".format(method))
+
+
+@tf.function
+def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N=200):
+    phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
+
+    target_amp_profile = tf.signal.ifftshift(target_amp_profile)
+    target_amp_profile = tf.cast(target_amp_profile, dtype=BACKEND.dtype_complex)
+
+    for _ in tf.range(N):
+        phase_profile = tf.cast(phase_profile, dtype=BACKEND.dtype_complex)
+        modulated_profile = input_profile * tf.exp(1j * phase_profile)
+        profile = _inverse_fourier_transform(modulated_profile)
+        profile_angle = tf.math.angle(profile)
+        profile_angle = tf.cast(profile_angle, dtype=BACKEND.dtype_complex)
+        profile_corrected = target_amp_profile * tf.exp(1j * profile_angle)
+        phase_profile = tf.math.angle(_fourier_transform(profile_corrected))
+
+    return phase_profile

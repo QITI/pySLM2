@@ -6,7 +6,7 @@ from .profile import FunctionProfile
 from . import _lib
 from ._backend import BACKEND
 
-__all__ = ["SLM", "DMD", "DLP7000", "DLP9500"]
+__all__ = ["SLM", "DMD", "DLP7000", "DLP9500", "LCOS_SLM", "PLUTO_2"]
 
 
 class SLM(object):
@@ -349,3 +349,37 @@ class DLP7000(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super(DLP7000, self).__init__(wavelength, focal_length, periodicity, theta,
                                       1024, 768, 13.6 * micro, negative_order=negative_order)
+
+
+class LCOS_SLM(SLM):
+    def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
+        super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
+        self.slm_state = np.zeros(shape=(Ny, Nx), dtype=np.complex)
+
+    def reset_slm_state(self):
+        self.slm_state = np.zeros(shape=(self.Ny, self.Nx), dtype=np.complex)
+
+    def _state_tensor(self):
+        return tf.constant(self.slm_state, dtype=BACKEND.dtype_complex)
+
+    def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
+        input_profile = self._profile_to_tensor(input_profile, complex=True)
+        target_amp_profile = self._profile_to_tensor(target_amp_profile, at_fourier_plane=False)
+        self.slm_state = np.array(_lib.calculate_lcos_slm_hologram(input_profile, target_amp_profile, method=method,
+                                                                   **kwargs))
+
+
+class PLUTO_2(LCOS_SLM):
+    def __init__(self, wavelength, focal_length):
+        """This class implements the PLUTO-2 [1]_ families from HOLOEYE Photonics AG.
+
+        Parameters
+        ----------
+        wavelength
+        focal_length
+
+        References
+        ----------
+        .. [1] https://holoeye.com/slm-pluto-phase-only/
+        """
+        super().__init__(wavelength, focal_length, 1920, 1080, 8 * micro)
