@@ -354,7 +354,10 @@ class DLP7000(DMD):
 class LCOS_SLM(SLM):
     def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
         super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
-        self.slm_state = np.ones(shape=(Ny, Nx), dtype=np.complex)
+        self.slm_state = np.zeros(shape=(Ny, Nx), dtype=np.complex)
+
+    def reset_slm_state(self):
+        self.slm_state = np.zeros(shape=(self.Ny, self.Nx), dtype=np.complex)
 
     def _state_tensor(self):
         return tf.constant(self.slm_state, dtype=BACKEND.dtype_complex)
@@ -379,4 +382,4 @@ class PLUTO_2(LCOS_SLM):
         ----------
         .. [1] https://holoeye.com/slm-pluto-phase-only/
         """
-        super().__init__(wavelength, focal_length, 1920, 1080, 8*micro)
+        super().__init__(wavelength, focal_length, 1920, 1080, 8 * micro)
