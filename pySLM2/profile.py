@@ -147,9 +147,6 @@ class HermiteGaussian(FunctionProfile):
         self._hermite_n_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._n).coef]
         self._hermite_m_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in hermite(self._m).coef]
 
-        a = tf.function(lambda x: x)
-        print(a(1).dtype)
-
     @tf.function
     def _func(self, x, y):
         x_norm = (x - self._x0) / self._w
