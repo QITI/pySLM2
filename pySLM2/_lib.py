@@ -117,8 +117,8 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
         i = tf.cast(i, dtype=BACKEND.dtype)
         grating_binarized = _ifta_binarize_hologram(grating_unbinarized, (i+1) * step)
         modulated_profile = input_profile*tf.cast(grating_binarized, BACKEND.dtype_complex)
-        profile = _inverse_fourier_transform(modulated_profile)
-        profile_corrected = _ifta_correct_profile(profile, profile_ideal, signal_window)
+        image_plane_profile = _inverse_fourier_transform(modulated_profile)
+        profile_corrected = _ifta_correct_profile(image_plane_profile, profile_ideal, signal_window)
         grating_unbinarized = tf.math.real(_fourier_transform(profile_corrected) / input_profile)
 
     return grating_unbinarized > 0.5
@@ -143,8 +143,8 @@ def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N=200):
     for _ in tf.range(N):
         phase_profile = tf.cast(phase_profile, dtype=BACKEND.dtype_complex)
         modulated_profile = input_profile * tf.exp(1j * phase_profile)
-        profile = _inverse_fourier_transform(modulated_profile)
-        profile_angle = tf.math.angle(profile)
+        image_plane_profile = _inverse_fourier_transform(modulated_profile)
+        profile_angle = tf.math.angle(image_plane_profile)
         profile_angle = tf.cast(profile_angle, dtype=BACKEND.dtype_complex)
         profile_corrected = target_amp_profile * tf.exp(1j * profile_angle)
         phase_profile = tf.math.angle(_fourier_transform(profile_corrected))
