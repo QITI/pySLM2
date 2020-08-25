@@ -64,6 +64,12 @@ def test_as_complex():
     )
 
 
+def test_super_gaussian():
+    gaussian00 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=0, m=0)
+    gaussian_super = pySLM2.SuperGaussian(x0=-1, y0=1, a=0.5, w=2, p=1)
+    np.testing.assert_array_almost_equal(gaussian00(x, y), gaussian_super(x, y))
+
+
 @pytest.mark.parametrize("extrapolate", [False, True])
 def test_zernike_function(extrapolate, visualize=False):
     """Test if the Zernike profile match the Zernike polynomials from the reference paper at different orders.

@@ -4,7 +4,7 @@ from scipy.special import hermite, factorial
 from ._backend import BACKEND
 import math
 
-__all__ = ["FunctionProfile", "HermiteGaussian", "Zernike"]
+__all__ = ["FunctionProfile", "HermiteGaussian", "SuperGaussian", "Zernike"]
 
 class FunctionProfile(object):
     @tf.function
@@ -194,6 +194,71 @@ class HermiteGaussian(FunctionProfile):
     @property
     def m(self):
         return self._m
+
+
+class SuperGaussian(FunctionProfile):
+    """
+
+    Parameters
+    ----------
+    x0
+    y0
+    a
+    w
+    """
+    def __init__(self, x0, y0, a, w, p=1.0):
+        self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
+        self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
+        self._a = tf.Variable(a, dtype=BACKEND.dtype)
+        self._w = tf.Variable(w, dtype=BACKEND.dtype)
+        self._p = tf.Variable(p, dtype=BACKEND.dtype)
+
+    @tf.function
+    def _func(self, x, y):
+        x_norm = (x - self._x0) / self._w
+        y_norm = (y - self._y0) / self._w
+
+        return self._a * tf.exp(-(x_norm ** 2 + y_norm ** 2)**self._p)
+
+    @property
+    def x0(self):
+        return self._x0.value()
+
+    @x0.setter
+    def x0(self, value):
+        self._x0.assign(value)
+
+    @property
+    def y0(self):
+        return self._y0.value()
+
+    @y0.setter
+    def y0(self, value):
+        self._y0.assign(value)
+
+    @property
+    def a(self):
+        return self._a.value()
+
+    @a.setter
+    def a(self, value):
+        self._a.assign(value)
+
+    @property
+    def w(self):
+        return self._w.value()
+
+    @w.setter
+    def w(self, value):
+        self._w.assign(value)
+
+    @property
+    def p(self):
+        return self._p.value()
+
+    @p.setter
+    def p(self, value):
+        self._p.assign(value)
 
 
 class Zernike(FunctionProfile):
