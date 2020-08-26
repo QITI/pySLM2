@@ -42,6 +42,8 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
     negative_order = tf.constant(negative_order, dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
+    elif method == "simple":
+        return _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
         r = kwargs.get("r", 1.0)
         r = tf.constant(r, dtype=BACKEND.dtype)
@@ -71,6 +73,12 @@ def _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negat
         phase_in = -phase_in
     grating = amp * (tf.cos(grating_phase - (phase_out - phase_in)) / 2 + 0.5)
     return grating
+
+@tf.function
+def _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, negative_order=False):
+    grating_ideal = _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
+                                                 negative_order=negative_order)
+    return grating_ideal > 0.5
 
 
 @tf.function
