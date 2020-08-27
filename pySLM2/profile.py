@@ -136,6 +136,31 @@ class FunctionProfile(object):
 
 
 class HermiteGaussian(FunctionProfile):
+    r"""Beam profiles of Hermite-Gaussian modes.
+
+    .. math::
+        E(x,y) &= A H_n(\frac{\sqrt{2}(x-x_0)}{w})H_m(\frac{\sqrt{2}(y-y_0)}{w})\mathrm{exp} \left ( - \frac{(x-x_0)^2 + (y-y_0)^2}{w^2} \right ) \\
+        H_n(x) &= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.
+
+    Parameters
+    ----------
+    x0: float
+        The center of the Gaussian in x coordinate :math:`x_0`.
+    y0: float
+        The center of the Gaussian in y coordinate :math:`y_0`.
+    a: float
+        Amplitude of the Gaussian beam :math:`A`.
+    w: float
+        The Gaussian beam width :math:`w`. It is the :math:`1/e` radius of the fundamental mental (n=0, m=0).
+    n: int
+        Order of Hermite polynomials :math:`H_n` in x direction . (Default: 0)
+    m: int
+        Order of Hermite polynomials :math:`H_m` in y direction . (Default: 0)
+
+    See Also
+    --------
+    scipy.special.hermite: Physicist’s Hermite polynomial.
+    """
     def __init__(self, x0, y0, a, w, n=0, m=0):
         self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
         self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
@@ -197,14 +222,23 @@ class HermiteGaussian(FunctionProfile):
 
 
 class SuperGaussian(FunctionProfile):
-    """
+    r"""Beam profiles of super Gaussian function.
+
+    .. math::
+        E(x,y) = A \mathrm{exp} \left ( - \left( \frac{(x-x_0)^2 + (y-y_0)^2}{w^2} \right )^P \right )
 
     Parameters
     ----------
-    x0
-    y0
-    a
-    w
+    x0: float
+        The center of the Gaussian in x coordinate :math:`x_0`.
+    y0: float
+        The center of the Gaussian in y coordinate :math:`y_0`.
+    a: float
+        Amplitude of the Gaussian beam :math:`A`.
+    w: float
+        The Gaussian beam width :math:`w`. It is the :math:`1/e` radius of the fundamental mental (n=0, m=0).
+    p: float
+        Supper Gaussian power :math:`P`. (Default: 1.0)
     """
     def __init__(self, x0, y0, a, w, p=1.0):
         self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
