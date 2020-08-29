@@ -82,7 +82,7 @@ def _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, nega
 
 
 @tf.function
-def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=False, r=1):
+def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=False, r):
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
@@ -142,7 +142,7 @@ def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", 
 
 
 @tf.function
-def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N=200):
+def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)

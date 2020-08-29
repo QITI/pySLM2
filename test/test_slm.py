@@ -56,30 +56,47 @@ def test_eta(dmd_model, f):
     assert eta == pytest.approx(2, 1e-3)
 
 
-@pytest.mark.skip(reason="This test has finished.")
-def test_dmd_hologram_calc():
+@pytest.mark.parametrize("method,kwargs", [("ideal", dict()),
+                                           ("random", dict(r=1)),
+                                           ("ifta", dict(N=100))])
+def test_dmd_hologram_calc(method, kwargs):
     dmd = pySLM2.DLP9500(wavelength=369 * nano, focal_length=37 * milli, periodicity=4, theta=-np.pi / 4)
     sim = pySLM2.DMDSimulation(dmd)
 
-    # dmd_idea = pySLM2.DLP9500(wavelength=369 * nano, focal_length=37 * milli, periodicity=20, theta=-np.pi / 4)
-    # sim = pySLM2.DMDSimulation(dmd)
-
     x0, y0 = dmd.first_order_origin
-    signal_window = pySLM2.RectWindow(x0, y0, 50 * micro, 50 * micro)
+    signal_window = pySLM2.RectWindow(x0, y0, 100 * micro, 100 * micro)
+
+    if method == "ifta":
+        kwargs["signal_window"] = signal_window
 
     input_profile = pySLM2.HermiteGaussian(0, 0, 200, 3 * milli)
     target_profile = pySLM2.HermiteGaussian(0, 0, 1, 10 * micro, n=1, m=1)
 
-    eta = dmd.calculate_dmd_state(input_profile, target_profile, method="random")
-    print("eta:", eta)
-    print("scaling_factor", sim.scaling_factor)
+    eta = dmd.calculate_dmd_state(input_profile, target_profile, method=method, **kwargs)
+    # print("eta:", eta)
+    # print("scaling_factor", sim.scaling_factor)
+
+    target_profile_first_order = target_profile.shift(x0, y0)(*sim.image_plane_padded_grid) * eta / 4
+
+    window = signal_window(*sim.image_plane_padded_grid) > 0.5
 
     sim.propagate_to_image(input_profile)
     sim.block_zeroth_order()
 
-    plt.imshow(np.abs(target_profile.shift(x0, y0)(*sim.image_plane_padded_grid)))
-    plt.colorbar()
-    plt.show()
-    plt.imshow(np.abs(sim.image_plane_field) * np.sqrt(sim.scaling_factor) / eta * 2)
-    plt.colorbar()
-    plt.show()
+    mx = np.max(target_profile_first_order)
+
+    def rms(a, b):
+        diff = a - b
+        diff2 = np.real(diff) ** 2 + np.imag(diff) ** 2
+        return np.sqrt(np.mean(diff2))
+
+    rel_err = rms(target_profile_first_order[window], sim.image_plane_field[window]) / mx
+
+    assert rel_err < 0.05
+
+    # plt.imshow(np.abs(target_profile_first_order))
+    # plt.colorbar()
+    # plt.show()
+    # plt.imshow(np.abs(sim.image_plane_field)*window)
+    # plt.colorbar()
+    # plt.show()
