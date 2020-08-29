@@ -82,7 +82,7 @@ def _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, nega
 
 
 @tf.function
-def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=False, r):
+def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=False, r=1.0):
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
