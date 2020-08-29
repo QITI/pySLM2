@@ -25,6 +25,12 @@ def test_pixel_area():
     sim1 = pySLM2.DMDSimulation(dmd=dmd, padding_x=0, padding_y=0)
     sim2 = pySLM2.DMDSimulation(dmd=dmd, padding_x=dmd.Nx // 2, padding_y=dmd.Ny // 2)
 
+    fx, fy = sim1.fourier_plane_padded_grid
+    assert sim2.fourier_plane_pixel_area == pytest.approx((fx[0, 1] - fx[0, 0]) * (fy[0, 0] - fy[1, 0]))
+
+    ix, iy = sim1.image_plane_padded_grid
+    assert sim2.image_plane_pixel_area == pytest.approx((ix[0, 1] - ix[0, 0]) * (iy[0, 0] - iy[1, 0]))
+
     assert sim2.fourier_plane_pixel_area > 0
     assert sim2.image_plane_pixel_area > 0
 
@@ -43,10 +49,39 @@ def test_get_input_power(slm):
     input_profile = pySLM2.HermiteGaussian(0, 0, a_i, w_i)
 
     sim.propagate_to_image(input_profile)
+
     # test get_input_power with the analytical solution.
     # ref: https://en.wikipedia.org/wiki/Gaussian_function#Relation_to_standard_Gaussian_integral
+    # wolframe code:
+    # Integrate[a^2 E^((2 (-x^2 - y^2))/w^2), {y, -Infinity, Infinity}, {x, -Infinity, Infinity}]
+    # ConditionalExpression[(a^2 Pi w^2)/2, Re[w^2] > 0]
 
     assert sim.get_input_power() == pytest.approx(0.5 * np.pi * a_i ** 2 * w_i ** 2, 1e-3)
+
+
+def test_get_image_plane_power():
+    dmd = pySLM2.DLP9500(369 * nano, 25 * milli, 10, np.pi / 4)
+
+    a_i = 1.1
+    w_i = 3 * milli
+    input_profile = pySLM2.HermiteGaussian(0, 0, a_i, w_i)
+
+    sim = pySLM2.SLMSimulation(dmd, padding_x=1000, padding_y=1000)
+    dmd.set_dmd_state_off()
+
+    sim.propagate_to_image(input_profile)
+
+    assert sim.get_image_plane_power() == 0.0
+
+    dmd.set_dmd_state_on()
+    sim.propagate_to_image(input_profile)
+    p1 = sim.get_image_plane_power()
+
+    dmd.dmd_state = dmd.dmd_state * 0.5
+    sim.propagate_to_image(input_profile)
+    p2 = sim.get_image_plane_power()
+
+    assert p1 == p2 * 2**2
 
 
 def test_energy_conservation():

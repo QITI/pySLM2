@@ -120,8 +120,6 @@ class SLMSimulation(object):
         return np.array(x), np.array(y)
 
     def propagate_to_image(self, input_profile):
-        # TODO use tf function to speed up
-
         input_profile = self._slm._profile_to_tensor(input_profile, complex=True)
 
         self._input_field = tf.pad(input_profile,
@@ -135,8 +133,8 @@ class SLMSimulation(object):
         _image_plane_field_unormalized = tf.signal.fftshift(
             _lib._inverse_fourier_transform(tf.signal.ifftshift(self._output_field)))
 
-        self._image_plane_field = _image_plane_field_unormalized * math.sqrt(
-            self.Nx * self.Ny * self.fourier_plane_pixel_area / self.image_plane_pixel_area)
+        # TODO proper explanation
+        self._image_plane_field = _image_plane_field_unormalized * self.Nx * self.Ny * self.fourier_plane_pixel_area / self.scaling_factor
 
     @tf.function
     def _field_to_intensity(self, field_tensor):

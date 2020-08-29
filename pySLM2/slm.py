@@ -279,15 +279,16 @@ class DMD(SLM):
         amp_out = tf.math.abs(target_profile_fp)
 
         amp_scaled = amp_out / amp_in
-        amp_scaled = amp_scaled / tf.math.reduce_max(amp_scaled)
+        eta_fft = 1.0 / tf.math.reduce_max(amp_scaled)
+        amp_scaled = amp_scaled * eta_fft
 
-        return amp_scaled, phase_in, phase_out
+        return amp_scaled, phase_in, phase_out, eta_fft
 
     def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
         # TODO check kwargs for different method
         input_profile = self._profile_to_tensor(input_profile, complex=True)
         target_profile = self._profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
-        amp_scaled, phase_in, phase_out = self._calc_amp_phase(input_profile, target_profile)
+        amp_scaled, phase_in, phase_out, eta_fft = self._calc_amp_phase(input_profile, target_profile)
 
         x, y = self._fourier_plane_grid()
 
@@ -300,6 +301,11 @@ class DMD(SLM):
             _lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self._p, self._theta,
                                        method=method, negative_order=self.negative_order,
                                        **kwargs))
+
+        # TODO better explanation on relation between optical Fourier transform and FFT/iFFT
+        # The eta_fft is for FFT. The eta needs some scaling.
+        eta = eta_fft * self.pixel_size ** 2 / self.scaling_factor * self.Nx * self.Ny
+        return float(eta)
 
     @property
     def theta(self):
