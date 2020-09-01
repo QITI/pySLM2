@@ -1,7 +1,7 @@
 import pySLM2
 import numpy as np
 import pytest
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 from scipy.constants import nano, micro, milli
 
 
@@ -37,6 +37,7 @@ def test_scaling_factor(w_f):
 @pytest.mark.parametrize("dmd_model,f", [(pySLM2.DLP9500, 37 * milli),
                                          (pySLM2.DLP7000, 137 * milli)])
 def test_eta(dmd_model, f):
+    # TODO known issue test case f=37*milli fails in 32bit mode while using GPU
     dmd = dmd_model(wavelength=369 * nano, focal_length=f, periodicity=4, theta=-np.pi / 4)
     sim = pySLM2.DMDSimulation(dmd)
 
