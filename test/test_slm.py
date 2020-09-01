@@ -1,7 +1,7 @@
 import pySLM2
 import numpy as np
 import pytest
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 from scipy.constants import nano, micro, milli
 
 
