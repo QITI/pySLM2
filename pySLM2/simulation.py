@@ -134,7 +134,7 @@ class SLMSimulation(object):
             _lib._inverse_fourier_transform(tf.signal.ifftshift(self._output_field)))
 
         # TODO proper explanation
-        self._image_plane_field = _image_plane_field_unormalized * self.Nx * self.Ny * self.fourier_plane_pixel_area / self.scaling_factor
+        self._image_plane_field = _image_plane_field_unormalized * (self.Nx * self.Ny * self.fourier_plane_pixel_area / self.scaling_factor)
 
     @tf.function
     def _field_to_intensity(self, field_tensor):
