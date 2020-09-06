@@ -1,5 +1,4 @@
 from setuptools import setup
-#from .pySLM2.version import __version__
 
 version = {}
 with open("pySLM2/version.py") as fp:
@@ -11,7 +10,7 @@ setup(
     packages=['pySLM2'],
     url='',
     license='',
-    author='Gilbert',
-    author_email='',
+    author='Chung-You (Gilbert) Shih',
+    author_email='c5shih@uwaterloo.ca',
     description=''
 )

@@ -304,8 +304,8 @@ class DMD(SLM):
 
         # TODO better explanation on relation between optical Fourier transform and FFT/iFFT
         # The eta_fft is for FFT. The eta needs some scaling.
-        eta = self.pixel_size ** 2 / self.scaling_factor * self.Nx * self.Ny / one_over_eta_fft
-        return float(eta)
+        eta = self.pixel_size ** 2 / self.scaling_factor * self.Nx * self.Ny / float(one_over_eta_fft)
+        return eta
 
     @property
     def theta(self):
@@ -346,15 +346,43 @@ class DLP9500(DMD):
     """
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
 
-        super(DLP9500, self).__init__(wavelength, focal_length, periodicity, theta,
+        super().__init__(wavelength, focal_length, periodicity, theta,
                                       1920, 1080, 10.8 * micro, negative_order=negative_order)
 
 # TODO List more dmd models here
 
 class DLP7000(DMD):
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
-        super(DLP7000, self).__init__(wavelength, focal_length, periodicity, theta,
-                                      1024, 768, 13.6 * micro, negative_order=negative_order)
+        super().__init__(wavelength, focal_length, periodicity, theta,
+                         1024, 768, 13.6 * micro, negative_order=negative_order)
+
+
+class DLP9000(DMD):
+    """This class implements the DLP9000 [1]_ model, DLP9000X[2]_ model, and DLP9000XUV [3]_ model from Texas Instruments.
+
+        Parameters
+        ----------
+        wavelength: float
+            Wavelength of the laser.
+        focal_length: float
+            Effective focal length of the lens system.
+        periodicity: float
+            Periodicity of the grating in unit of pixels
+        theta: float
+            Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
+        negative_order: bool
+            If this parameter is set to True, use negative first order instead of first order diffraction beam.
+
+        References
+        ----------
+        .. [1] https://www.ti.com/product/DLP9000
+        .. [2] https://www.ti.com/product/DLP9000X
+        .. [3] https://www.ti.com/product/DLP9000XUV
+        """
+
+    def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
+        super().__init__(wavelength, focal_length, periodicity, theta,
+                         2560, 1600, 7.6 * micro, negative_order=negative_order)
 
 
 class LCOS_SLM(SLM):

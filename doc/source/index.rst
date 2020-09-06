@@ -6,6 +6,7 @@ Welcome to pySLM2's documentation!
    :caption: Contents:
 
    Intro
+   fourier-hologram
    pySLM2
    contributor
 
