@@ -120,7 +120,7 @@ class SLMSimulation(object):
         return np.array(x), np.array(y)
 
     def propagate_to_image(self, input_profile):
-        input_profile = self._slm._profile_to_tensor(input_profile, complex=True)
+        input_profile = self._slm.profile_to_tensor(input_profile, complex=True)
 
         self._input_field = tf.pad(input_profile,
                                    [[self._padding_y, self._padding_y], [self._padding_x, self._padding_x]])

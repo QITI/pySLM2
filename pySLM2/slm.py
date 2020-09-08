@@ -80,21 +80,6 @@ class SLM(object):
 
     @tf.function
     def _convert_pixel_index_to_dmd_coordinate(self, i, j):
-        """
-
-        Parameters
-        ----------
-        i : float or :obj:numpy.ndarray
-
-        j : float or :obj:numpy.ndarray
-
-        Returns
-        -------
-        x: float or :obj:numpy.ndarray
-
-        y: float or :obj:numpy.ndarray
-
-        """
         i = self._Ny - i
         j = j - self._Nx / 2
         i = i - self._Ny / 2
@@ -102,21 +87,6 @@ class SLM(object):
 
     @tf.function
     def _convert_slm_coordinate_to_pixel_index(self, x, y):
-        """
-
-        Parameters
-        ----------
-        x : float or :obj:numpy.ndarray
-
-        y : float or :obj:numpy.ndarray
-
-        Returns
-        -------
-        j: float or :obj:numpy.ndarray
-
-        j: float or :obj:numpy.ndarray
-
-        """
         x = x / self._pixel_size
         y = y / self._pixel_size
         i = y + self._Ny / 2
@@ -137,6 +107,7 @@ class SLM(object):
 
     @property
     def fourier_plane_grid(self):
+        """(numpy.ndarray, numpy.ndarray) The x and y coordinates of all the pixels on the SLM."""
         x, y = self._fourier_plane_grid()
         return np.array(x), np.array(y)
 
@@ -152,10 +123,33 @@ class SLM(object):
 
     @property
     def image_plane_grid(self):
+        """(numpy.ndarray, numpy.ndarray) The x and y coordinates of the coorsponding."""
         x, y = self._image_plane_grid()
         return np.array(x), np.array(y)
 
-    def _profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
+    def profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
+        """This function covert a profile into into tensor.
+
+        Parameters
+        ----------
+        profile: pySLM2.profile.FunctionProfile, tensorflow.Tensor, numpy.ndarray, int, float or complex
+            If profile is a FunctionProfile, it will be sampled with the grid in either the Fourier plane or the image plane.
+            Otherwise, it will be cast into a tensorflow.Tensor.
+        at_fourier_plane: bool
+            If the value is True, the profile is sampled with the Fourier plane grid.
+            Otherwise, it will be sampled with the image plane grid. (Default: True)
+        complex: bool
+            The dtype of the tensor.
+            If the value is True, the dtype of the tensor will be set to pySLM2.BACKEND.complex_dtype.
+            Otherwise, the dtype will be set to pySLM2.BACKEND.dtype. (Default: False)
+
+        Returns
+        -------
+        tensor:
+            The tensor has the same dimension as the fourier_plane_grid and the image_plane_grid.
+            The dtyoe of the tensor can be set by complex.
+
+        """
         tensor_dtype = BACKEND.dtype_complex if complex else BACKEND.dtype
         if isinstance(profile, FunctionProfile):
             grid = self._fourier_plane_grid() if at_fourier_plane else self._image_plane_grid()
@@ -194,8 +188,6 @@ class DMD(SLM):
     negative_order: bool
         If this parameter is set to True, use negative first order instead of first order diffraction beam.
 
-
-
     """
     def __init__(self, wavelength, focal_length, periodicity, theta, Nx, Ny, pixel_size,
                  negative_order=False):
@@ -217,9 +209,9 @@ class DMD(SLM):
         self.dmd_state = np.ones((self.Ny, self.Nx), dtype=np.bool)
 
     def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", **kwargs):
-        amp = self._profile_to_tensor(amp)
-        phase_in = self._profile_to_tensor(phase_in)
-        phase_out = self._profile_to_tensor(phase_out)
+        amp = self.profile_to_tensor(amp)
+        phase_in = self.profile_to_tensor(phase_in)
+        phase_out = self.profile_to_tensor(phase_out)
 
         x, y = self._fourier_plane_grid()
         self.dmd_state = np.array(_lib.calculate_dmd_grating(amp, phase_in, phase_out, x, y, self._p, self._theta,
@@ -238,13 +230,14 @@ class DMD(SLM):
 
         Parameters
         ----------
-        i
-        j
-        amp
+        i: float
+        j: float
+        amp: float
         phase_in
         phase_out
         d
-        method
+        method: str
+            (Default: "random")
         kwargs
 
         Returns
@@ -252,9 +245,9 @@ class DMD(SLM):
 
         """
 
-        amp = self._profile_to_tensor(amp)
-        phase_in = self._profile_to_tensor(phase_in)
-        phase_out = self._profile_to_tensor(phase_out)
+        amp = self.profile_to_tensor(amp)
+        phase_in = self.profile_to_tensor(phase_in)
+        phase_out = self.profile_to_tensor(phase_out)
 
         pix_ii, pix_jj = self._fourier_plane_pixel_grid()
         mask = self._circular_mask(i, j, pix_ii, pix_jj, d)
@@ -286,16 +279,16 @@ class DMD(SLM):
 
     def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
         # TODO check kwargs for different method
-        input_profile = self._profile_to_tensor(input_profile, complex=True)
-        target_profile = self._profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
+        input_profile = self.profile_to_tensor(input_profile, complex=True)
+        target_profile = self.profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
         amp_scaled, phase_in, phase_out, one_over_eta_fft = self._calc_amp_phase(input_profile, target_profile)
 
         x, y = self._fourier_plane_grid()
 
         if method == "ifta":
             kwargs["input_profile"] = input_profile
-            kwargs["signal_window"] = self._profile_to_tensor(kwargs["signal_window"], at_fourier_plane=False,
-                                                              complex=True)
+            kwargs["signal_window"] = self.profile_to_tensor(kwargs["signal_window"], at_fourier_plane=False,
+                                                             complex=True)
 
         self.dmd_state = np.array(
             _lib.calculate_dmd_grating(amp_scaled, phase_in, phase_out, x, y, self._p, self._theta,
@@ -324,7 +317,7 @@ class DMD(SLM):
 # TODO Find a way to reuse the docstring
 
 class DLP9500(DMD):
-    """This class implements the DLP9500 [1]_ model and DLP9500UV [2]_ model from Texas Instruments.
+    """This class implements the DLP9500 model and DLP9500UV model from Texas Instruments.
 
     Parameters
     ----------
@@ -338,27 +331,36 @@ class DLP9500(DMD):
         Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
     negative_order: bool
         If this parameter is set to True, use negative first order instead of first order diffraction beam.
-
-    References
-    ----------
-    .. [1] https://www.ti.com/product/DLP9500
-    .. [2] https://www.ti.com/product/DLP9500UV
     """
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
-
         super().__init__(wavelength, focal_length, periodicity, theta,
                                       1920, 1080, 10.8 * micro, negative_order=negative_order)
 
 # TODO List more dmd models here
 
 class DLP7000(DMD):
+    """This class implements the DLP7000 model and DLP7000UV model from Texas Instruments.
+
+    Parameters
+    ----------
+    wavelength: float
+        Wavelength of the laser.
+    focal_length: float
+        Effective focal length of the lens system.
+    periodicity: float
+        Periodicity of the grating in unit of pixels
+    theta: float
+        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
+    negative_order: bool
+        If this parameter is set to True, use negative first order instead of first order diffraction beam.
+    """
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super().__init__(wavelength, focal_length, periodicity, theta,
                          1024, 768, 13.6 * micro, negative_order=negative_order)
 
 
 class DLP9000(DMD):
-    """This class implements the DLP9000 [1]_ model, DLP9000X[2]_ model, and DLP9000XUV [3]_ model from Texas Instruments.
+    """This class implements the DLP9000 model, DLP9000X model, and DLP9000XUV model from Texas Instruments.
 
         Parameters
         ----------
@@ -372,12 +374,6 @@ class DLP9000(DMD):
             Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.
         negative_order: bool
             If this parameter is set to True, use negative first order instead of first order diffraction beam.
-
-        References
-        ----------
-        .. [1] https://www.ti.com/product/DLP9000
-        .. [2] https://www.ti.com/product/DLP9000X
-        .. [3] https://www.ti.com/product/DLP9000XUV
         """
 
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
@@ -397,23 +393,21 @@ class LCOS_SLM(SLM):
         return tf.constant(self.slm_state, dtype=BACKEND.dtype_complex)
 
     def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
-        input_profile = self._profile_to_tensor(input_profile, complex=True)
-        target_amp_profile = self._profile_to_tensor(target_amp_profile, at_fourier_plane=False)
+        input_profile = self.profile_to_tensor(input_profile, complex=True)
+        target_amp_profile = self.profile_to_tensor(target_amp_profile, at_fourier_plane=False)
         self.slm_state = np.array(_lib.calculate_lcos_slm_hologram(input_profile, target_amp_profile, method=method,
                                                                    **kwargs))
 
 
 class PLUTO_2(LCOS_SLM):
+    """This class implements the PLUTO-2 families from HOLOEYE Photonics AG.
+
+    Parameters
+    ----------
+    wavelength: float
+            Wavelength of the laser.
+    focal_length: float
+        Effective focal length of the lens system.
+    """
     def __init__(self, wavelength, focal_length):
-        """This class implements the PLUTO-2 [1]_ families from HOLOEYE Photonics AG.
-
-        Parameters
-        ----------
-        wavelength
-        focal_length
-
-        References
-        ----------
-        .. [1] https://holoeye.com/slm-pluto-phase-only/
-        """
         super().__init__(wavelength, focal_length, 1920, 1080, 8 * micro)
