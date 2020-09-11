@@ -8,7 +8,7 @@ setup(
     name='pySLM2',
     version=version['__version__'],
     packages=['pySLM2'],
-    url='',
+    url='https://github.com/QITI/pySLM2',
     license='',
     author='Chung-You (Gilbert) Shih',
     author_email='c5shih@uwaterloo.ca',

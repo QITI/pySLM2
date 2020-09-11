@@ -12,14 +12,15 @@ __all__ = ["SLMSimulation", "DMDSimulation"]
 
 
 class SLMSimulation(object):
-    """SLMSimulation Plane
+    """The class implements a Simulation plan for the SLM.
 
     Parameters
     ----------
     slm: pySLM2.slm.SLM
     padding_x: int
+        Number of pixels padded in the x direction. (see the note for details)
     padding_y: int
-
+        Number of pixels padded in the y direction. (see the note for details)
 
     .. Note::
         The padded Fourier plane is defined as following::
@@ -44,7 +45,7 @@ class SLMSimulation(object):
             raise TypeError("padding_x must be an integer.")
 
         if not isinstance(padding_y, int):
-            raise TypeError("padding_x must be an integer.")
+            raise TypeError("padding_y must be an integer.")
 
         if isinstance(slm, SLM):
             self._slm = slm
@@ -59,6 +60,7 @@ class SLMSimulation(object):
         self._image_plane_field = None
 
     def clear(self):
+        """Clear the simulation result."""
         self._input_field = None
         self._output_field = None
         self._image_plane_field = None
@@ -120,6 +122,12 @@ class SLMSimulation(object):
         return np.array(x), np.array(y)
 
     def propagate_to_image(self, input_profile):
+        """
+
+        Parameters
+        ----------
+        input_profile
+        """
         input_profile = self._slm.profile_to_tensor(input_profile, complex=True)
 
         self._input_field = tf.pad(input_profile,
@@ -157,26 +165,32 @@ class SLMSimulation(object):
 
     @property
     def input_field(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._input_field)
 
     @property
     def output_field(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._output_field)
 
     @property
     def image_plane_field(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._image_plane_field)
 
     @property
     def input_intensity(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._input_intensity)
 
     @property
     def output_intensity(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._output_intensity)
 
     @property
     def image_plane_intensity(self):
+        "np.ndarray"
         return self._pack_tensor_to_array(self._image_plane_intensity)
 
     def get_input_power(self):
@@ -201,12 +215,12 @@ class SLMSimulation(object):
         return np.sum(self.output_intensity) * self.fourier_plane_pixel_area
 
     def get_image_plane_power(self):
-        """
+        """Calculates and returns the total power at the images plane.
 
         Returns
         -------
         power: float
-            The total power at image plane.
+            The total power at images plane.
         """
 
         return np.sum(self.image_plane_intensity) * self.image_plane_pixel_area
@@ -217,13 +231,15 @@ class SLMSimulation(object):
 
 
 class DMDSimulation(SLMSimulation):
-    """
+    """The class implements a Simulation plan for the DMD.
 
     Parameters
     ----------
     dmd: pySLM2.slm.DMD
-    padding_x
-    padding_y
+    padding_x: int
+        Number of pixels padded in the x direction. (see pySLM2.simulation.SLMSimulation for details)
+    padding_y: int
+        Number of pixels padded in the y direction. (see pySLM2.simulation.SLMSimulation for details)
     """
     def __init__(self, dmd, padding_x=0, padding_y=0):
 
@@ -241,7 +257,7 @@ class DMDSimulation(SLMSimulation):
         """On the DMDSimulation.image_plane array, set the centre values (0th order diffraction) to zero."""
         assert isinstance(self._slm, DMD)
         if self._output_field is None:
-            raise TypeError("Run propagate_to_image first to initialise image plane light field")
+            raise TypeError("Run propagate_to_image first to initialise images plane light field")
 
         if r is None:
             r = self.scaling_factor / self._slm._p.value() / 2

@@ -6,7 +6,7 @@ from .profile import FunctionProfile
 from . import _lib
 from ._backend import BACKEND
 
-__all__ = ["SLM", "DMD", "DLP7000", "DLP9500", "LCOS_SLM", "PLUTO_2"]
+__all__ = ["SLM", "DMD", "DLP7000", "DLP9500", "DLP9000", "LCOS_SLM", "PLUTO_2"]
 
 
 class SLM(object):
@@ -133,11 +133,11 @@ class SLM(object):
         Parameters
         ----------
         profile: pySLM2.profile.FunctionProfile, tensorflow.Tensor, numpy.ndarray, int, float or complex
-            If profile is a FunctionProfile, it will be sampled with the grid in either the Fourier plane or the image plane.
+            If profile is a FunctionProfile, it will be sampled with the grid in either the Fourier plane or the images plane.
             Otherwise, it will be cast into a tensorflow.Tensor.
         at_fourier_plane: bool
             If the value is True, the profile is sampled with the Fourier plane grid.
-            Otherwise, it will be sampled with the image plane grid. (Default: True)
+            Otherwise, it will be sampled with the images plane grid. (Default: True)
         complex: bool
             The dtype of the tensor.
             If the value is True, the dtype of the tensor will be set to pySLM2.BACKEND.complex_dtype.
@@ -306,7 +306,7 @@ class DMD(SLM):
 
     @property
     def first_order_origin(self):
-        """(int, int): The origin of the first order beam in image plane."""
+        """(int, int): The origin of the first order beam in images plane."""
         origin_x = np.cos(self.theta) * self.scaling_factor / self._p.value()
         origin_y = np.sin(self.theta) * self.scaling_factor / self._p.value()
         return origin_x, origin_y
