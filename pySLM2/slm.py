@@ -356,7 +356,7 @@ class DLP7000(DMD):
     """
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super().__init__(wavelength, focal_length, periodicity, theta,
-                         1024, 768, 13.6 * micro, negative_order=negative_order)
+                         1024, 768, 13.68 * micro, negative_order=negative_order)
 
 
 class DLP9000(DMD):
@@ -378,7 +378,7 @@ class DLP9000(DMD):
 
     def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
         super().__init__(wavelength, focal_length, periodicity, theta,
-                         2560, 1600, 7.6 * micro, negative_order=negative_order)
+                         2560, 1600, 7.56 * micro, negative_order=negative_order)
 
 
 class LCOS_SLM(SLM):
