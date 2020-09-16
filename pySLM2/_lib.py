@@ -82,7 +82,7 @@ def _calculate_dmd_grating_ideal_square(amp, phase_in, phase_out, x, y, p, theta
     if negative_order:
         phase_in = -phase_in
     grating = (tf.cos(grating_phase - (phase_out - phase_in)) / 2 + 0.5)
-    grating = tf.cast(grating>0.5, tf.dtypes)
+    grating = _ifta_binarize_hologram(grating, 0.5)
     grating = grating * amp
     return grating
 
