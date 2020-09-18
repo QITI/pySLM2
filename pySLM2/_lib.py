@@ -47,7 +47,7 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
     elif method == "simple":
         return _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
-        r = kwargs.get("r", 1.0)
+        r = kwargs.get("r", 10.0)
         r = tf.constant(r, dtype=BACKEND.dtype)
         return _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order,
                                              r=r)
@@ -106,7 +106,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
 
     w = tf.math.asin(amp)  # + pi / 2
 
-    grating = (tf.math.tanh(r * (p + w / 2)) - tf.math.tanh(r * (p - w / 2)))
+    grating = 0.5*(tf.math.tanh(r * (p + w)) - tf.math.tanh(r * (p - w)))
     threshold = tf.random.uniform(shape=grating.shape, dtype=BACKEND.dtype)
     grating = (grating > threshold)
 
