@@ -101,3 +101,12 @@ def test_dmd_hologram_calc(method, kwargs):
     # plt.imshow(np.abs(sim.image_plane_field)*window)
     # plt.colorbar()
     # plt.show()
+
+    
+@pytest.mark.parametrize("dmd_model", [pySLM2.DLP9500, pySLM2.DLP7000, pySLM2.DLP9000])
+def test_dmd_pack_dmd_state(dmd_model):
+    dmd = dmd_model(wavelength=369 * nano, focal_length=37 * milli, periodicity=4, theta=-np.pi / 4)
+    dmd.set_dmd_state_off()
+    assert dmd.pack_dmd_state() == b'\x00' * (dmd.Nx * dmd.Ny // 8)
+    dmd.set_dmd_state_on()
+    assert dmd.pack_dmd_state() == b'\xff' * (dmd.Nx * dmd.Ny // 8)

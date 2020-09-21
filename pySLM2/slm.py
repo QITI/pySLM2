@@ -314,6 +314,24 @@ class DMD(SLM):
     def _state_tensor(self):
         return tf.constant(self.dmd_state, dtype=BACKEND.dtype_complex)
 
+    def pack_dmd_state(self):
+        """Pack the dmd state to bytes.
+
+        Returns
+        -------
+        packed_dmd_state: bytes
+
+        """
+        if self.dmd_state.dtype != np.bool:
+            raise TypeError("The dtype of dmd_state is not bool")
+
+        packed_bits = np.packbits(self.dmd_state)
+
+        return packed_bits.tobytes()
+
+
+
+
 # TODO Find a way to reuse the docstring
 
 class DLP9500(DMD):
