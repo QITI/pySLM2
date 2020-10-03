@@ -58,7 +58,6 @@ def test_eta(dmd_model, f):
 
 
 @pytest.mark.parametrize("method,kwargs", [("ideal", dict()),
-                                           ("random", dict(r=1)),
                                            ("ifta", dict(N=100))])
 def test_dmd_hologram_calc(method, kwargs):
     dmd = pySLM2.DLP9500(wavelength=369 * nano, focal_length=37 * milli, periodicity=4, theta=-np.pi / 4)

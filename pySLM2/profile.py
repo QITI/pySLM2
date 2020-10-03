@@ -324,20 +324,20 @@ class Zernike(FunctionProfile):
     @tf.function
     def _func(self, x, y):
         r = tf.sqrt(x ** 2 + y ** 2)
-
-        if self._n == 0 and self._m ==0:
-            return tf.ones_like(r)
-
         rho = r / self._radius
-        phi = tf.math.atan2(y, x)
-        R = tf.math.polyval(coeffs=self._coef, x=rho)
-
-        if self._m == 0:
-            Z_unnomalized = self._a * R
-        elif self._m > 0:
-            Z_unnomalized = self._a * R * tf.cos(self._m * phi)
+        
+        if self._n == 0 and self._m ==0:
+            Z_unnomalized = tf.ones_like(r)
         else:
-            Z_unnomalized = self._a * R * tf.sin(-self._m * phi)
+            phi = tf.math.atan2(y, x)
+            R = tf.math.polyval(coeffs=self._coef, x=rho)
+
+            if self._m == 0:
+                Z_unnomalized = self._a * R
+            elif self._m > 0:
+                Z_unnomalized = self._a * R * tf.cos(self._m * phi)
+            else:
+                Z_unnomalized = self._a * R * tf.sin(-self._m * phi)
 
         Z = self._normalization * Z_unnomalized if self.is_normalized() else Z_unnomalized
 
