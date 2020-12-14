@@ -3,6 +3,11 @@ try:
 except:
     ALP4 = None
 
+try:
+    import Luxbeam
+except:
+    Luxbeam = None
+
 __all__ = ["DMDControllerBase", "ALPController", "LuxbeamController"]
 
 
@@ -18,10 +23,16 @@ class DMDControllerBase(object):
     def close(self):
         pass
 
-    def load_single(self, image):
+    def load_single(self, dmd_state):
+        """
+
+        Parameters
+        ----------
+        dmd_state: numpy.ndarray
+        """
         raise NotImplementedError
 
-    def load_sequence(self):
+    def load_sequence(self, images):
         raise NotImplementedError
 
     def fire_software_trigger(self):
@@ -60,7 +71,7 @@ class ALPController(DMDControllerBase):
         self.alp.Free()
 
     @_check_initialization
-    def load_single(self, image):
+    def load_single(self, dmd_state):
         # Allocate the onboard memory for the image sequence
         self.alp.SeqAlloc(nbImg=1, bitDepth=1)
 
@@ -68,7 +79,7 @@ class ALPController(DMDControllerBase):
         self.alp.SeqControl(ALP4.ALP_BIN_MODE, ALP4.ALP_BIN_UNINTERRUPTED)
 
         # Send the image sequence as a 1D list/array/numpy array
-        self.alp.SeqPut(imgData=image)
+        self.alp.SeqPut(imgData=dmd_state)
 
         self.alp.SetTiming()
 
@@ -79,5 +90,37 @@ class ALPController(DMDControllerBase):
 
 
 class LuxbeamController(DMDControllerBase):
-    def __init__(self):
-        super(LuxbeamController, self).__init__()
+    def __init__(self, ip, invert=False, timeout=None):
+        if Luxbeam is None:
+            raise ModuleNotFoundError("Luxbeam module is unavailable.")
+
+        self.luxbeam = Luxbeam.Luxbeam(ip, inverse=invert, timeout=timeout)
+
+        super(LuxbeamController, self).__init__(invert=invert)
+
+    def initialize(self):
+        super(LuxbeamController, self).initialize()
+
+    def close(self):
+        pass
+
+    @_check_initialization
+    def load_single(self, dmd_state):
+        # TODO Load the sequencer
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.ENABLE)
+        self.luxbeam.load_image(0, dmd_state)
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.DISABLE)
+
+    @_check_initialization
+    def fire_software_trigger(self):
+        self.luxbeam.set_software_sync(1)
+        self.luxbeam.set_software_sync(0)
+
+
+
+
+
+
+
+
+
