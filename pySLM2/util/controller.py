@@ -12,6 +12,7 @@ __all__ = ["DMDControllerBase", "ALPController", "LuxbeamController"]
 
 
 class DMDControllerBase(object):
+    """Base class for the DMD controller."""
     def __init__(self, invert=False):
         self._initialized = False
         self.invert = invert
@@ -55,6 +56,20 @@ def _check_initialization(function):
 
 
 class ALPController(DMDControllerBase):
+    """This class implements the control function for interacting the controller from Vialux.
+
+    Parameters
+    ----------
+    invert: bool
+        If true, invert the on/off mirrors in the hologram.
+    version: str
+        Version of the ALP library fom Vialux.
+
+    See Also
+    --------
+    ALP4.ALP4
+
+    """
     def __init__(self, invert=False, version='4.3'):
         if ALP4 is None:
             raise ModuleNotFoundError("ALP4lib module is unavailable.")
@@ -72,6 +87,13 @@ class ALPController(DMDControllerBase):
 
     @_check_initialization
     def load_single(self, dmd_state):
+        """load and display a single binary image on the DMD.
+
+        Parameters
+        ----------
+        dmd_state: numpy.ndarray
+            The dtype must be bool and have the same dimension as the DMD.
+        """
         # Allocate the onboard memory for the image sequence
         self.alp.SeqAlloc(nbImg=1, bitDepth=1)
 
@@ -90,6 +112,22 @@ class ALPController(DMDControllerBase):
 
 
 class LuxbeamController(DMDControllerBase):
+    """This class implements the control function for interacting the controller from Visitech.
+
+    Parameters
+    ----------
+    ip: str
+        IP address of the controller.
+    invert: bool
+        If true, invert the on/off mirrors in the hologram.
+    timeout: None or float
+        Timeout of the network socket.
+
+    See Also
+    --------
+    Luxbeam.Luxbeam
+
+    """
     def __init__(self, ip, invert=False, timeout=None):
         if Luxbeam is None:
             raise ModuleNotFoundError("Luxbeam module is unavailable.")
@@ -106,6 +144,13 @@ class LuxbeamController(DMDControllerBase):
 
     @_check_initialization
     def load_single(self, dmd_state):
+        """load and display a single binary image on the DMD.
+
+        Parameters
+        ----------
+        dmd_state: numpy.ndarray
+            The dtype must be bool and have the same dimension as the DMD.
+        """
         # TODO Load the sequencer
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.ENABLE)
         self.luxbeam.load_image(0, dmd_state)

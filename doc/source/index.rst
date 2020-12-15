@@ -8,7 +8,9 @@ Welcome to pySLM2's documentation!
    Intro
    fourier-hologram
    pySLM2
+   pySLM2.util
    contributor
+
 
 
 
