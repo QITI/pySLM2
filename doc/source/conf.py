@@ -61,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'pySLM2'
-copyright = '2018, QITI LAB'
+copyright = '2020, Chung-You Shih'
 author = 'Chung-You (Gilbert) Shih @ QITI Lab'
 
 # The version info for the project you're documenting, acts as replacement for
