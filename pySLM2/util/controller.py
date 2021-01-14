@@ -152,9 +152,9 @@ class LuxbeamController(DMDControllerBase):
             The dtype must be bool and have the same dimension as the DMD.
         """
         # TODO Load the sequencer
-        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.ENABLE)
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.ENABLE)
         self.luxbeam.load_image(0, dmd_state)
-        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.DISABLE)
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.DISABLE)
 
     @_check_initialization
     def fire_software_trigger(self):
