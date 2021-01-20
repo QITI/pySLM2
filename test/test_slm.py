@@ -33,7 +33,8 @@ def test_scaling_factor(w_f):
     # plt.imshow(image_plane_profile)
     # plt.show()
 
-
+@pytest.mark.skip(
+    reason="This test is not numerically stable.")
 @pytest.mark.parametrize("dmd_model,f", [(pySLM2.DLP9500, 37 * milli),
                                          (pySLM2.DLP7000, 137 * milli)])
 def test_eta(dmd_model, f):
