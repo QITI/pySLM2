@@ -226,22 +226,26 @@ class DMD(SLM):
         return mask
 
     def circular_patch(self, i, j, amp, phase_in, phase_out, d, method="random", **kwargs):
-        """
+        """Create a circular grating patch.
 
         Parameters
         ----------
-        i: float
+        i: int or float
+            Coordinate of the center of the patch in the pixel index.
         j: float
+            Coordinate of the center of the patch in the pixel index.
         amp: float
-        phase_in
-        phase_out
-        d
+            Amplitude scaling of the diffracting beam from the grating.
+            The valid range is between 0 and 1.
+        phase_in: float or numpy.ndarray or tensorflow.Tensor
+            The input phase map (aberration correction) of the beam.
+        phase_out: float or numpy.ndarray or tensorflow.Tensor
+            The output phase map of the beam.
+        d: float
+            Diameter of the patch in the unit of pixel.
         method: str
             (Default: "random")
         kwargs
-
-        Returns
-        -------
 
         """
 
@@ -302,11 +306,12 @@ class DMD(SLM):
 
     @property
     def theta(self):
+        """float"""
         return self._theta.value()
 
     @property
     def first_order_origin(self):
-        """(int, int): The origin of the first order beam in images plane."""
+        """(float, float): The origin of the first order beam in images plane."""
         origin_x = np.cos(self.theta) * self.scaling_factor / self._p.value()
         origin_y = np.sin(self.theta) * self.scaling_factor / self._p.value()
         return origin_x, origin_y
