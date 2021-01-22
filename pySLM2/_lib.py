@@ -71,6 +71,8 @@ def _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negat
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
+        phase_out = -phase_out
+
     grating = amp * (tf.cos(grating_phase - (phase_out - phase_in)) / 2 + 0.5)
     return grating
 
@@ -86,6 +88,7 @@ def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, nega
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
+        phase_out = -phase_out  # verify if this is correct.
 
     p = tf.acos(tf.cos(grating_phase - (phase_out - phase_in)))
     # TODO more efficient expression for phase extraction?
