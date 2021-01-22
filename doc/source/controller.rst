@@ -1,9 +1,13 @@
 DMD Controller
 ==============
 pySLM2 provides a set of classes for interfacing the DMD controllers from multiple manufacture.
-It is implemented in the way that they shares almost identical application programing interfaces,
+It is implemented in a way that they shares almost identical application programing interfaces,
 so a control program can be modified to work with other DMD controllers with minimum efforts.
 The specifications of the programing interfaces are defined in the base class, ``pySLM2.util.DMDController``.
+
+Note that pySLM2 doesn't implement the communication protocols directly.
+It its built on top of several packages.
+See :ref:`sec-optional-dependencies` for details.
 
 Visitech Luxbeam Controller
 ---------------------------

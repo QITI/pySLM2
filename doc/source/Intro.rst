@@ -29,6 +29,8 @@ Or, if you wish to edit the pySLM2 source code without re-installing each time :
 
     python setup.py develop
 
+.. _sec-optional-dependencies:
+
 Optional Dependencies
 ---------------------
 pySLM2.util includes provides an universal interface for interacting with DMD controllers from different vendors.
