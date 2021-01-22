@@ -8,18 +8,20 @@ try:
 except:
     Luxbeam = None
 
+import inspect
 from .sample import number_image
 
 __all__ = ["DMDControllerBase", "ALPController", "LuxbeamController"]
+
 
 def _check_initialization(function):
     def wrapper(*args, **kwargs):
         controller = args[0]
         assert isinstance(controller, DMDControllerBase)
-        if not controller.is_initialize:
+        if not controller.is_initialized:
             raise Exception("Controller not initialized.")
         return function(*args, **kwargs)
-
+    wrapper.__signature__ = inspect.signature(function)
     return wrapper
 
 
@@ -30,7 +32,7 @@ class DMDControllerBase(object):
         self.invert = invert
         super(DMDControllerBase, self).__init__()
 
-    def is_initialize(self):
+    def is_initialized(self):
         self._initialized = True
 
     def close(self):
@@ -63,10 +65,6 @@ class DMDControllerBase(object):
     def fire_software_trigger(self):
         raise NotImplementedError
 
-    @property
-    def initialized(self):
-        return self._initialized
-
     @_check_initialization
     def number_image(self, i):
         return number_image(i, self.Nx, self.Ny)
@@ -95,9 +93,9 @@ class ALPController(DMDControllerBase):
 
         super(ALPController, self).__init__(invert=invert)
 
-    def is_initialize(self):
+    def is_initialized(self):
         self.alp.Initialize()
-        super(ALPController, self).is_initialize()
+        super(ALPController, self).is_initialized()
 
     def close(self):
         self.alp.Free()
@@ -153,7 +151,7 @@ class LuxbeamController(DMDControllerBase):
 
         super(LuxbeamController, self).__init__(invert=invert)
 
-    def is_initialize(self):
+    def is_initialized(self):
         seq = Luxbeam.LuxbeamSequencer()
 
         # ======= Sequencer ============
@@ -177,7 +175,7 @@ class LuxbeamController(DMDControllerBase):
         self.luxbeam.set_sequencer_reg(reg_no=0, reg_val=1)
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.DISABLE)
 
-        super(LuxbeamController, self).is_initialize()
+        super(LuxbeamController, self).is_initialized()
 
     def close(self):
         pass

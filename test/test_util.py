@@ -18,7 +18,7 @@ def yesno(question):
 @pytest.mark.luxbeam
 def test_luxbeam_load_single(luxbeam_ip):
     luxbeam = pySLM2.util.LuxbeamController(ip=luxbeam_ip)
-    luxbeam.is_initialize()
+    luxbeam.is_initialized()
     number = random.randint(100,999)
     luxbeam.load_single(luxbeam.number_image(number))
 
