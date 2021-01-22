@@ -18,7 +18,7 @@ def _check_initialization(function):
     def wrapper(*args, **kwargs):
         controller = args[0]
         assert isinstance(controller, DMDControllerBase)
-        if not controller.is_initialized:
+        if not controller.is_initialized():
             raise Exception("Controller not initialized.")
         return function(*args, **kwargs)
     wrapper.__signature__ = inspect.signature(function)
@@ -32,8 +32,11 @@ class DMDControllerBase(object):
         self.invert = invert
         super(DMDControllerBase, self).__init__()
 
-    def is_initialized(self):
+    def initialize(self):
         self._initialized = True
+
+    def is_initialized(self):
+        return self._initialized
 
     def close(self):
         pass
@@ -93,9 +96,9 @@ class ALPController(DMDControllerBase):
 
         super(ALPController, self).__init__(invert=invert)
 
-    def is_initialized(self):
+    def initialize(self):
         self.alp.Initialize()
-        super(ALPController, self).is_initialized()
+        super(ALPController, self).initialize()
 
     def close(self):
         self.alp.Free()
@@ -151,21 +154,20 @@ class LuxbeamController(DMDControllerBase):
 
         super(LuxbeamController, self).__init__(invert=invert)
 
-    def is_initialized(self):
+    def initialize(self):
         seq = Luxbeam.LuxbeamSequencer()
-
         # ======= Sequencer ============
-        reg0 = seq.assign_var_reg(regno=0)
+        reg0 = seq.assign_var_reg(regno=0) # reg0 is the total number of images
         for _ in seq.jump_loop_iter():
-            seq.load_global(0, 400)
+            seq.load_global(0, 400) # Load the first image to the DMD memory
             for _, inum in seq.range_loop_iter(0, reg0):
-                seq.reset_global(40)
-                seq.load_global(inum + 1, 400)
+                seq.reset_global(40) # Set the DMD mirror with the image in the memory
+                seq.load_global(inum + 1, 400) # Load the next image to the DMD memory
                 seq.trig(Luxbeam.TRIG_MODE_POSITIVE_EDGE,
                          Luxbeam.TRIG_SOURCE_SOFTWARE +
                          Luxbeam.TRIG_SOURCE_ELECTRICAL +
                          Luxbeam.TRIG_SOURCE_OPTICAL,
-                         0)
+                         0) # Wait for the trigger
         # ======= Sequencer ============
         print(seq.dumps())
 
@@ -175,7 +177,7 @@ class LuxbeamController(DMDControllerBase):
         self.luxbeam.set_sequencer_reg(reg_no=0, reg_val=1)
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.DISABLE)
 
-        super(LuxbeamController, self).is_initialized()
+        super(LuxbeamController, self).initialize()
 
     def close(self):
         pass
