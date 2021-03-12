@@ -6,7 +6,7 @@ so a control program can be modified to work with other DMD controllers with min
 The specifications of the programing interfaces are defined in the base class, ``pySLM2.util.DMDController``.
 
 Note that pySLM2 doesn't implement the communication protocols directly.
-It its built on top of several packages.
+It is built on top of several packages.
 See :ref:`sec-optional-dependencies` for details.
 
 Visitech Luxbeam Controller
