@@ -1,7 +1,10 @@
 name: "Pull Request Docs Check"
-on: 
-- pull_request
-
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+    
 jobs:
   docs:
     runs-on: ubuntu-latest
