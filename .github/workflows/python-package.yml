@@ -35,6 +35,3 @@ jobs:
     - name: Test with pytest (64 bit backend)
       run: |
         pytest -v test --backend64
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "doc/"
