@@ -4,7 +4,7 @@ from scipy.special import hermite, factorial
 from ._backend import BACKEND
 import math
 
-__all__ = ["FunctionProfile", "HermiteGaussian", "SuperGaussian", "Zernike"]
+__all__ = ["FunctionProfile", "ConstantProfile", "HermiteGaussian", "SuperGaussian", "Zernike"]
 
 class FunctionProfile(object):
     @tf.function
@@ -35,27 +35,44 @@ class FunctionProfile(object):
             raise NotImplementedError
         return tf.function(func)
 
+    def __radd__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
+        func_profile = FunctionProfile()
+        func_profile._func = self._make_attribute_func("__radd__", other)
+        return func_profile
+
     def __add__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
         func_profile = FunctionProfile()
         func_profile._func = self._make_attribute_func("__add__", other)
         return func_profile
 
     def __sub__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
         func_profile = FunctionProfile()
         func_profile._func = self._make_attribute_func("__sub__", other)
         return func_profile
 
     def __mul__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
         func_profile = FunctionProfile()
         func_profile._func = self._make_attribute_func("__mul__", other)
         return func_profile
 
     def __rmul__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
         func_profile = FunctionProfile()
         func_profile._func = self._make_attribute_func("__rmul__", other)
         return func_profile
 
     def __truediv__(self, other):
+        if isinstance(other, int) or isinstance(other, float):
+            other = ConstantProfile(other)
         func_profile = FunctionProfile()
         func_profile._func = self._make_attribute_func("__truediv__", other)
         return func_profile
@@ -133,6 +150,22 @@ class FunctionProfile(object):
         func_profile._func = tf.function(func=lambda x, y: tf.exp(1j*tf.cast(self._func(x, y),
                                                                              dtype=BACKEND.dtype_complex)))
         return func_profile
+
+class ConstantProfile(FunctionProfile):
+    def __init__(self, c=0.0):
+        self._c = tf.Variable(c, dtype=BACKEND.dtype)
+
+    @tf.function
+    def _func(self, x, y):
+        return self._c
+
+    @property
+    def c(self):
+        return self._c.value()
+
+    @c.setter
+    def c(self, value):
+        self._c.assign(value)
 
 
 class HermiteGaussian(FunctionProfile):
@@ -327,7 +360,7 @@ class Zernike(FunctionProfile):
         rho = r / self._radius
         
         if self._n == 0 and self._m ==0:
-            Z_unnomalized = tf.ones_like(r)
+            Z_unnomalized = self._a * tf.ones_like(r)
         else:
             phi = tf.math.atan2(y, x)
             R = tf.math.polyval(coeffs=self._coef, x=rho)
