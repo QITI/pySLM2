@@ -25,7 +25,7 @@ def remove_trivial_phase(profile, radius, remove_defocus=False, verbose=False):
 
     """
     Ny, Nx = profile.shape
-    xx, yy = np.meshgrid(np.arange(Nx) - (Nx-1) / 2, np.arange(Ny, 0, -1) - (Ny-1) / 2)
+    xx, yy = np.meshgrid(np.arange(Nx) - (Nx-1) / 2, np.arange(Ny, 0, -1) - (Ny+1) / 2)
     trivial_terms = [(0, 0), (1, -1), (1, 1)]
 
     if remove_defocus:
@@ -76,7 +76,7 @@ def zernike_decomposition(profile, radius, num_terms, verbose=False):
         Zernike coefficients. The length is the list is the same as num_terms.
     """
     Ny, Nx = profile.shape
-    xx, yy = np.meshgrid(np.arange(Nx) - (Nx-1) / 2, np.arange(Ny, 0, -1) - (Ny-1) / 2)
+    xx, yy = np.meshgrid(np.arange(Nx) - (Nx-1) / 2, np.arange(Ny, 0, -1) - (Ny+1) / 2)
 
     aperture = xx ** 2 + yy ** 2 < radius ** 2
 
