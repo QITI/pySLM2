@@ -5,7 +5,7 @@ import pySLM2
 
 def test_remove_trivial_phase_piston():
     radius = 500
-    xx, yy = np.meshgrid(np.arange(1920) - 1920 // 2, np.arange(1080, 0, -1) - 1080 // 2)
+    xx, yy = np.meshgrid(np.arange(1920) - (1920-1) / 2, np.arange(1080, 0, -1) - (1080-1) / 2)
 
     profile = pySLM2.Zernike(1,radius,0,0)(xx,yy)
     profile_removed = pySLM2.remove_trivial_phase(profile, radius=radius)
@@ -31,7 +31,7 @@ def test_zernike_decomposition():
     print(coeff)
 
     radius = 500
-    xx, yy = np.meshgrid(np.arange(1920) - 1920 // 2, np.arange(1080, 0, -1) - 1080 // 2)
+    xx, yy = np.meshgrid(np.arange(1920) - (1920-1) / 2, np.arange(1080, 0, -1) - (1080-1) / 2)
 
     profile = pySLM2.ConstantProfile(c=0)
     for i, c in enumerate(coeff):
