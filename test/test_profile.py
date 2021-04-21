@@ -63,11 +63,20 @@ def test_as_complex():
         np.ones_like(x)
     )
 
-
 def test_laguerre_gaussian():
     gaussian_hermite_00 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=0, m=0)
     gaussian_laguerre_00 = pySLM2.LaguerreGaussian(x0=-1, y0=1, a=0.5, w=2, l=0, p=0)
     np.testing.assert_array_almost_equal(gaussian_hermite_00(x, y), gaussian_laguerre_00(x, y))
+
+def test_laguerre_gaussian2():
+    gaussian_hermite_10 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=1, m=0)
+    gaussian_hermite_01 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=0, m=1)
+    gaussian_laguerre_10 = pySLM2.LaguerreGaussian(x0=-1, y0=1, a=1, w=2, l=1, p=0)
+
+    np.testing.assert_array_almost_equal(
+        (-1j*(gaussian_hermite_01+1j*gaussian_hermite_10))(x, y),  # There is a constant phase offset.
+        gaussian_laguerre_10(x, y)
+    )
 
 
 def test_super_gaussian():
