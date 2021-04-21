@@ -64,6 +64,12 @@ def test_as_complex():
     )
 
 
+def test_laguerre_gaussian():
+    gaussian_hermite_00 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=0, m=0)
+    gaussian_laguerre_00 = pySLM2.LaguerreGaussian(x0=-1, y0=1, a=0.5, w=2, l=0, p=0)
+    np.testing.assert_array_almost_equal(gaussian_hermite_00(x, y), gaussian_laguerre_00(x, y))
+
+
 def test_super_gaussian():
     gaussian00 = pySLM2.HermiteGaussian(x0=-1, y0=1, a=0.5, w=2, n=0, m=0)
     gaussian_super = pySLM2.SuperGaussian(x0=-1, y0=1, a=0.5, w=2, p=1)

@@ -1,10 +1,10 @@
 import tensorflow as tf
 import numpy as np
-from scipy.special import hermite, factorial
+from scipy.special import hermite, factorial, genlaguerre
 from ._backend import BACKEND
 import math
 
-__all__ = ["FunctionProfile", "ConstantProfile", "HermiteGaussian", "SuperGaussian", "Zernike"]
+__all__ = ["FunctionProfile", "ConstantProfile", "HermiteGaussian", "SuperGaussian", "Zernike", "LaguerreGaussian"]
 
 class FunctionProfile(object):
     @tf.function
@@ -254,6 +254,35 @@ class HermiteGaussian(FunctionProfile):
         return self._m
 
 
+class LaguerreGaussian(FunctionProfile):
+    def __init__(self, x0, y0, a, w, l=0, p=0):
+        self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
+        self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
+        self._a = tf.Variable(a, dtype=BACKEND.dtype)
+        self._w = tf.Variable(w, dtype=BACKEND.dtype)
+        self._p = p  # read only for now
+        self._l = l  # read only for now
+
+        self._genlaguerre_coef = [tf.constant(c, dtype=BACKEND.dtype) for c in genlaguerre(self._p, abs(self._l)).coef]
+
+
+    @tf.function
+    def _func(self, x, y):
+        r2 = (x-self._x0) ** 2 + (y-self._y0) ** 2
+        r = tf.sqrt(r2)
+        phi = tf.math.atan2(y, x)
+        Lpl = tf.math.polyval(coeffs=self._genlaguerre_coef, x=2.0 * r2 / self._w ** 2)
+
+        amplitude = self._a * (math.sqrt(2) * r / self._w) ** (abs(self._l)) * tf.exp(
+            -r2 / self._w ** 2) * Lpl
+
+        phase = tf.exp(-1j * self._l * tf.cast(phi, dtype=BACKEND.dtype_complex))
+
+        return tf.cast(amplitude, dtype=BACKEND.dtype_complex) * phase
+
+
+
+
 class SuperGaussian(FunctionProfile):
     r"""Beam profiles of super Gaussian function.
 
@@ -284,6 +313,8 @@ class SuperGaussian(FunctionProfile):
     def _func(self, x, y):
         x_norm = (x - self._x0) / self._w
         y_norm = (y - self._y0) / self._w
+
+
 
         return self._a * tf.exp(-(x_norm ** 2 + y_norm ** 2)**self._p)
 
