@@ -23,4 +23,11 @@ pySLM2.profile module
     :undoc-members:
     :show-inheritance:
 
+pySLM2.analysis module
+---------------------
+.. automodule:: pySLM2.analysis
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 

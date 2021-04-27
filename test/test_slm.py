@@ -33,7 +33,8 @@ def test_scaling_factor(w_f):
     # plt.imshow(image_plane_profile)
     # plt.show()
 
-
+@pytest.mark.skip(
+    reason="This test is not numerically stable.")
 @pytest.mark.parametrize("dmd_model,f", [(pySLM2.DLP9500, 37 * milli),
                                          (pySLM2.DLP7000, 137 * milli)])
 def test_eta(dmd_model, f):
@@ -58,7 +59,6 @@ def test_eta(dmd_model, f):
 
 
 @pytest.mark.parametrize("method,kwargs", [("ideal", dict()),
-                                           ("random", dict(r=1)),
                                            ("ifta", dict(N=100))])
 def test_dmd_hologram_calc(method, kwargs):
     dmd = pySLM2.DLP9500(wavelength=369 * nano, focal_length=37 * milli, periodicity=4, theta=-np.pi / 4)
@@ -101,3 +101,12 @@ def test_dmd_hologram_calc(method, kwargs):
     # plt.imshow(np.abs(sim.image_plane_field)*window)
     # plt.colorbar()
     # plt.show()
+
+    
+@pytest.mark.parametrize("dmd_model", [pySLM2.DLP9500, pySLM2.DLP7000, pySLM2.DLP9000])
+def test_dmd_pack_dmd_state(dmd_model):
+    dmd = dmd_model(wavelength=369 * nano, focal_length=37 * milli, periodicity=4, theta=-np.pi / 4)
+    dmd.set_dmd_state_off()
+    assert dmd.pack_dmd_state() == b'\x00' * (dmd.Nx * dmd.Ny // 8)
+    dmd.set_dmd_state_on()
+    assert dmd.pack_dmd_state() == b'\xff' * (dmd.Nx * dmd.Ny // 8)

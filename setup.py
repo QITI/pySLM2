@@ -7,7 +7,7 @@ with open("pySLM2/version.py") as fp:
 setup(
     name='pySLM2',
     version=version['__version__'],
-    packages=['pySLM2'],
+    packages=['pySLM2','pySLM2.util'],
     url='https://github.com/QITI/pySLM2',
     license='',
     author='Chung-You (Gilbert) Shih',
