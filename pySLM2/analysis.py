@@ -56,7 +56,7 @@ def ansi_j_to_n_m(idx):
     return n, m
 
 
-def zernike_decomposition(profile, radius, num_terms, verbose=False, reconstruct=False):
+def zernike_decomposition(profile, radius, num_terms, verbose=False, reconstruct=False, extrapolate=False):
     """Extract Zernike coefficients of a phase profile.
 
     Parameters
@@ -86,7 +86,7 @@ def zernike_decomposition(profile, radius, num_terms, verbose=False, reconstruct
 
     for idx in range(num_terms):
         n, m = ansi_j_to_n_m(idx)
-        z = Zernike(1, radius, n, m, extrapolate=False)(xx, yy)
+        z = Zernike(1, radius, n, m, extrapolate=extrapolate)(xx, yy)
         c = np.mean(profile[aperture] * z[aperture])
         if verbose:
             print("n = {0}, m = {1}, coefficient = {2}".format(n, m, c))
