@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DMD Controller &mdash; pySLM2  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -40,7 +41,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="fourier-hologram.html">Fourier Hologram</a></li>
@@ -66,8 +67,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>DMD Controller</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">DMD Controller</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/controller.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -77,7 +78,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="dmd-controller">
+  <section id="dmd-controller">
 <h1>DMD Controller<a class="headerlink" href="#dmd-controller" title="Permalink to this headline">¶</a></h1>
 <p>pySLM2 provides a set of classes for interfacing the DMD controllers from multiple manufacture.
 It is implemented in a way that they shares almost identical application programing interfaces,
@@ -86,7 +87,7 @@ The specifications of the programing interfaces are defined in the base class, <
 <p>Note that pySLM2 doesn’t implement the communication protocols directly.
 It is built on top of several packages.
 See <a class="reference internal" href="Intro.html#sec-optional-dependencies"><span class="std std-ref">Optional Dependencies</span></a> for details.</p>
-<div class="section" id="visitech-luxbeam-controller">
+<section id="visitech-luxbeam-controller">
 <h2>Visitech Luxbeam Controller<a class="headerlink" href="#visitech-luxbeam-controller" title="Permalink to this headline">¶</a></h2>
 <p>In pySLM2, we implement a custom sequencer that is loaded during <code class="docutils literal notranslate"><span class="pre">LuxbeamController.initialize()</span></code>.
 The sequencer is composed with the <code class="docutils literal notranslate"><span class="pre">Luxbeam</span></code> package.
@@ -124,8 +125,8 @@ JumpIf Var1 &lt; Var0 Loop_1 1
 Jump Loop0 1
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
