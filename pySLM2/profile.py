@@ -367,8 +367,8 @@ class Zernike(FunctionProfile):
             print("Radial polynomial is zero for these inputs: m={}, n={} " +
                   "(are you sure you wanted this Zernike?)".format(m, n))
 
-        self._n = n
-        self._m = m
+        self._n = tf.constant(n, dtype=BACKEND.dtype_int)
+        self._m = tf.constant(m, dtype=BACKEND.dtype_int)
         self._radius = tf.constant(radius, dtype=BACKEND.dtype)
         self._a = tf.Variable(a, dtype=BACKEND.dtype)
 
@@ -399,9 +399,9 @@ class Zernike(FunctionProfile):
             if self._m == 0:
                 Z_unnomalized = self._a * R
             elif self._m > 0:
-                Z_unnomalized = self._a * R * tf.cos(self._m * phi)
+                Z_unnomalized = self._a * R * tf.cos(tf.cast(self._m, dtype=BACKEND.dtype) * phi)
             else:
-                Z_unnomalized = self._a * R * tf.sin(-self._m * phi)
+                Z_unnomalized = self._a * R * tf.sin(-tf.cast(self._m, dtype=BACKEND.dtype) * phi)
 
         Z = self._normalization * Z_unnomalized if self.is_normalized() else Z_unnomalized
 
@@ -432,8 +432,8 @@ class Zernike(FunctionProfile):
 
     @property
     def n(self):
-        return self._n
+        return self._n.value()
 
     @property
     def m(self):
-        return self._m
+        return self._m.value()
