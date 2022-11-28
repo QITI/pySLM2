@@ -266,9 +266,12 @@ class DMD(SLM):
 
     @staticmethod
     @tf.function
-    def _calc_amp_phase(input_profile, target_profile):
+    def _calc_amp_phase(input_profile, target_profile, window=None):
         target_profile_fp = _lib._fourier_transform(tf.signal.ifftshift(target_profile))
         target_profile_fp = tf.signal.fftshift(target_profile_fp)
+
+        if window is not None:
+            target_profile_fp = target_profile_fp * window
 
         phase_in = tf.math.angle(input_profile)
         amp_in = tf.math.abs(input_profile)
@@ -281,11 +284,16 @@ class DMD(SLM):
 
         return amp_scaled, phase_in, phase_out, one_over_eta_fft
 
-    def calculate_dmd_state(self, input_profile, target_profile, method="random", **kwargs):
+    def calculate_dmd_state(self, input_profile, target_profile, method="random", window=None, **kwargs):
         # TODO check kwargs for different method
         input_profile = self.profile_to_tensor(input_profile, complex=True)
         target_profile = self.profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
-        amp_scaled, phase_in, phase_out, one_over_eta_fft = self._calc_amp_phase(input_profile, target_profile)
+
+        if window is not None:
+            window = self.profile_to_tensor(window)
+
+        amp_scaled, phase_in, phase_out, one_over_eta_fft = self._calc_amp_phase(input_profile, target_profile,
+                                                                                window=window)
 
         x, y = self._fourier_plane_grid()
 

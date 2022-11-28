@@ -5,7 +5,7 @@ from ._backend import BACKEND
 __all__ = ["RectWindow"]
 
 
-class RectWindow(FunctionProfile):
+class RectangularWindowRectangle(FunctionProfile):
     def __init__(self, x0, y0, wx, wy):
         self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
         self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
@@ -48,3 +48,37 @@ class RectWindow(FunctionProfile):
     @wy.setter
     def wy(self, value):
         self._wy.assign(value)
+
+class RectangularWindowCircular(FunctionProfile):
+    def __init__(self, x0, y0, r):
+        self._x0 = tf.Variable(x0, dtype=BACKEND.dtype)
+        self._y0 = tf.Variable(y0, dtype=BACKEND.dtype)
+        self._r = tf.Variable(r, dtype=BACKEND.dtype)
+
+    @tf.function
+    def _func(self, x, y):
+        return tf.cast((x - self._x0) ** 2 + (y - self._y0) **2, BACKEND.dtype)
+
+    @property
+    def x0(self):
+        return self._x0.value()
+
+    @x0.setter
+    def x0(self, value):
+        self._x0.assign(value)
+
+    @property
+    def y0(self):
+        return self._y0.value()
+
+    @y0.setter
+    def y0(self, value):
+        self._y0.assign(value)
+
+    @property
+    def r(self):
+        return self._r.value()
+
+    @r.setter
+    def r(self, value):
+        self._r.assign(value)
