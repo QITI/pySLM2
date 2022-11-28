@@ -278,7 +278,7 @@ class DMD(SLM):
         
         phase_out = tf.where(
             target_profile_fp == 0.0,
-            0,
+            tf.zeros_like(target_profile_fp),
             tf.math.angle(target_profile_fp)
         )
         amp_out = tf.math.abs(target_profile_fp)
