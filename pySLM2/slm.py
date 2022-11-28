@@ -275,10 +275,21 @@ class DMD(SLM):
 
         phase_in = tf.math.angle(input_profile)
         amp_in = tf.math.abs(input_profile)
-        phase_out = tf.math.angle(target_profile_fp)
+
         amp_out = tf.math.abs(target_profile_fp)
 
-        amp_scaled = amp_out / amp_in
+        phase_out = tf.where(
+            target_profile_fp == 0.0,
+            tf.zeros_like(amp_out),
+            tf.math.angle(target_profile_fp)
+        )
+
+        amp_scaled = tf.where(
+            amp_out == 0.0,
+            tf.zeros_like(amp_out),
+            amp_out / amp_in
+        )
+
         one_over_eta_fft = tf.math.reduce_max(amp_scaled)
         amp_scaled = amp_scaled / one_over_eta_fft
 
