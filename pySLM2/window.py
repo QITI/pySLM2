@@ -2,7 +2,7 @@ import tensorflow as tf
 from .profile import FunctionProfile
 from ._backend import BACKEND
 
-__all__ = ["RectWindow"]
+__all__ = ["RectangularWindowRectangle", "RectangularWindowCircular"]
 
 
 class RectangularWindowRectangle(FunctionProfile):
