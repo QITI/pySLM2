@@ -290,7 +290,7 @@ class DMD(SLM):
         target_profile = self.profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
 
         if window is not None:
-            window = self.profile_to_tensor(window)
+            window = self.profile_to_tensor(window, complex=True)
 
         amp_scaled, phase_in, phase_out, one_over_eta_fft = self._calc_amp_phase(input_profile, target_profile,
                                                                                 window=window)
