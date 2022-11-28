@@ -57,7 +57,7 @@ class RectangularWindowCircular(FunctionProfile):
 
     @tf.function
     def _func(self, x, y):
-        return tf.cast((x - self._x0) ** 2 + (y - self._y0) **2, BACKEND.dtype)
+        return tf.cast((x - self._x0) ** 2 + (y - self._y0) ** 2 <= self._r ** 2, BACKEND.dtype)
 
     @property
     def x0(self):

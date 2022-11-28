@@ -284,7 +284,7 @@ class DMD(SLM):
 
         return amp_scaled, phase_in, phase_out, one_over_eta_fft
 
-    def calculate_dmd_state(self, input_profile, target_profile, method="random", window=None, **kwargs):
+    def calculate_dmd_state(self, input_profile, target_profile, method="random", window=None, verbose=False,**kwargs):
         # TODO check kwargs for different method
         input_profile = self.profile_to_tensor(input_profile, complex=True)
         target_profile = self.profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
