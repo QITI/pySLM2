@@ -65,7 +65,7 @@ def test_dmd_hologram_calc(method, kwargs):
     sim = pySLM2.DMDSimulation(dmd)
 
     x0, y0 = dmd.first_order_origin
-    signal_window = pySLM2.RectWindow(x0, y0, 100 * micro, 100 * micro)
+    signal_window = pySLM2.RectangularWindowRectangle(x0, y0, 100 * micro, 100 * micro)
 
     if method == "ifta":
         kwargs["signal_window"] = signal_window
