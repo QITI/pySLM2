@@ -125,7 +125,7 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
     step = 0.5 / tf.cast(N, dtype=BACKEND.dtype)
 
     mask = input_profile == 0.0
-    zeros = tf.zeros_like(input_profile)
+    zeros = tf.zeros_like(input_profile, dtype=BACKEND.dtype_complex)
 
     for i in tf.range(N):
         i = tf.cast(i, dtype=BACKEND.dtype)
