@@ -139,7 +139,7 @@ class FunctionProfile(object):
         m = tf.constant(m, dtype=BACKEND.dtype)
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: self._func(
-            x=m * x,
+            x=x / m,
             y=y
         ))
         return func_profile
@@ -149,7 +149,7 @@ class FunctionProfile(object):
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: self._func(
             x=x,
-            y=m * y
+            y=y / m
         ))
         return func_profile
 
