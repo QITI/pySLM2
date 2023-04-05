@@ -135,6 +135,24 @@ class FunctionProfile(object):
         ))
         return func_profile
 
+    def rescale_x(self, m):
+        m = tf.constant(m, dtype=BACKEND.dtype)
+        func_profile = FunctionProfile()
+        func_profile._func = tf.function(func=lambda x, y: self._func(
+            x=x / m,
+            y=y
+        ))
+        return func_profile
+
+    def rescale_y(self, m):
+        m = tf.constant(m, dtype=BACKEND.dtype)
+        func_profile = FunctionProfile()
+        func_profile._func = tf.function(func=lambda x, y: self._func(
+            x=x,
+            y=y / m
+        ))
+        return func_profile
+
     def as_complex(self):
         """This function returns the complex form of the profile.
 
