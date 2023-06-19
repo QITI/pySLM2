@@ -10,6 +10,9 @@ except:
 
 import inspect
 from .sample import number_image
+import numpy as np
+
+from typing import List
 
 __all__ = ["DMDControllerBase", "ALPController", "LuxbeamController"]
 
@@ -49,6 +52,10 @@ class DMDControllerBase(object):
         ----------
         dmd_state: numpy.ndarray
         """
+        raise NotImplementedError
+
+    @_check_initialization
+    def load_multiple(self, dmd_states: List[np.ndarray]):
         raise NotImplementedError
 
     @_check_initialization
@@ -199,6 +206,29 @@ class LuxbeamController(DMDControllerBase):
 
         self.luxbeam.load_image(0, dmd_state)
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.ENABLE)
+
+    @_check_initialization
+    def load_multiple(self, dmd_states: List[np.ndarray]):
+        """load and display a list of binary images on the DMD.
+
+        Parameters
+        ----------
+        dmd_states: List[numpy.ndarray]
+            The dtype must be bool and have the same dimension as the DMD.
+        """
+        
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.DISABLE)
+
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.ENABLE)
+        N = len(dmd_states)
+        self.luxbeam.set_sequencer_reg(reg_no=0, reg_val=N)
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.DISABLE)
+
+        for i, dmd_state in enumerate(dmd_states):
+            self.luxbeam.load_image(i, dmd_state)
+
+        self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.ENABLE)
+
 
     @property
     @_check_initialization
