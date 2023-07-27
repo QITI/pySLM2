@@ -42,6 +42,8 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
     negative_order = tf.constant(negative_order, dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
+    elif method == "ideal_square":
+        return _calculate_dmd_grating_ideal_square(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "simple":
         return _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
     elif method == "random":
@@ -54,8 +56,10 @@ def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="rand
         signal_window = kwargs.get("signal_window")
         N = kwargs.get("N", 200)
         N = tf.constant(N, dtype=BACKEND.dtype_int)
+        s = kwargs.get("s", 1.0)
+        s = tf.constant(s, dtype=BACKEND.dtype)
         return _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
-                                           negative_order=negative_order, N=N)
+                                           negative_order=negative_order, N=N, s=s)
 
     else:
         raise ValueError("{0} is not a valid method!".format(method))
@@ -74,6 +78,16 @@ def _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negat
         phase_out = -phase_out
 
     grating = amp * (tf.cos(grating_phase - (phase_out - phase_in)) / 2 + 0.5)
+    return grating
+
+@tf.function
+def _calculate_dmd_grating_ideal_square(amp, phase_in, phase_out, x, y, p, theta, negative_order=False):
+    grating_phase = _grating_phase(x, y, theta, p)
+    if negative_order:
+        phase_in = -phase_in
+    grating = (tf.cos(grating_phase - (phase_out - phase_in)) / 2 + 0.5)
+    grating = _ifta_binarize_hologram(grating, 0.5)
+    grating = grating * amp
     return grating
 
 @tf.function
@@ -114,9 +128,9 @@ def _ifta_binarize_hologram(hologram, threthold):
 
 @tf.function
 def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
-                                negative_order=False, N=200):
-    grating_ideal = _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
-                                                 negative_order=negative_order)
+                                negative_order=False, N=200, s=tf.constant(1.0)):
+    grating_ideal = s * _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
+                                                    negative_order=negative_order)
 
     grating_unbinarized = tf.identity(grating_ideal)
 
