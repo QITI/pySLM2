@@ -193,7 +193,7 @@ class DMD(SLM):
                  negative_order=False):
         super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
 
-        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
+        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=bool)
 
         self._p = tf.Variable(periodicity * self._pixel_size, dtype=BACKEND.dtype)
         self._theta = tf.Variable(theta, dtype=BACKEND.dtype)
@@ -202,11 +202,11 @@ class DMD(SLM):
 
     def set_dmd_state_off(self):
         """ Reset dmd_state to be an array (Ny, Nx) of zeros."""
-        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=np.bool)
+        self.dmd_state = np.zeros((self.Ny, self.Nx), dtype=bool)
 
     def set_dmd_state_on(self):
         """Reset dmd_state to be an array (Ny, Nx) of ones."""
-        self.dmd_state = np.ones((self.Ny, self.Nx), dtype=np.bool)
+        self.dmd_state = np.ones((self.Ny, self.Nx), dtype=bool)
 
     def set_dmd_grating_state(self, amp=1, phase_in=0, phase_out=0, method="random", **kwargs):
         amp = self.profile_to_tensor(amp)
@@ -346,7 +346,7 @@ class DMD(SLM):
         packed_dmd_state: bytes
 
         """
-        if self.dmd_state.dtype != np.bool:
+        if self.dmd_state.dtype != bool:
             raise TypeError("The dtype of dmd_state is not bool")
 
         packed_bits = np.packbits(self.dmd_state)
