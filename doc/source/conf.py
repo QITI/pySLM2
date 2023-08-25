@@ -46,6 +46,7 @@ extensions = ['sphinx.ext.autodoc',
               # 'numpydoc',
               'sphinx.ext.autosummary',
               'sphinx.ext.doctest',
+              'myst-parser'
               ]
 
 # Add any paths that contain templates here, relative to this directory.

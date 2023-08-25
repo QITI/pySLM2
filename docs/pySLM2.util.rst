@@ -10,7 +10,7 @@ pySLM2.util.controller module
     :show-inheritance:
 
 pySLM2.util.sample module
---------------------------
+-------------------------
 .. automodule:: pySLM2.util.sample
     :members:
     :undoc-members:

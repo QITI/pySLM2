@@ -268,7 +268,7 @@ class DMD(SLM):
 
     @staticmethod
     @tf.function
-    def _calc_amp_phase(input_profile, target_profile, window=None):
+    def _calc_amp_phase(input_profile: tf.Tensor, target_profile: tf.Tensor, window=None):
         target_profile_fp = _lib._fourier_transform(tf.signal.ifftshift(target_profile))
         target_profile_fp = tf.signal.fftshift(target_profile_fp)
 
@@ -348,8 +348,6 @@ class DMD(SLM):
                                        method=method, negative_order=self.negative_order,
                                        **kwargs))
 
-        # TODO better explanation on relation between optical Fourier transform and FFT/iFFT
-        # The eta_fft is for FFT. The eta needs some scaling.
         eta = self.pixel_size ** 2 / self.scaling_factor * self.Nx * self.Ny / float(one_over_eta_fft)
         return eta
 
@@ -404,7 +402,7 @@ class DLP9500(DMD):
     negative_order: bool
         If this parameter is set to True, use negative first order instead of first order diffraction beam.
     """
-    def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
+    def __init__(self, wavelength: float, focal_length: float, periodicity: float, theta: float, negative_order: bool = False) -> None:
         super().__init__(wavelength, focal_length, periodicity, theta,
                                       1920, 1080, 10.8 * micro, negative_order=negative_order)
 
@@ -426,7 +424,7 @@ class DLP7000(DMD):
     negative_order: bool
         If this parameter is set to True, use negative first order instead of first order diffraction beam.
     """
-    def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
+    def __init__(self, wavelength: float, focal_length: float, periodicity: float, theta: float, negative_order: bool = False) -> None:
         super().__init__(wavelength, focal_length, periodicity, theta,
                          1024, 768, 13.68 * micro, negative_order=negative_order)
 
@@ -448,12 +446,14 @@ class DLP9000(DMD):
             If this parameter is set to True, use negative first order instead of first order diffraction beam.
         """
 
-    def __init__(self, wavelength, focal_length, periodicity, theta, negative_order=False):
+    def __init__(self, wavelength: float, focal_length: float, periodicity: float, theta: float, negative_order: bool = False) -> None:
         super().__init__(wavelength, focal_length, periodicity, theta,
                          2560, 1600, 7.56 * micro, negative_order=negative_order)
 
 
 class LCOS_SLM(SLM):
+    """Base class for a Liquid Crystal on Silicon (LCOS) spatial light modulators."""
+
     def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
         super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
         self.slm_state = np.zeros(shape=(Ny, Nx), dtype=np.complex)

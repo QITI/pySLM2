@@ -3,7 +3,7 @@ pySLM2 package
 
 
 pySLM2.slm module
----------------------
+-----------------
 .. automodule:: pySLM2.slm
     :members:
     :undoc-members:
@@ -24,7 +24,7 @@ pySLM2.profile module
     :show-inheritance:
 
 pySLM2.analysis module
----------------------
+----------------------
 .. automodule:: pySLM2.analysis
     :members:
     :undoc-members:
