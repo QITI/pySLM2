@@ -6,7 +6,6 @@ name = "pySLM2"
 version = "0.1.0"
 description = ""
 authors = [{ name = "Chung-You (Gilbert) Shih", email = "c5shih@uwaterloo.ca" }]
-copyright = "2023, Chung-You (Gilbert) Shih"
 readme = "README.md"
 dependencies = [
     "numpy > 1", 

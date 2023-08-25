@@ -23,13 +23,13 @@ With setuptools
 
 If you prefer the development version from GitHub, download it here, `cd` to the pySLM2 directory, and use:
 ```
-python setup.py install
+pip install .
 ```
 
 Or, if you wish to edit the pySLM2 source code without re-installing each time
 
 ```
-python setup.py develop
+pip install -e .
 ```
 
 Optional Dependencies for Hardware Controls

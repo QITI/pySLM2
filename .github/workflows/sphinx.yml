@@ -27,8 +27,9 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install pytest
+        python -m pip install build
         pip install .
-        python -m pip install matplotlib furo m2r2 sphinx sphinx-math-dollar
+        python -m pip install matplotlib furo m2r2 sphinx sphinx-math-dollar sphinx_pyproject
     - name: Build Document
       working-directory: docs/
       run: make html
