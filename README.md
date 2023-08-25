@@ -1,6 +1,6 @@
 pySLM2
 ======
-[![Python package](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml)
+[![Test](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/pytest.yml)
 [![Build Documentation HTML](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml)
 
 `pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping. 
