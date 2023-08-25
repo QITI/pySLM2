@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="API: pySLM2.util package" href="pySLM2.util.html" />
 
     <!-- Generated with Sphinx 7.2.3 and Furo 2023.08.19 -->
-        <title>Examples - pySLM2 documentation</title>
+        <title>Examples - pySLM2 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">pySLM2  documentation</div></a>
+      <a href="index.html"><div class="brand">pySLM2 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -148,7 +148,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">pySLM2  documentation</span>
+  <span class="sidebar-brand-text">pySLM2 0.1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -323,6 +323,26 @@
 <img alt="_images/create_multiple_gaussian_beam.png" class="plot-directive" src="_images/create_multiple_gaussian_beam.png" />
 </figure>
 </section>
+<section id="load-image-to-the-luxbeam-dmd-controller">
+<h2>Load image to the Luxbeam DMD controller<a class="headerlink" href="#load-image-to-the-luxbeam-dmd-controller" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pySLM2.util</span> <span class="kn">import</span> <span class="n">LuxbeamController</span>
+
+<span class="n">luxbeam</span> <span class="o">=</span> <span class="n">LuxbeamController</span><span class="p">()</span>
+<span class="n">luxbeam</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
+
+<span class="c1"># generate two images</span>
+<span class="n">image_1</span> <span class="o">=</span> <span class="n">luxbeam</span><span class="o">.</span><span class="n">number_image</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">image_2</span> <span class="o">=</span> <span class="n">luxbeam</span><span class="o">.</span><span class="n">number_image</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">luxbeam</span><span class="o">.</span><span class="n">load_multiple</span><span class="p">([</span><span class="n">image_1</span><span class="p">,</span> <span class="n">image_2</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use trigger (software or external) to switch between images&quot;</span><span class="p">)</span>
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Press Enter to fire software trigger...&quot;</span><span class="p">)</span>
+    <span class="n">luxbeam</span><span class="o">.</span><span class="n">fire_software_trigger</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
 </section>
 
         </article>
@@ -375,6 +395,7 @@
 <li><a class="reference internal" href="#">Examples</a><ul>
 <li><a class="reference internal" href="#create-a-donut-beam-laguerre-gauss-mode-with-dmd">Create a donut beam (Laguerre-Gauss mode) with DMD</a></li>
 <li><a class="reference internal" href="#create-multiple-beam-spots-with-dmd">Create multiple beam spots with DMD</a></li>
+<li><a class="reference internal" href="#load-image-to-the-luxbeam-dmd-controller">Load image to the Luxbeam DMD controller</a></li>
 </ul>
 </li>
 </ul>
@@ -386,7 +407,7 @@
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+</div><script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>

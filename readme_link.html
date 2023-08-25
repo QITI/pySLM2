@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API: pySLM2 package" href="pySLM2.html" /><link rel="prev" title="Welcome to pySLM2’s documentation!" href="index.html" />
 
     <!-- Generated with Sphinx 7.2.3 and Furo 2023.08.19 -->
-        <title>pySLM2 - pySLM2 documentation</title>
+        <title>pySLM2 - pySLM2 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
@@ -125,7 +125,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">pySLM2  documentation</div></a>
+      <a href="index.html"><div class="brand">pySLM2 0.1.0 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -148,7 +148,7 @@
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
   
-  <span class="sidebar-brand-text">pySLM2  documentation</span>
+  <span class="sidebar-brand-text">pySLM2 0.1.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -198,7 +198,6 @@
         <article role="main">
           <section id="pyslm2">
 <h1>pySLM2<a class="headerlink" href="#pyslm2" title="Link to this heading">#</a></h1>
-<a class="reference external image-reference" href="https://circleci.com/gh/QITI/pySLM2"><img alt="QITI" src="https://circleci.com/gh/QITI/pySLM2.svg?style=svg&amp;circle-token=fb1c6f5478c88791c454c4a3f85d4de17b23f5d2" /></a>
 <a class="reference external image-reference" href="https://github.com/QITI/pySLM2/actions/workflows/python-package.yml"><img alt="Python package" src="https://github.com/QITI/pySLM2/actions/workflows/python-package.yml/badge.svg" /></a>
 <a class="reference external image-reference" href="https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml"><img alt="Build Documentation HTML" src="https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg" /></a>
 <p><code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping.</p>
@@ -207,15 +206,19 @@
 <p>The dependencies of <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> in includes: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>.
 <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> uses <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
 In order to take advantage of the GPU, the correct version of <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> along with the cuda toolkits have to be installed.</p>
+<p>If you are using Anaconda as your python distribution, you can install the <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with GPU support by:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">anaconda</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span>
+</pre></div>
+</div>
 </section>
 <section id="with-setuptools">
 <h2>With setuptools<a class="headerlink" href="#with-setuptools" title="Link to this heading">#</a></h2>
 <p>If you prefer the development version from GitHub, download it here, <code class="docutils literal notranslate"><span class="pre">cd</span></code> to the pySLM2 directory, and use:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
 </pre></div>
 </div>
 <p>Or, if you wish to edit the pySLM2 source code without re-installing each time</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">develop</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
 </section>
@@ -250,13 +253,14 @@ If you wish to use double-precision, you can configure the backend right after y
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pySLM2</span><span class="o">.</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">pySLM2</span><span class="o">.</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">TENSOR_64BITS</span>
 </pre></div>
 </div>
+<p>In practice, the single-precision is sufficient for most of the applications. However, if you are suspecting the precision is not enough, you can change the precision to double-precision and see if the results are different.</p>
 </section>
 <section id="research-using-pyslm2">
 <h2>Research using pySLM2<a class="headerlink" href="#research-using-pyslm2" title="Link to this heading">#</a></h2>
 <p>If you used pySLM2 in your research, we’d like to hear from you!</p>
 <ul class="simple">
 <li><p>Shih, Chung-You, et al. “Reprogrammable and high-precision holographic optical addressing of trapped ions for scalable quantum control.” npj Quantum Information 7.1 (2021): 57. <a class="reference external" href="https://doi.org/10.1038/s41534-021-00396-0">https://doi.org/10.1038/s41534-021-00396-0</a></p></li>
-<li><p>Motlakunta, Sainath, et al. “Preserving a qubit during adjacent measurements at a few micrometers distance.” arXiv preprint arXiv:2306.03075 (2023). https://doi.org/10.48550/arXiv.2306.03075</p></li>
+<li><p>Motlakunta, Sainath, et al. “Preserving a qubit during adjacent measurements at a few micrometers distance.” arXiv preprint arXiv:2306.03075 (2023). <a class="reference external" href="https://doi.org/10.48550/arXiv.2306.03075">https://doi.org/10.48550/arXiv.2306.03075</a></p></li>
 </ul>
 </section>
 </section>
@@ -337,7 +341,7 @@ If you wish to use double-precision, you can configure the backend right after y
       
     </aside>
   </div>
-</div><script src="_static/documentation_options.js?v=5929fcd5"></script>
+</div><script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=32e29ea5"></script>

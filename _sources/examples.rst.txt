@@ -17,4 +17,10 @@ This example shows how to create multiple beam spots with a digital mircromirror
    :include-source:
 
 
+Load image to the Luxbeam DMD controller
+----------------------------------------
+.. literalinclude:: ../examples/load_images_luxbeam.py
+   :language: python
+
+
 
