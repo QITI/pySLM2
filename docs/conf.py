@@ -42,7 +42,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
-    # 'myst_parser',
+    'sphinx_math_dollar',
     'm2r2'
 ]
 

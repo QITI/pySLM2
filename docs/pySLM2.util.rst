@@ -1,5 +1,5 @@
-pySLM2.util package
-===================
+API: pySLM2.util package
+========================
 
 
 pySLM2.util.controller module

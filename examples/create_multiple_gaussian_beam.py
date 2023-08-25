@@ -23,19 +23,31 @@ dmd.calculate_dmd_state(
     method="random"
 )
 
-plt.title("Hologram displayed on the DMD")
-plt.imshow(dmd.dmd_state)
-plt.show()
+pfig, axs = plt.subplots(2, 2)
 
+axs[0, 0].set_title("Hologram displayed on the DMD")
+axs[0, 0].imshow(dmd.dmd_state)
+
+axs[1, 0].set_title("Input beam profile")
+axs[1, 0].imshow(dmd.profile_to_tensor(input_profile ** 2))
 
 sim = pySLM2.DMDSimulation(dmd, padding_x=0, padding_y=(dmd.Nx-dmd.Ny)//2)
 
 # perform the simulation
 sim.propagate_to_image(input_profile)
+sim.block_zeroth_order()
 
-plt.pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
+axs[0, 1].pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
 (x,y) = dmd.first_order_origin
+axs[0, 1].set_title("Intensity profile of the first order beam")
+axs[0, 1].set_xlim(x-100*micro, x+100*micro)
+axs[0, 1].set_ylim(y-100*micro, y+100*micro)
 
-plt.xlim(x-100*micro, x+100*micro)
-plt.ylim(y-100*micro, y+100*micro)
+p = axs[1, 1].pcolormesh(*sim.image_plane_padded_grid, np.angle(sim.image_plane_field))
+(x,y) = dmd.first_order_origin
+axs[1, 1].set_title("Phase profile of the first order beam")
+plt.colorbar(p, ax=axs[1, 1])
+axs[1, 1].set_xlim(x-100*micro, x+100*micro)
+axs[1, 1].set_ylim(y-100*micro, y+100*micro)
+plt.tight_layout()
 plt.show()

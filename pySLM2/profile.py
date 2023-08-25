@@ -33,7 +33,7 @@ class FunctionProfile(object):
                 other)
         else:
             raise NotImplementedError
-        return tf.function(func, jit_compile=True)
+        return tf.function(func)
 
     def __radd__(self, other):
         if isinstance(other, int) or isinstance(other, float) or isinstance(other, complex):

@@ -1,5 +1,5 @@
-pySLM2 package
-==============
+API: pySLM2 package
+===================
 
 
 pySLM2.slm module

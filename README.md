@@ -4,14 +4,14 @@ pySLM2
 [![Python package](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml)
 [![Build Documentation HTML](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml)
 
-`pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping.
+`pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping. 
 
 
 Installation
 ------------
-The dependencies of pySLM2 in includes: numpy, scipy, matplotlib, and tensorflow.
-pySLM2 uses tensorflow for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
-In order to take advantage of the GPU, the correct version of tensorflow along with the cuda toolkits have to be installed.
+The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
+`pySLM2` uses `tensorflow` for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
+In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed.
 
 
 With setuptools
@@ -30,11 +30,10 @@ python setup.py develop
 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
-`pySLM2.util` includes provides an universal interface for interacting with DMD controllers from different vendors.
+`pySLM2.util` includes provides an universal interface for interacting with different SLM controllers from different vendors.
 `pySLM2.util` itself doesn't implement the communication protocal. Instead, it relies on different libraries and wraps them with a universal interface.
 
-Vialux
-------
+### Vialux
 The DMDs from Vialux are communicated with the ALP library and a python binding, ALP4lib.
 
 * To install the ALP library, visit the vendors website: https://vialux.de/en/download.html
@@ -43,8 +42,7 @@ The DMDs from Vialux are communicated with the ALP library and a python binding,
 pip install https://github.com/QITI/ALP4lib
 ```
 
-Visitech
---------
+### Visitech
 The DMD from Visitech are communicates with UDP, and there no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed through git:
 ```
 pip install Luxbeam

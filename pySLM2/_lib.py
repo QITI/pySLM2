@@ -126,7 +126,7 @@ def _ifta_binarize_hologram(hologram, threthold):
     return hologram_binarized
 
 
-@tf.function(jit_compile=True)
+@tf.function
 def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
                                 negative_order=False, N=200, s=tf.constant(1.0)):
     grating_ideal = s * _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
