@@ -1,6 +1,5 @@
 pySLM2
 ======
-[![QITI](https://circleci.com/gh/QITI/pySLM2.svg?style=svg&circle-token=fb1c6f5478c88791c454c4a3f85d4de17b23f5d2)](https://circleci.com/gh/QITI/pySLM2)
 [![Python package](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/python-package.yml)
 [![Build Documentation HTML](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml)
 
@@ -12,6 +11,11 @@ Installation
 The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
 `pySLM2` uses `tensorflow` for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
 In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed.
+
+If you are using Anaconda as your python distribution, you can install the `tensorflow` with GPU support by:
+```
+conda install -c anaconda tensorflow-gpu
+```
 
 
 With setuptools
@@ -56,15 +60,16 @@ If you wish to use double-precision, you can configure the backend right after y
 pySLM2.BACKEND.dtype = pySLM2.BACKEND.TENSOR_64BITS
 ```
 
+In practice, the single-precision is sufficient for most of the applications. However, if you are suspecting the precision is not enough, you can change the precision to double-precision and see if the results are different.
 
 Research using pySLM2
 ---------------------
 
 If you used pySLM2 in your research, we'd like to hear from you!
 
-* Shih, Chung-You, et al. "Reprogrammable and high-precision holographic optical addressing of trapped ions for scalable quantum control." npj Quantum Information 7.1 (2021): 57. https://doi.org/10.1038/s41534-021-00396-0
+* Shih, Chung-You, et al. "Reprogrammable and high-precision holographic optical addressing of trapped ions for scalable quantum control." npj Quantum Information 7.1 (2021): 57. [https://doi.org/10.1038/s41534-021-00396-0](https://doi.org/10.1038/s41534-021-00396-0)
 
-* Motlakunta, Sainath, et al. "Preserving a qubit during adjacent measurements at a few micrometers distance." arXiv preprint arXiv:2306.03075 (2023). https://doi.org/10.48550/arXiv.2306.03075
+* Motlakunta, Sainath, et al. "Preserving a qubit during adjacent measurements at a few micrometers distance." arXiv preprint arXiv:2306.03075 (2023). [https://doi.org/10.48550/arXiv.2306.03075](https://doi.org/10.48550/arXiv.2306.03075)
 
 
 

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[project]
+name = "pySLM2"
+version = "0.1.0"
+description = ""
+authors = [{ name = "Chung-You (Gilbert) Shih", email = "c5shih@uwaterloo.ca" }]
+copyright = "2023, Chung-You (Gilbert) Shih"
+readme = "README.md"
+dependencies = [
+    "numpy > 1", 
+    "matplotlib > 3", 
+    "scipy >1", 
+    "tensorflow >2"
+]
+
+[project.urls]
+Source = "https://github.com/QITI/pySLM2"
+Homepage = "https://github.com/QITI/pySLM2"
