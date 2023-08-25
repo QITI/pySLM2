@@ -5,6 +5,7 @@ from functools import lru_cache
 from .profile import FunctionProfile
 from . import _lib
 from ._backend import BACKEND
+from typing import Union, Tuple
 
 __all__ = ["SLM", "DMD", "DLP7000", "DLP9500", "DLP9000", "LCOS_SLM", "PLUTO_2"]
 
@@ -95,13 +96,13 @@ class SLM(object):
         return i, j
 
     @lru_cache()
-    def _fourier_plane_pixel_grid(self):
+    def _fourier_plane_pixel_grid(self) -> Tuple[tf.Tensor, tf.Tensor]:
         pix_j = tf.range(self.Nx, dtype=BACKEND.dtype)
         pix_i = tf.range(self.Ny, dtype=BACKEND.dtype)
         return tf.meshgrid(pix_i, pix_j, indexing="ij")
 
     @lru_cache()
-    def _fourier_plane_grid(self):
+    def _fourier_plane_grid(self) -> Tuple[tf.Tensor, tf.Tensor]:
         pix_ii, pix_jj = self._fourier_plane_pixel_grid()
         return self._convert_pixel_index_to_dmd_coordinate(pix_ii, pix_jj)
 
@@ -127,7 +128,8 @@ class SLM(object):
         x, y = self._image_plane_grid()
         return np.array(x), np.array(y)
 
-    def profile_to_tensor(self, profile, at_fourier_plane=True, complex=False):
+    def profile_to_tensor(self, profile: Union[FunctionProfile, tf.Tensor, np.ndarray, int, float, complex], 
+                          at_fourier_plane=True, complex=False):
         """This function covert a profile into into tensor.
 
         Parameters
@@ -295,7 +297,35 @@ class DMD(SLM):
 
         return amp_scaled, phase_in, phase_out, one_over_eta_fft
 
-    def calculate_dmd_state(self, input_profile, target_profile, method="random", window=None, verbose=False,**kwargs):
+    def calculate_dmd_state(self, input_profile: Union[FunctionProfile, np.ndarray, tf.Tensor, float, int, complex], 
+                            target_profile: Union[FunctionProfile, np.ndarray, tf.Tensor, float, int, complex], 
+                            method="random", window=None, **kwargs):
+        """Calculate the DMD grating state based on the input and target profiles.
+        
+        Parameters
+        ----------
+        input_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
+            The input profile of the beam at Fourier plane. 
+        target_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
+            The target profile of the beam at image plane.
+        method: str (Default: "random")
+            Method to calculate the DMD grating.
+        window: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
+            The window function to be applied to the input_profile.
+        kwargs: dict
+            Additional arguments for the method.
+
+        Returns
+        -------
+        eta: float
+            The efficiency of mode matching.
+
+        See Also
+        --------
+        profile_to_tensor
+        
+        """
+
         # TODO check kwargs for different method
         input_profile = self.profile_to_tensor(input_profile, complex=True)
         target_profile = self.profile_to_tensor(target_profile, at_fourier_plane=False, complex=True)
@@ -331,8 +361,8 @@ class DMD(SLM):
     @property
     def first_order_origin(self):
         """(float, float): The origin of the first order beam in images plane."""
-        origin_x = np.cos(self.theta) * self.scaling_factor / self._p.value()
-        origin_y = np.sin(self.theta) * self.scaling_factor / self._p.value()
+        origin_x = np.cos(self.theta) * self.scaling_factor / float(self._p.value())
+        origin_y = np.sin(self.theta) * self.scaling_factor / float(self._p.value())
         return origin_x, origin_y
 
     def _state_tensor(self):

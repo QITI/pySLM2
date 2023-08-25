@@ -7,6 +7,7 @@ import tensorflow as tf
 from . import _lib
 from ._backend import BACKEND
 from .slm import SLM, DMD
+from typing import Tuple
 
 __all__ = ["SLMSimulation", "DMDSimulation"]
 
@@ -40,7 +41,7 @@ class SLMSimulation(object):
                             padding_x * pixel_size
     """
 
-    def __init__(self, slm, padding_x=0, padding_y=0):
+    def __init__(self, slm: SLM, padding_x: int=0, padding_y: int=0):
         if not isinstance(padding_x, int):
             raise TypeError("padding_x must be an integer.")
 
@@ -66,28 +67,28 @@ class SLMSimulation(object):
         self._image_plane_field = None
 
     @property
-    def fourier_plane_pixel_area(self):
+    def fourier_plane_pixel_area(self) -> float:
         """float"""
         return self._slm._pixel_size ** 2
 
     @property
-    def image_plane_pixel_area(self):
+    def image_plane_pixel_area(self) -> float:
         return self._slm.scaling_factor ** 2 / (self.Nx * self.Ny) / self._slm.pixel_size ** 2
 
     @property
-    def padding_x(self):
+    def padding_x(self) -> int:
         return self._padding_x
 
     @property
-    def padding_y(self):
+    def padding_y(self) -> int:
         return self._padding_y
 
     @property
-    def Nx(self):
+    def Nx(self) -> int:
         return self._slm.Nx + 2 * self._padding_x
 
     @property
-    def Ny(self):
+    def Ny(self) -> int:
         return self._slm.Ny + 2 * self._padding_y
 
     @lru_cache()
@@ -103,7 +104,7 @@ class SLMSimulation(object):
         return tf.meshgrid(x_atom, y_atom)
 
     @property
-    def image_plane_padded_grid(self):
+    def image_plane_padded_grid(self) -> Tuple[np.ndarray, np.ndarray]:
         x, y = self._image_plane_padded_grid()
         return np.array(x), np.array(y)
 
@@ -117,7 +118,7 @@ class SLMSimulation(object):
         return self._slm._convert_pixel_index_to_dmd_coordinate(pix_ii, pix_jj)
 
     @property
-    def fourier_plane_padded_grid(self):
+    def fourier_plane_padded_grid(self) -> Tuple[np.ndarray, np.ndarray]:
         x, y = self._fourier_plane_padded_grid()
         return np.array(x), np.array(y)
 
@@ -164,36 +165,34 @@ class SLMSimulation(object):
         return None if tensor is None else np.array(tensor)
 
     @property
-    def input_field(self):
-        "np.ndarray"
+    def input_field(self) -> np.ndarray:
         return self._pack_tensor_to_array(self._input_field)
 
     @property
-    def output_field(self):
-        "np.ndarray"
+    def output_field(self) -> np.ndarray:
         return self._pack_tensor_to_array(self._output_field)
 
     @property
-    def image_plane_field(self):
+    def image_plane_field(self) -> np.ndarray:
         "np.ndarray"
         return self._pack_tensor_to_array(self._image_plane_field)
 
     @property
-    def input_intensity(self):
+    def input_intensity(self) -> np.ndarray:
         "np.ndarray"
         return self._pack_tensor_to_array(self._input_intensity)
 
     @property
-    def output_intensity(self):
+    def output_intensity(self) -> np.ndarray:
         "np.ndarray"
         return self._pack_tensor_to_array(self._output_intensity)
 
     @property
-    def image_plane_intensity(self):
+    def image_plane_intensity(self) -> np.ndarray:
         "np.ndarray"
         return self._pack_tensor_to_array(self._image_plane_intensity)
 
-    def get_input_power(self):
+    def get_input_power(self) -> float:
         """Calculates and returns the total power incident on the SLM.
 
         Returns
@@ -203,7 +202,7 @@ class SLMSimulation(object):
         """
         return np.sum(self.input_intensity) * self.fourier_plane_pixel_area
 
-    def get_output_power(self):
+    def get_output_power(self) -> float:
         """Calculates and returns the total power output from the SLM.
 
         Returns
@@ -214,7 +213,7 @@ class SLMSimulation(object):
         """
         return np.sum(self.output_intensity) * self.fourier_plane_pixel_area
 
-    def get_image_plane_power(self):
+    def get_image_plane_power(self) -> float:
         """Calculates and returns the total power at the images plane.
 
         Returns
@@ -226,7 +225,7 @@ class SLMSimulation(object):
         return np.sum(self.image_plane_intensity) * self.image_plane_pixel_area
 
     @property
-    def scaling_factor(self):
+    def scaling_factor(self) -> float:
         return self._slm.scaling_factor
 
 

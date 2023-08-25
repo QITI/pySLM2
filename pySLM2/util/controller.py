@@ -176,7 +176,6 @@ class LuxbeamController(DMDControllerBase):
                          Luxbeam.TRIG_SOURCE_OPTICAL,
                          0) # Wait for the trigger
         # ======= Sequencer ============
-        print(seq.dumps())
 
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RUN, Luxbeam.DISABLE)
         self.luxbeam.set_sequencer_state(Luxbeam.SEQ_CMD_RESET, Luxbeam.ENABLE)
