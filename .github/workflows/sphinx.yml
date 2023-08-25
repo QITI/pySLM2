@@ -6,17 +6,33 @@ name: Build Documentation HTML
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: ammaraskar/sphinx-action@master
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
       with:
-        docs-folder: "docs/"
-        pre-build-command: "pip install m2r2 sphinx_rtd_theme shpinx-math-dollar"
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies and packages
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        python setup.py install
+        python -m pip install matplotlib furo m2r2 sphinx sphinx-math-dollar
+    - name: Build Document
+      working-directory: docs/
+      run: make html
     - name: Deploy 🚀
       uses: JamesIves/github-pages-deploy-action@4.1.1
       with:
