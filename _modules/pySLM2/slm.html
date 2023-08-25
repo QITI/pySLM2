@@ -1,0 +1,768 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <!-- Generated with Sphinx 7.2.3 and Furo 2023.08.19 -->
+        <title>pySLM2.slm - pySLM2 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=eafc0fe6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">pySLM2  documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">pySLM2  documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme_link.html">pySLM2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pySLM2.html">API: pySLM2 package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pySLM2.util.html">API: pySLM2.util package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for pySLM2.slm</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.constants</span> <span class="kn">import</span> <span class="n">micro</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">lru_cache</span>
+<span class="kn">from</span> <span class="nn">.profile</span> <span class="kn">import</span> <span class="n">FunctionProfile</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">_lib</span>
+<span class="kn">from</span> <span class="nn">._backend</span> <span class="kn">import</span> <span class="n">BACKEND</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;SLM&quot;</span><span class="p">,</span> <span class="s2">&quot;DMD&quot;</span><span class="p">,</span> <span class="s2">&quot;DLP7000&quot;</span><span class="p">,</span> <span class="s2">&quot;DLP9500&quot;</span><span class="p">,</span> <span class="s2">&quot;DLP9000&quot;</span><span class="p">,</span> <span class="s2">&quot;LCOS_SLM&quot;</span><span class="p">,</span> <span class="s2">&quot;PLUTO_2&quot;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="SLM">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.SLM">[docs]</a>
+<span class="k">class</span> <span class="nc">SLM</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for a spatial light modulators.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelength: float</span>
+<span class="sd">        Wavelength of the laser.</span>
+<span class="sd">    focal_length: float</span>
+<span class="sd">        Effective focal length of the lens system.</span>
+<span class="sd">    Nx: int</span>
+<span class="sd">        Number of pixels in the x direction.</span>
+<span class="sd">    Ny: int</span>
+<span class="sd">        Number of pixels in the y direction.</span>
+<span class="sd">    pixel_size: float</span>
+<span class="sd">        Edge length of a single pixel.</span>
+
+
+<span class="sd">    .. Note::</span>
+<span class="sd">        Coordinate system::</span>
+
+<span class="sd">               +-----&gt;  j</span>
+
+<span class="sd">         +     +------------------+     ^</span>
+<span class="sd">         |     |        y         |     |</span>
+<span class="sd">         |     |        ^         |     |</span>
+<span class="sd">         v     |        |         |     | Ny * pixel_size</span>
+<span class="sd">               |        0---&gt; x   |     |</span>
+<span class="sd">         i     |                  |     |</span>
+<span class="sd">               |                  |     |</span>
+<span class="sd">               +------------------+     v</span>
+
+<span class="sd">               &lt;------------------&gt;</span>
+<span class="sd">                  Nx * pixel_size</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">):</span>
+        <span class="c1"># Read only</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wavelength</span> <span class="o">=</span> <span class="n">wavelength</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_focal_length</span> <span class="o">=</span> <span class="n">focal_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Nx</span> <span class="o">=</span> <span class="n">Nx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span> <span class="o">=</span> <span class="n">Ny</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scaling_factor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wavelength</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_focal_length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span> <span class="o">=</span> <span class="n">pixel_size</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">scaling_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scaling_factor</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Nx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Nx</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Ny</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">wavelength</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wavelength</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">focal_length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_focal_length</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pixel_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span>
+
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_convert_pixel_index_to_dmd_coordinate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span> <span class="o">-</span> <span class="n">i</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Nx</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">j</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span>
+
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_convert_slm_coordinate_to_pixel_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Nx</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_Ny</span> <span class="o">-</span> <span class="n">i</span>
+        <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span>
+
+    <span class="nd">@lru_cache</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_fourier_plane_pixel_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="n">pix_j</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">pix_i</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">pix_i</span><span class="p">,</span> <span class="n">pix_j</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s2">&quot;ij&quot;</span><span class="p">)</span>
+
+    <span class="nd">@lru_cache</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_fourier_plane_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+        <span class="n">pix_ii</span><span class="p">,</span> <span class="n">pix_jj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_pixel_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_convert_pixel_index_to_dmd_coordinate</span><span class="p">(</span><span class="n">pix_ii</span><span class="p">,</span> <span class="n">pix_jj</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fourier_plane_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(numpy.ndarray, numpy.ndarray) The x and y coordinates of all the pixels on the SLM.&quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="nd">@lru_cache</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">_image_plane_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">kx_atom</span><span class="p">,</span> <span class="n">ky_atom</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> \
+                           <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fftfreq</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="n">kx_atom</span><span class="p">,</span> <span class="n">ky_atom</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">kx_atom</span><span class="p">),</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">ky_atom</span><span class="p">)</span>
+        <span class="n">x_atom</span> <span class="o">=</span> <span class="n">kx_atom</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span>
+        <span class="n">y_atom</span> <span class="o">=</span> <span class="n">ky_atom</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x_atom</span><span class="p">,</span> <span class="n">y_atom</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">image_plane_grid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(numpy.ndarray, numpy.ndarray) The x and y coordinates of the coorsponding.&quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_plane_grid</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SLM.profile_to_tensor">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.SLM.profile_to_tensor">[docs]</a>
+    <span class="k">def</span> <span class="nf">profile_to_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profile</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">FunctionProfile</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">complex</span><span class="p">],</span> 
+                          <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function covert a profile into into tensor.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        profile: pySLM2.profile.FunctionProfile, tensorflow.Tensor, numpy.ndarray, int, float or complex</span>
+<span class="sd">            If profile is a FunctionProfile, it will be sampled with the grid in either the Fourier plane or the images plane.</span>
+<span class="sd">            Otherwise, it will be cast into a tensorflow.Tensor.</span>
+<span class="sd">        at_fourier_plane: bool</span>
+<span class="sd">            If the value is True, the profile is sampled with the Fourier plane grid.</span>
+<span class="sd">            Otherwise, it will be sampled with the images plane grid. (Default: True)</span>
+<span class="sd">        complex: bool</span>
+<span class="sd">            The dtype of the tensor.</span>
+<span class="sd">            If the value is True, the dtype of the tensor will be set to pySLM2.BACKEND.complex_dtype.</span>
+<span class="sd">            Otherwise, the dtype will be set to pySLM2.BACKEND.dtype. (Default: False)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tensor:</span>
+<span class="sd">            The tensor has the same dimension as the fourier_plane_grid and the image_plane_grid.</span>
+<span class="sd">            The dtyoe of the tensor can be set by complex.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tensor_dtype</span> <span class="o">=</span> <span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype_complex</span> <span class="k">if</span> <span class="nb">complex</span> <span class="k">else</span> <span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">FunctionProfile</span><span class="p">):</span>
+            <span class="n">grid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_grid</span><span class="p">()</span> <span class="k">if</span> <span class="n">at_fourier_plane</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_image_plane_grid</span><span class="p">()</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">_func</span><span class="p">(</span><span class="o">*</span><span class="n">grid</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">):</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">profile</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="n">profile</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tensor_dtype</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">tensor</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="n">tensor_dtype</span><span class="p">:</span>
+            <span class="n">tensor</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tensor</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tensor_dtype</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tensor</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_state_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+
+<div class="viewcode-block" id="DMD">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD">[docs]</a>
+<span class="k">class</span> <span class="nc">DMD</span><span class="p">(</span><span class="n">SLM</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for a Digital Micromirror Device (DMD).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelength: float</span>
+<span class="sd">        Wavelength of the laser.</span>
+<span class="sd">    focal_length: float</span>
+<span class="sd">        Effective focal length of the lens system.</span>
+<span class="sd">    periodicity: float</span>
+<span class="sd">        Periodicity of the grating in unit of pixels</span>
+<span class="sd">    theta: float</span>
+<span class="sd">        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.</span>
+<span class="sd">    Nx: int</span>
+<span class="sd">        Number of pixels in the x direction.</span>
+<span class="sd">    Ny: int</span>
+<span class="sd">        Number of pixels in the y direction.</span>
+<span class="sd">    pixel_size: float</span>
+<span class="sd">        Edge length of a single pixel. In the context of the DMD, a pixel is a micromirror.</span>
+<span class="sd">    negative_order: bool</span>
+<span class="sd">        If this parameter is set to True, use negative first order instead of first order diffraction beam.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">,</span>
+                 <span class="n">negative_order</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_p</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">periodicity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pixel_size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">negative_order</span> <span class="o">=</span> <span class="n">negative_order</span>
+
+<div class="viewcode-block" id="DMD.set_dmd_state_off">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.set_dmd_state_off">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_dmd_state_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Reset dmd_state to be an array (Ny, Nx) of zeros.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DMD.set_dmd_state_on">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.set_dmd_state_on">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_dmd_state_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Reset dmd_state to be an array (Ny, Nx) of ones.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DMD.set_dmd_grating_state">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.set_dmd_grating_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_dmd_grating_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amp</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">phase_in</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">phase_out</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">amp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">amp</span><span class="p">)</span>
+        <span class="n">phase_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">phase_in</span><span class="p">)</span>
+        <span class="n">phase_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">phase_out</span><span class="p">)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_grid</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_lib</span><span class="o">.</span><span class="n">calculate_dmd_grating</span><span class="p">(</span><span class="n">amp</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="p">,</span>
+                                                             <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">negative_order</span><span class="p">,</span>
+                                                             <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_circular_mask</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">pix_ii</span><span class="p">,</span> <span class="n">pix_jj</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="n">pix_rr_square</span> <span class="o">=</span> <span class="p">(</span><span class="n">pix_jj</span> <span class="o">-</span> <span class="n">j</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">pix_ii</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">pix_rr_square</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">d</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">mask</span>
+
+<div class="viewcode-block" id="DMD.circular_patch">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.circular_patch">[docs]</a>
+    <span class="k">def</span> <span class="nf">circular_patch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">amp</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create a circular grating patch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i: int or float</span>
+<span class="sd">            Coordinate of the center of the patch in the pixel index.</span>
+<span class="sd">        j: float</span>
+<span class="sd">            Coordinate of the center of the patch in the pixel index.</span>
+<span class="sd">        amp: float</span>
+<span class="sd">            Amplitude scaling of the diffracting beam from the grating.</span>
+<span class="sd">            The valid range is between 0 and 1.</span>
+<span class="sd">        phase_in: float or numpy.ndarray or tensorflow.Tensor</span>
+<span class="sd">            The input phase map (aberration correction) of the beam.</span>
+<span class="sd">        phase_out: float or numpy.ndarray or tensorflow.Tensor</span>
+<span class="sd">            The output phase map of the beam.</span>
+<span class="sd">        d: float</span>
+<span class="sd">            Diameter of the patch in the unit of pixel.</span>
+<span class="sd">        method: str</span>
+<span class="sd">            (Default: &quot;random&quot;)</span>
+<span class="sd">        kwargs</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">amp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">amp</span><span class="p">)</span>
+        <span class="n">phase_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">phase_in</span><span class="p">)</span>
+        <span class="n">phase_out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">phase_out</span><span class="p">)</span>
+
+        <span class="n">pix_ii</span><span class="p">,</span> <span class="n">pix_jj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_pixel_grid</span><span class="p">()</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_circular_mask</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">pix_ii</span><span class="p">,</span> <span class="n">pix_jj</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_grid</span><span class="p">()</span>
+
+        <span class="c1"># TODO mask the array before passing them into the function</span>
+        <span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_lib</span><span class="o">.</span><span class="n">calculate_dmd_grating</span><span class="p">(</span><span class="n">amp</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="p">,</span>
+                                                        <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">negative_order</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmd_state</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div>
+
+
+    <span class="nd">@staticmethod</span>
+    <span class="nd">@tf</span><span class="o">.</span><span class="n">function</span>
+    <span class="k">def</span> <span class="nf">_calc_amp_phase</span><span class="p">(</span><span class="n">input_profile</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">target_profile</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">target_profile_fp</span> <span class="o">=</span> <span class="n">_lib</span><span class="o">.</span><span class="n">_fourier_transform</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">target_profile</span><span class="p">))</span>
+        <span class="n">target_profile_fp</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">fftshift</span><span class="p">(</span><span class="n">target_profile_fp</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">target_profile_fp</span> <span class="o">=</span> <span class="n">target_profile_fp</span> <span class="o">*</span> <span class="n">window</span>
+
+        <span class="n">phase_in</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">input_profile</span><span class="p">)</span>
+        <span class="n">amp_in</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">input_profile</span><span class="p">)</span>
+
+        <span class="n">amp_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">target_profile_fp</span><span class="p">)</span>
+
+        <span class="n">phase_out</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">target_profile_fp</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">amp_out</span><span class="p">),</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">target_profile_fp</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">amp_scaled</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="n">amp_out</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">,</span>
+            <span class="n">tf</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">amp_out</span><span class="p">),</span>
+            <span class="n">amp_out</span> <span class="o">/</span> <span class="n">amp_in</span>
+        <span class="p">)</span>
+
+        <span class="n">one_over_eta_fft</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">math</span><span class="o">.</span><span class="n">reduce_max</span><span class="p">(</span><span class="n">amp_scaled</span><span class="p">)</span>
+        <span class="n">amp_scaled</span> <span class="o">=</span> <span class="n">amp_scaled</span> <span class="o">/</span> <span class="n">one_over_eta_fft</span>
+
+        <span class="k">return</span> <span class="n">amp_scaled</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">one_over_eta_fft</span>
+
+<div class="viewcode-block" id="DMD.calculate_dmd_state">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.calculate_dmd_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_dmd_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_profile</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">FunctionProfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">complex</span><span class="p">],</span> 
+                            <span class="n">target_profile</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">FunctionProfile</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">complex</span><span class="p">],</span> 
+                            <span class="n">method</span><span class="o">=</span><span class="s2">&quot;random&quot;</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate the DMD grating state based on the input and target profiles.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        input_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex</span>
+<span class="sd">            The input profile of the beam at Fourier plane. </span>
+<span class="sd">        target_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex</span>
+<span class="sd">            The target profile of the beam at image plane.</span>
+<span class="sd">        method: str (Default: &quot;random&quot;)</span>
+<span class="sd">            Method to calculate the DMD grating.</span>
+<span class="sd">        window: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex</span>
+<span class="sd">            The window function to be applied to the input_profile.</span>
+<span class="sd">        kwargs: dict</span>
+<span class="sd">            Additional arguments for the method.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        eta: float</span>
+<span class="sd">            The efficiency of mode matching.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        profile_to_tensor</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># TODO check kwargs for different method</span>
+        <span class="n">input_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">target_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">target_profile</span><span class="p">,</span> <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">window</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">window</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">window</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">amp_scaled</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">one_over_eta_fft</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_calc_amp_phase</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="n">target_profile</span><span class="p">,</span>
+                                                                                <span class="n">window</span><span class="o">=</span><span class="n">window</span><span class="p">)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fourier_plane_grid</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;ifta&quot;</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;input_profile&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_profile</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;signal_window&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;signal_window&quot;</span><span class="p">],</span> <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                             <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+            <span class="n">_lib</span><span class="o">.</span><span class="n">calculate_dmd_grating</span><span class="p">(</span><span class="n">amp_scaled</span><span class="p">,</span> <span class="n">phase_in</span><span class="p">,</span> <span class="n">phase_out</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="p">,</span>
+                                       <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">negative_order</span><span class="p">,</span>
+                                       <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="n">eta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixel_size</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nx</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ny</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">one_over_eta_fft</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eta</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">theta</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;float&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_theta</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">first_order_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(float, float): The origin of the first order beam in images plane.&quot;&quot;&quot;</span>
+        <span class="n">origin_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+        <span class="n">origin_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scaling_factor</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_p</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">origin_x</span><span class="p">,</span> <span class="n">origin_y</span>
+
+    <span class="k">def</span> <span class="nf">_state_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype_complex</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DMD.pack_dmd_state">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DMD.pack_dmd_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">pack_dmd_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Pack the dmd state to bytes.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        packed_dmd_state: bytes</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span><span class="o">.</span><span class="n">dtype</span> <span class="o">!=</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;The dtype of dmd_state is not bool&quot;</span><span class="p">)</span>
+
+        <span class="n">packed_bits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">packbits</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dmd_state</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">packed_bits</span><span class="o">.</span><span class="n">tobytes</span><span class="p">()</span></div>
+</div>
+
+
+
+
+
+<span class="c1"># TODO Find a way to reuse the docstring</span>
+
+<div class="viewcode-block" id="DLP9500">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DLP9500">[docs]</a>
+<span class="k">class</span> <span class="nc">DLP9500</span><span class="p">(</span><span class="n">DMD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements the DLP9500 model and DLP9500UV model from Texas Instruments.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelength: float</span>
+<span class="sd">        Wavelength of the laser.</span>
+<span class="sd">    focal_length: float</span>
+<span class="sd">        Effective focal length of the lens system.</span>
+<span class="sd">    periodicity: float</span>
+<span class="sd">        Periodicity of the grating in unit of pixels</span>
+<span class="sd">    theta: float</span>
+<span class="sd">        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.</span>
+<span class="sd">    negative_order: bool</span>
+<span class="sd">        If this parameter is set to True, use negative first order instead of first order diffraction beam.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">negative_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span>
+                                      <span class="mi">1920</span><span class="p">,</span> <span class="mi">1080</span><span class="p">,</span> <span class="mf">10.8</span> <span class="o">*</span> <span class="n">micro</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="n">negative_order</span><span class="p">)</span></div>
+
+
+<span class="c1"># TODO List more dmd models here</span>
+
+<div class="viewcode-block" id="DLP7000">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DLP7000">[docs]</a>
+<span class="k">class</span> <span class="nc">DLP7000</span><span class="p">(</span><span class="n">DMD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements the DLP7000 model and DLP7000UV model from Texas Instruments.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelength: float</span>
+<span class="sd">        Wavelength of the laser.</span>
+<span class="sd">    focal_length: float</span>
+<span class="sd">        Effective focal length of the lens system.</span>
+<span class="sd">    periodicity: float</span>
+<span class="sd">        Periodicity of the grating in unit of pixels</span>
+<span class="sd">    theta: float</span>
+<span class="sd">        Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.</span>
+<span class="sd">    negative_order: bool</span>
+<span class="sd">        If this parameter is set to True, use negative first order instead of first order diffraction beam.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">negative_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span>
+                         <span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="mf">13.68</span> <span class="o">*</span> <span class="n">micro</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="n">negative_order</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DLP9000">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.DLP9000">[docs]</a>
+<span class="k">class</span> <span class="nc">DLP9000</span><span class="p">(</span><span class="n">DMD</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements the DLP9000 model, DLP9000X model, and DLP9000XUV model from Texas Instruments.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wavelength: float</span>
+<span class="sd">            Wavelength of the laser.</span>
+<span class="sd">        focal_length: float</span>
+<span class="sd">            Effective focal length of the lens system.</span>
+<span class="sd">        periodicity: float</span>
+<span class="sd">            Periodicity of the grating in unit of pixels</span>
+<span class="sd">        theta: float</span>
+<span class="sd">            Desired grating angle. This affects the direction between first order beam relative to the zeroth order beam.</span>
+<span class="sd">        negative_order: bool</span>
+<span class="sd">            If this parameter is set to True, use negative first order instead of first order diffraction beam.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">theta</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">negative_order</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">periodicity</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span>
+                         <span class="mi">2560</span><span class="p">,</span> <span class="mi">1600</span><span class="p">,</span> <span class="mf">7.56</span> <span class="o">*</span> <span class="n">micro</span><span class="p">,</span> <span class="n">negative_order</span><span class="o">=</span><span class="n">negative_order</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="LCOS_SLM">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.LCOS_SLM">[docs]</a>
+<span class="k">class</span> <span class="nc">LCOS_SLM</span><span class="p">(</span><span class="n">SLM</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for a Liquid Crystal on Silicon (LCOS) spatial light modulators.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="n">Nx</span><span class="p">,</span> <span class="n">Ny</span><span class="p">,</span> <span class="n">pixel_size</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slm_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">Ny</span><span class="p">,</span> <span class="n">Nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LCOS_SLM.reset_slm_state">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.LCOS_SLM.reset_slm_state">[docs]</a>
+    <span class="k">def</span> <span class="nf">reset_slm_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slm_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Ny</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nx</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_state_tensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">constant</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">slm_state</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype_complex</span><span class="p">)</span>
+
+<div class="viewcode-block" id="LCOS_SLM.calculate_hologram">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.LCOS_SLM.calculate_hologram">[docs]</a>
+    <span class="k">def</span> <span class="nf">calculate_hologram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_profile</span><span class="p">,</span> <span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gs&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">input_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">target_amp_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">slm_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_lib</span><span class="o">.</span><span class="n">calculate_lcos_slm_hologram</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+                                                                   <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PLUTO_2">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.slm.PLUTO_2">[docs]</a>
+<span class="k">class</span> <span class="nc">PLUTO_2</span><span class="p">(</span><span class="n">LCOS_SLM</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements the PLUTO-2 families from HOLOEYE Photonics AG.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wavelength: float</span>
+<span class="sd">            Wavelength of the laser.</span>
+<span class="sd">    focal_length: float</span>
+<span class="sd">        Effective focal length of the lens system.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">wavelength</span><span class="p">,</span> <span class="n">focal_length</span><span class="p">,</span> <span class="mi">1920</span><span class="p">,</span> <span class="mi">1080</span><span class="p">,</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">micro</span><span class="p">)</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2023, Chung-You (Gilbert) Shih
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    </body>
+</html>
