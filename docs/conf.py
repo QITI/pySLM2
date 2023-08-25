@@ -61,6 +61,8 @@ source_suffix = {
     '.md': 'markdown',
 }
 
+plot_formats = [('png', 100)]
+
 
 # -- Options for HTML output -------------------------------------------------
 
