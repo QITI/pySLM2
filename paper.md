@@ -1,5 +1,5 @@
 ---
-title: 'pySLM2: A python package for full stack module for holographic beam shaping'
+title: 'pySLM2: A full-stack python package for holographic beam shaping'
 tags:
   - Python
   - optics
