@@ -12,6 +12,9 @@ authors:
     equal-contrib: false
     affiliation: "1" # (Multiple affiliations must be quoted)
     corresponding: true # (This is how to denote the corresponding author)
+  - name: Kazi Rajibul Islam
+    affiliation: "1"
+    
 
 affiliations:
  - name: Institute for Quantum Computing and Department of Physics and Astronomy, University of Waterloo, 200 University Ave. West, Waterloo, Ontario N2L 3G1, Canada
@@ -22,28 +25,30 @@ bibliography: paper.bib
 ---
 
 # Summary
-Holographic beam shaping using spatial light modulators (SLMs) as a reporgramable Fourier hologram offers a powerful tool for precise and flexible optical controls and has been used in many areas of research, including atom trapping, manipulating the quantum state of atomic qubit,
+Holographic beam shaping using spatial light modulators (SLMs) as a reporgramable Fourier hologram offers a powerful tool for precise and flexible optical controls and has been used in many areas of research, including atom trapping[@gaunt2012robust], manipulating the quantum state of atomic qubit[@motlakunta2023preserving;@zupancic2016ultra], 
 
 `pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping, including hologram generation, simulation, and hardware controls. 
 
-The packages implemnts the hologram generation algorithms of the Lee hologram[@lee1978iii] and its predecesors from @zupancic2016ultra and @shih2021reprogrammable, tragetting the digital micromirror device (DMD) based SLM. It also implemnts the Gram-Schmidt alogorithm[@gerhberg1972practical] that can be applied liqcuid crystal on silicon (LCoS) based SLM.
+The packages implemnts the hologram generation algorithms of the Lee hologram[@lee1978iii] with a naive binarization and its improved predecesors from @zupancic2016ultra and @shih2021reprogrammable, tragetting the digital micromirror device (DMD) based SLM. It also implemnts the Gerchber-Saxton alogorithm[@gerhberg1972practical] that can be applied liqcuid crystal on silicon (LCoS) based SLM.
 
-Under the hood, the package uses `TensorFlow` for heavy lifting numerical computation. The use of `TensorFlow` allows the package to harness the power of GPU for fast computation without the need of changing the code. This provides orders of magnitude speed up for algorthims that requires heavy numerical computation, such as the algorithms relies on iterative Fourier transformation.
+Under the hood, the package uses `TensorFlow` for heavy lifting numerical computation. The use of `TensorFlow` allows the package to harness the power of GPU for faster computation without the need of changing the code. This can provide orders of magnitude speed up for algorthims that requires heavy numerical computation, such as the algorithms relies on iterative Fourier transformation.
 
 The package provides a universal interface for different SLMs, so the code writen for one device can be easily adapted to another one. As the time of writing, the package supports the DMDs from both Visitech and Vialux.
 
-The package has been used in the research of @shih2021reprogrammable and @motlakunta2023preserving.
+
 
 # Statement of need
-High quality optical controls are essential for many scientific and engineering applications. For example, in atom-based quantum information processor, the control of the quantum state of individual atoms is often done by individually adressable laser beams. The quality of the addressing beams directly affects the fidelity of the quantum operations. 
+High quality optical controls are essential for many scientific and engineering applications. For example, in atom-based quantum information processor, the control of the quantum state of individual atoms is often done by individually adressable laser beams. The quality of the addressing beams directly affects the fidelity of the quantum operations[@motlakunta2023preserving]. 
 
 Holographic beam shapping using spatial light modulators (SLMs) offers a powerful tool for precise and flexible optical controls.
-Compare to using convential optical elements, the holographic beam shapping offers several advantages. First, the holographic beam shapping can be used to generate arbitrary beam profiles that is not trivial to created with convential optical elements. For instance, Laguerre-Gaussian beam with non-zero azimuthal index (often referred as doughnut beam) can be used to trap atoms in a tube-like potential, applying angular momentum to the Bose-Einstein Condensation, and performing superresolution imaging. 
+Compare to using convential optical elements, the holographic beam shapping offers several advantages. First, the holographic beam shapping can be used to generate arbitrary beam profiles that is not trivial to created with convential optical elements. For instance, Laguerre-Gaussian beam with non-zero azimuthal index (often referred as doughnut beam) can be used to trap atoms in a tube-like potential[@kuga1997novel], applying angular momentum to the Bose-Einstein Condensation[@andersen2006quantized], or performing superresolution imaging[@qian2021super;drechsler2021optical]. 
 
-Second, the holographic beam shapping can also correct the optical aberrations in the system, leading to a diffraction limited optical system. This allows engineering of high quality beam profiles. It has been demonstrated that the residual aberrtion can be corrected to less than $\lambda/20$[@shih2021reprogrammable].
+Second, the holographic beam shapping can actively compensate the optical aberrations in the system, leading to a diffraction limited performance. This allows engineering of high quality beam profiles. It has been demonstrated that the residual aberrtion can be corrected to less than $\lambda/20$[@shih2021reprogrammable].
 
+As the time of writing, the `pySLM2` package described in the manuscript has been used in the research of @shih2021reprogrammable, @motlakunta2023preserving and @kotibhaskar2023programmable.
 
-# Usage
+<!-- 
+# Usage -->
 
 <!-- 
 # Mathematics
