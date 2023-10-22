@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="API: pySLM2.util package" href="pySLM2.util.html" />
 
-    <!-- Generated with Sphinx 7.2.3 and Furo 2023.08.19 -->
+    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
         <title>Examples - pySLM2 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
@@ -327,7 +327,7 @@
 <h2>Load image to the Luxbeam DMD controller<a class="headerlink" href="#load-image-to-the-luxbeam-dmd-controller" title="Link to this heading">#</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pySLM2.util</span> <span class="kn">import</span> <span class="n">LuxbeamController</span>
 
-<span class="n">luxbeam</span> <span class="o">=</span> <span class="n">LuxbeamController</span><span class="p">()</span>
+<span class="n">luxbeam</span> <span class="o">=</span> <span class="n">LuxbeamController</span><span class="p">(</span><span class="n">ip</span><span class="o">=</span><span class="s2">&quot;192.168.1.10&quot;</span><span class="p">)</span>
 <span class="n">luxbeam</span><span class="o">.</span><span class="n">initialize</span><span class="p">()</span>
 
 <span class="c1"># generate two images</span>
