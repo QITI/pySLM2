@@ -18,8 +18,7 @@ conda install -c anaconda tensorflow-gpu
 ```
 
 
-With setuptools
----------------
+### With setuptools
 
 If you prefer the development version from GitHub, download it here, `cd` to the pySLM2 directory, and use:
 ```
