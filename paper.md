@@ -49,12 +49,12 @@ At the time of writing, the pySLM2 package, as detailed in this manuscript, has 
 
 `pySLM2` is designed for holographic beam shaping using Fourier holography. The name "Fourier" comes from the fact that the hologram and the target beam profile are related by a Fourier transformation.
 
- In a paraxial lens system, the lens act as a Fourier transform operator mapping the electric field in one focal plane to the electric field in the another focal plane. In the context of Fourier Holography, the two focal plane are referred as the image plane (IP) and the Fourier plane (FP). The electric field at the two planes, $E_{\rm{IP}}(\mathbf{x}')$ and $E_{\rm{FP}}(\mathbf{x})$ respectively, are related by the following equation:
-<!-- 
+ In a paraxial lens system, the lens act as a Fourier transform operator mapping the electric field in one focal plane to the electric field in the another focal plane. In the context of Fourier Holography, the two focal plane are referred as the image plane (IP) and the Fourier plane (FP). The electric field at the two planes, $E_{\mathrm{IP}}(\mathbf{x}')$ and $E_{\mathrm{FP}}(\mathbf{x})$ respectively, are related by the following equation:
+
 $$
-E_{\rm{FP}}(\mathbf{x})\mathrm{e}^{\mathrm{i} \Phi_{ab}} = \left. \frac{\lambda f}{2 \pi}  \mathcal{F}\left [E_{\rm{IP}} (\mathbf{x}')\right ](\mathbf{k}') \right | _{\mathbf{k}'=\frac{2 \pi}{\lambda f} \mathbf{x}}
+E_{\mathrm{FP}}(\mathbf{x})\mathrm{e}^{\mathrm{i} \Phi_{ab}} = \left. \frac{\lambda f}{2 \pi}  \mathcal{F}\left [E_{\mathrm{IP}} (\mathbf{x}')\right ](\mathbf{k}') \right | _{\mathbf{k}'=\frac{2 \pi}{\lambda f} \mathbf{x}}
 $$
-In which, $\mathbf{x}'$ and $\mathbf{k}'$ denote the spatial coordinate and the wave vector at the image plane respectively, and $\mathcal{F}$ denotes Fourier transformation. The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $ \mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$. 
+<!-- In which, $\mathbf{x}'$ and $\mathbf{k}'$ denote the spatial coordinate and the wave vector at the image plane respectively, and $\mathcal{F}$ denotes Fourier transformation. The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $ \mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$. 
 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. 
 
@@ -62,11 +62,11 @@ The aberrations of the optical system can be modeled as a phase map $\Phi_{\math
 * `output_profile`: The beam profile at the Fourier plane after modulated by the SLM.
 * `target_profile`: The desired beam profile at the image plane.
 
-To calculate the hologram, we will need both `input_profile` and `target_profile`. The `output_profile` is not required but one can extract it from the simulation. -->
+To calculate the hologram, we will need both `input_profile` and `target_profile`. The `output_profile` is not required but one can extract it from the simulation. 
 
 # Hardware Controls
 `pySLM2` provides with the hardware controls of the DMDs from Visitech and Vialux. The controllers from the two companies uses different communication protocols and architectures.
-A goal of `pySLM2` is to provide a universal application interface for interacting with the hardwares.
+A goal of `pySLM2` is to provide a universal application interface for interacting with the hardwares. -->
 
 For both controllers, we implemented ....
 
