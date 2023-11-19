@@ -54,8 +54,9 @@ At the time of writing, the pySLM2 package, as detailed in this manuscript, has 
 $$
 E_{\mathrm{FP}}(\mathbf{x})\mathrm{e}^{\mathrm{i} \Phi_{ab}} = \left. \frac{\lambda f}{2 \pi}  \mathcal{F}\left [E_{\mathrm{IP}} (\mathbf{x}')\right ](\mathbf{k}') \right | _{\mathbf{k}'=\frac{2 \pi}{\lambda f} \mathbf{x}}
 $$
-In which, $\mathbf{x}'$ and $\mathbf{k}'$ denote the spatial coordinate and the wave vector at the image plane respectively, and $\mathcal{F}$ denotes Fourier transformation. The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $ \mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$. 
-<!---
+In which, $\mathbf{x}'$ and $\mathbf{k}'$ denote the spatial coordinate and the wave vector at the image plane respectively, and $\mathcal{F}$ denotes Fourier transformation. 
+The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $\mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$. 
+
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. 
 
 * `input_profile`: The beam profile at the Forier plane before modulated by the SLM. Typically, this is beam profile of the beam one used to illuminate the SLM.
@@ -66,7 +67,7 @@ To calculate the hologram, we will need both `input_profile` and `target_profile
 
 # Hardware Controls
 `pySLM2` provides with the hardware controls of the DMDs from Visitech and Vialux. The controllers from the two companies uses different communication protocols and architectures.
-A goal of `pySLM2` is to provide a universal application interface for interacting with the hardwares. -->
+A goal of `pySLM2` is to provide a universal application interface for interacting with the hardwares. 
 
 For both controllers, we implemented ....
 
