@@ -19,7 +19,7 @@ def luxbeam_ip(request):
 
 @pytest.fixture
 def alp_ip(request):
-    return request.config.getoption("--alp-ip")s
+    return request.config.getoption("--alp-ip")
 
 
 def pytest_configure(config):
