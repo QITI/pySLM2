@@ -113,6 +113,18 @@ class ALPController(DMDControllerBase):
         self.alp.Free()
 
     @_check_initialization
+    @property
+    def Nx(self) -> int:
+        """Number of pixels in x direction (width)."""
+        return self.alp.DevInquire(ALP_DEV_DISPLAY_WIDTH)
+
+    @_check_initialization
+    @property
+    def Ny(self) -> int:
+        """Number of pixels in y direction (height)."""
+        return self.alp.DevInquire(ALP_DEV_DISPLAY_Height)
+
+    @_check_initialization
     def load_single(self, dmd_state):
         """load and display a single binary image on the DMD.
 

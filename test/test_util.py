@@ -2,6 +2,7 @@ import pySLM2
 import pySLM2.util
 import random
 import pytest
+from sample import number_image
 
 def yesno(question):
     """Simple Yes/No Function."""
@@ -32,7 +33,8 @@ def test_alp_load_multiple():
     prompt = f'how many picutures? '
     num_pictures = int(input(prompt))
 
-    number_lst = [random.randint(1, 100) for _ in range(num_pictures)]
+
+    number_lst = [number_image(random.randint(1, 100), alp.Nx, alp.Ny) for _ in range(num_pictures)]
     alp.load_multiple(number_lst, picture_time=2000000)
 
     for number in number_lst:
