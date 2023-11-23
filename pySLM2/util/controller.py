@@ -112,14 +112,14 @@ class ALPController(DMDControllerBase):
     def close(self):
         self.alp.Free()
 
-    @_check_initialization
     @property
+    @_check_initialization
     def Nx(self) -> int:
         """Number of pixels in x direction (width)."""
         return self.alp.DevInquire(ALP_DEV_DISPLAY_WIDTH)
 
-    @_check_initialization
     @property
+    @_check_initialization
     def Ny(self) -> int:
         """Number of pixels in y direction (height)."""
         return self.alp.DevInquire(ALP_DEV_DISPLAY_Height)
