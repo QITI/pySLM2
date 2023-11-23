@@ -9,6 +9,9 @@ def pytest_addoption(parser):
     parser.addoption(
         "--luxbeam-ip", action="store", default=None, help="ip address of the DMD Luxbeam Controller",
     )
+    parser.addoption(
+        "--alp-ip", action="store", default=None, help="ip address of the ALP Controller",
+    )
 
 @pytest.fixture
 def luxbeam_ip(request):
@@ -24,6 +27,8 @@ def pytest_configure(config):
 
 
     config.addinivalue_line("markers", "luxbeam: mark test that requires luxbeam controller.")
+    config.addinivalue_line("markers", "alp: mark test that requires ALP controller.")
+
 
 
 def pytest_collection_modifyitems(config, items):
@@ -32,3 +37,9 @@ def pytest_collection_modifyitems(config, items):
         for item in items:
             if "luxbeam" in item.keywords:
                 item.add_marker(skip_luxbeam)
+
+    if config.getoption("--alp-ip") is None:
+        skip_alp = pytest.mark.skip(reason="need --alp-ip option to run")
+        for item in items:
+            if "alp" in item.keywords:
+                item.add_marker(skip_alp)
