@@ -59,11 +59,15 @@ The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ 
 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. 
 
-* `input_profile`: The beam profile at the Forier plane before modulated by the SLM. Typically, this is beam profile of the beam one used to illuminate the SLM.
+<!-- * `input_profile`: The beam profile at the Forier plane before modulated by the SLM. Typically, this is beam profile of the beam one used to illuminate the SLM.
 * `output_profile`: The beam profile at the Fourier plane after modulated by the SLM.
 * `target_profile`: The desired beam profile at the image plane.
 
-To calculate the hologram, we will need both `input_profile` and `target_profile`. The `output_profile` is not required but one can extract it from the simulation. 
+To calculate the hologram, we will need both `input_profile` and `target_profile`. The `output_profile` is not required but one can extract it from the simulation.  -->
+
+# Example
+
+
 
 # Hardware Controls
 `pySLM2` provides with the hardware controls of the DMDs from Visitech and Vialux. The controllers from the two companies uses different communication protocols and architectures.
