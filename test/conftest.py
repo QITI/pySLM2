@@ -17,6 +17,10 @@ def pytest_addoption(parser):
 def luxbeam_ip(request):
     return request.config.getoption("--luxbeam-ip")
 
+@pytest.fixture
+def alp_ip(request):
+    return request.config.getoption("--alp-ip")s
+
 
 def pytest_configure(config):
     backend64 = config.getoption("backend64")
