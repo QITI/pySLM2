@@ -81,6 +81,7 @@ class DMDControllerBase(object):
 
 
 class ALPController(DMDControllerBase):
+    MAX_UINT8 = 2**8 - 1 
     """This class implements the control function for interacting the controller from Vialux.
 
     Parameters
@@ -99,7 +100,8 @@ class ALPController(DMDControllerBase):
         if ALP4 is None:
             raise ModuleNotFoundError("ALP4lib module is unavailable.")
 
-        self.alp = ALP4.ALP4(version=version, invert=invert)
+        # TODO add invert
+        self.alp = ALP4.ALP4(version=version)
 
         super(ALPController, self).__init__(invert=invert)
 
@@ -126,7 +128,7 @@ class ALPController(DMDControllerBase):
         self.alp.SeqControl(ALP4.ALP_BIN_MODE, ALP4.ALP_BIN_UNINTERRUPTED)
 
         # Send the image sequence as a 1D list/array/numpy array
-        self.alp.SeqPut(imgData=dmd_state)
+        self.alp.SeqPut(imgData=dmd_state * self.MAX_UINT8)
 
         self.alp.SetTiming()
 
@@ -134,7 +136,7 @@ class ALPController(DMDControllerBase):
 
 
     @_check_initialization
-    def load_multiple(self, dmd_states: List[np.ndarray], picture_time:int, rising_edge:boolean=True, trigger_in_delay:int=0, num_rep:int=0):
+    def load_multiple(self, dmd_states: List[np.ndarray], picture_time:int, rising_edge:bool=True, trigger_in_delay:int=0, num_rep:int=0):
         """load and display a list of binary images on the DMD.
 
         Parameters
@@ -143,7 +145,7 @@ class ALPController(DMDControllerBase):
             The dtype must be bool and have the same dimension as the DMD.
         picture_time: float
             The time between two frames in microseconds.
-        rising_edge: boolean
+        rising_edge: bool
             If True, the trigger is a rising edge. Otherwise, it is a falling edge.
         trigger_in_delay: int
             The delay of the trigger in microseconds between picture_time and the trigger.
@@ -166,7 +168,7 @@ class ALPController(DMDControllerBase):
         self.alp.SeqControl(ALP4.ALP_BIN_MODE, ALP4.ALP_BIN_UNINTERRUPTED)
 
         # Send the image sequence as a 1D list/array/numpy array
-        self.alp.SeqPut(imgData=np.concatenate(dmd_states))
+        self.alp.SeqPut(imgData=np.concatenate(dmd_states)*self.MAX_UINT8)
         
         # Set the timing
         self.alp.SetTiming(picutreTime=picture_time, triggerInDelay=trigger_in_delay)
