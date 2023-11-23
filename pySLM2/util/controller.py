@@ -132,6 +132,52 @@ class ALPController(DMDControllerBase):
 
         self.alp.Run()
 
+
+    @_check_initialization
+    def load_multiple(self, dmd_states: List[np.ndarray], picture_time:int, rising_edge:boolean=True, trigger_in_delay:int=0, num_rep:int=0):
+        """load and display a list of binary images on the DMD.
+
+        Parameters
+        ----------
+        dmd_states: List[numpy.ndarray]
+            The dtype must be bool and have the same dimension as the DMD.
+        picture_time: float
+            The time between two frames in microseconds.
+        rising_edge: boolean
+            If True, the trigger is a rising edge. Otherwise, it is a falling edge.
+        trigger_in_delay: int
+            The delay of the trigger in microseconds between picture_time and the trigger.
+        num_rep: int
+            The number of repetitions. If 0, the sequence will run forever.
+        """
+        # Set to slave mode
+        self.alp.ProjControl(ALP_PROJ_MODE, ALP_SLAVE)
+
+        # Set the trigger edge to be rising or falling
+        if rising_edge:
+            self.alp.DevControl(ALP_TRIGGER_EDGE, ALP_EDGE_RISING)
+        else:
+            self.alp.DevControl(ALP_TRIGGER_EDGE, ALP_EDGE_FALLING)
+
+        # Allocate the onboard memory for the image sequence
+        self.alp.SeqAlloc(nbImg=len(dmd_states), bitDepth=1)
+
+        # Remove the reset time between frames.
+        self.alp.SeqControl(ALP4.ALP_BIN_MODE, ALP4.ALP_BIN_UNINTERRUPTED)
+
+        # Send the image sequence as a 1D list/array/numpy array
+        self.alp.SeqPut(imgData=np.concatenate(dmd_states))
+        
+        # Set the timing
+        self.alp.SetTiming(picutreTime=picture_time, triggerInDelay=trigger_in_delay)
+
+        # Run the sequence, loop forever if num_rep == 0, otherwise run num_rep times
+        if num_rep == 0:
+            self.alp.Run(loop=True)
+        else:
+            self.alp.SeqControl(ALP_SEQ_REPEAT, num_rep)
+            self.alp.Run(loop=False)
+
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
 
