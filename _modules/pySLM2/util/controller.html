@@ -307,7 +307,6 @@
 <div class="viewcode-block" id="ALPController">
 <a class="viewcode-back" href="../../../pySLM2.util.html#pySLM2.util.controller.ALPController">[docs]</a>
 <span class="k">class</span> <span class="nc">ALPController</span><span class="p">(</span><span class="n">DMDControllerBase</span><span class="p">):</span>
-    <span class="n">MAX_UINT8</span> <span class="o">=</span> <span class="mi">2</span><span class="o">**</span><span class="mi">8</span> <span class="o">-</span> <span class="mi">1</span> 
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;This class implements the control function for interacting the controller from Vialux.</span>
 
 <span class="sd">    Parameters</span>
@@ -326,8 +325,7 @@
         <span class="k">if</span> <span class="n">ALP4</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ModuleNotFoundError</span><span class="p">(</span><span class="s2">&quot;ALP4lib module is unavailable.&quot;</span><span class="p">)</span>
 
-        <span class="c1"># TODO add invert</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span> <span class="o">=</span> <span class="n">ALP4</span><span class="o">.</span><span class="n">ALP4</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span> <span class="o">=</span> <span class="n">ALP4</span><span class="o">.</span><span class="n">ALP4</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span> <span class="n">invert</span><span class="o">=</span><span class="n">invert</span><span class="p">)</span>
 
         <span class="nb">super</span><span class="p">(</span><span class="n">ALPController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">invert</span><span class="o">=</span><span class="n">invert</span><span class="p">)</span>
 
@@ -362,60 +360,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqControl</span><span class="p">(</span><span class="n">ALP4</span><span class="o">.</span><span class="n">ALP_BIN_MODE</span><span class="p">,</span> <span class="n">ALP4</span><span class="o">.</span><span class="n">ALP_BIN_UNINTERRUPTED</span><span class="p">)</span>
 
         <span class="c1"># Send the image sequence as a 1D list/array/numpy array</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqPut</span><span class="p">(</span><span class="n">imgData</span><span class="o">=</span><span class="n">dmd_state</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_UINT8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqPut</span><span class="p">(</span><span class="n">imgData</span><span class="o">=</span><span class="n">dmd_state</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SetTiming</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">Run</span><span class="p">()</span></div>
-
-
-
-<div class="viewcode-block" id="ALPController.load_multiple">
-<a class="viewcode-back" href="../../../pySLM2.util.html#pySLM2.util.controller.ALPController.load_multiple">[docs]</a>
-    <span class="nd">@_check_initialization</span>
-    <span class="k">def</span> <span class="nf">load_multiple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmd_states</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span> <span class="n">picture_time</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">rising_edge</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">trigger_in_delay</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">num_rep</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;load and display a list of binary images on the DMD.</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        dmd_states: List[numpy.ndarray]</span>
-<span class="sd">            The dtype must be bool and have the same dimension as the DMD.</span>
-<span class="sd">        picture_time: float</span>
-<span class="sd">            The time between two frames in microseconds.</span>
-<span class="sd">        rising_edge: bool</span>
-<span class="sd">            If True, the trigger is a rising edge. Otherwise, it is a falling edge.</span>
-<span class="sd">        trigger_in_delay: int</span>
-<span class="sd">            The delay of the trigger in microseconds between picture_time and the trigger.</span>
-<span class="sd">        num_rep: int</span>
-<span class="sd">            The number of repetitions. If 0, the sequence will run forever.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Set to slave mode</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">ProjControl</span><span class="p">(</span><span class="n">ALP_PROJ_MODE</span><span class="p">,</span> <span class="n">ALP_SLAVE</span><span class="p">)</span>
-
-        <span class="c1"># Set the trigger edge to be rising or falling</span>
-        <span class="k">if</span> <span class="n">rising_edge</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">DevControl</span><span class="p">(</span><span class="n">ALP_TRIGGER_EDGE</span><span class="p">,</span> <span class="n">ALP_EDGE_RISING</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">DevControl</span><span class="p">(</span><span class="n">ALP_TRIGGER_EDGE</span><span class="p">,</span> <span class="n">ALP_EDGE_FALLING</span><span class="p">)</span>
-
-        <span class="c1"># Allocate the onboard memory for the image sequence</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqAlloc</span><span class="p">(</span><span class="n">nbImg</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">dmd_states</span><span class="p">),</span> <span class="n">bitDepth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-        <span class="c1"># Remove the reset time between frames.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqControl</span><span class="p">(</span><span class="n">ALP4</span><span class="o">.</span><span class="n">ALP_BIN_MODE</span><span class="p">,</span> <span class="n">ALP4</span><span class="o">.</span><span class="n">ALP_BIN_UNINTERRUPTED</span><span class="p">)</span>
-
-        <span class="c1"># Send the image sequence as a 1D list/array/numpy array</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqPut</span><span class="p">(</span><span class="n">imgData</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">dmd_states</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_UINT8</span><span class="p">)</span>
-        
-        <span class="c1"># Set the timing</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SetTiming</span><span class="p">(</span><span class="n">picutreTime</span><span class="o">=</span><span class="n">picture_time</span><span class="p">,</span> <span class="n">triggerInDelay</span><span class="o">=</span><span class="n">trigger_in_delay</span><span class="p">)</span>
-
-        <span class="c1"># Run the sequence, loop forever if num_rep == 0, otherwise run num_rep times</span>
-        <span class="k">if</span> <span class="n">num_rep</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">Run</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">SeqControl</span><span class="p">(</span><span class="n">ALP_SEQ_REPEAT</span><span class="p">,</span> <span class="n">num_rep</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">alp</span><span class="o">.</span><span class="n">Run</span><span class="p">(</span><span class="n">loop</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
 
 
     <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
