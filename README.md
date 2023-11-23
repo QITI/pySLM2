@@ -16,7 +16,10 @@ If you are using Anaconda as your python distribution, you can install the `tens
 ```
 conda install -c anaconda tensorflow-gpu
 ```
-
+If you don't have GPU available, you can isntall the `tensorflow` with:
+```
+conda install -c anaconda tensorflow
+```
 
 ### With setuptools
 
