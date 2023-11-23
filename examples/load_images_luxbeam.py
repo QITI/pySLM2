@@ -1,6 +1,6 @@
 from pySLM2.util import LuxbeamController
 
-luxbeam = LuxbeamController()
+luxbeam = LuxbeamController(ip="192.168.1.10")
 luxbeam.initialize()
 
 # generate two images
