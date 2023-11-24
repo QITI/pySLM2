@@ -116,16 +116,16 @@ class ALPController(DMDControllerBase):
     @_check_initialization
     def Nx(self) -> int:
         """Number of pixels in x direction (width)."""
-        return self.alp.DevInquire(ALP.ALP_DEV_DISPLAY_WIDTH)
+        return self.alp.DevInquire(ALP4.ALP_DEV_DISPLAY_WIDTH)
 
     @property
     @_check_initialization
     def Ny(self) -> int:
         """Number of pixels in y direction (height)."""
-        return self.alp.DevInquire(ALP.ALP_DEV_DISPLAY_Height)
+        return self.alp.DevInquire(ALP4.ALP_DEV_DISPLAY_HEIGHT)
 
     @_check_initialization
-    def load_single(self, dmd_state):
+    def load_single(self, dmd_state, picture_time=2000):
         """load and display a single binary image on the DMD.
 
         Parameters
@@ -142,9 +142,14 @@ class ALPController(DMDControllerBase):
         # Send the image sequence as a 1D list/array/numpy array
         self.alp.SeqPut(imgData=dmd_state * self.MAX_UINT8)
 
-        self.alp.SetTiming()
+        self.alp.SetTiming(pictureTime=picture_time)
 
         self.alp.Run()
+
+        input("Press any key to stop display")
+
+        self.alp.Halt()
+        self.alp.FreeSeq()
 
 
     @_check_initialization
@@ -165,13 +170,13 @@ class ALPController(DMDControllerBase):
             The number of repetitions. If 0, the sequence will run forever.
         """
         # Set to slave mode
-        self.alp.ProjControl(ALP.ALP_PROJ_MODE, ALP.ALP_SLAVE)
+        self.alp.ProjControl(ALP4.ALP_PROJ_MODE, ALP4.ALP_SLAVE)
 
         # Set the trigger edge to be rising or falling
         if rising_edge:
-            self.alp.DevControl(ALP.ALP_TRIGGER_EDGE, ALP.ALP_EDGE_RISING)
+            self.alp.DevControl(ALP4.ALP_TRIGGER_EDGE, ALP4.ALP_EDGE_RISING)
         else:
-            self.alp.DevControl(ALP.ALP_TRIGGER_EDGE, ALP.ALP_EDGE_FALLING)
+            self.alp.DevControl(ALP4.ALP_TRIGGER_EDGE, ALP4.ALP_EDGE_FALLING)
 
         # Allocate the onboard memory for the image sequence
         self.alp.SeqAlloc(nbImg=len(dmd_states), bitDepth=1)
@@ -183,14 +188,17 @@ class ALPController(DMDControllerBase):
         self.alp.SeqPut(imgData=np.concatenate(dmd_states)*self.MAX_UINT8)
         
         # Set the timing
-        self.alp.SetTiming(picutreTime=picture_time, triggerInDelay=trigger_in_delay)
+        self.alp.SetTiming(pictureTime=picture_time, triggerInDelay=trigger_in_delay)
 
         # Run the sequence, loop forever if num_rep == 0, otherwise run num_rep times
         if num_rep == 0:
             self.alp.Run(loop=True)
+            input("Press any key to stop")
         else:
-            self.alp.SeqControl(ALP.ALP_SEQ_REPEAT, num_rep)
+            self.alp.SeqControl(ALP4.ALP_SEQ_REPEAT, num_rep)
             self.alp.Run(loop=False)
+        self.alp.Halt()
+        self.alp.FreeSeq()
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()

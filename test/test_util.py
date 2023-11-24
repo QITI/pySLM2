@@ -2,6 +2,8 @@ import pySLM2
 import pySLM2.util
 import random
 import pytest
+import time
+
 
 def yesno(question):
     """Simple Yes/No Function."""
@@ -31,6 +33,7 @@ def test_alp_Nx():
     alp.initialize()
 
     assert alp.Nx == 2560
+    alp.close()
 
 @pytest.mark.alp
 def test_alp_Ny():
@@ -38,17 +41,34 @@ def test_alp_Ny():
     alp.initialize()
 
     assert alp.Ny == 1600
+    alp.close()
+
+@pytest.mark.alp
+def test_alp_load_single():
+    alp = pySLM2.util.ALPController()
+    alp.initialize()
+
+    prompt = f'give a number '
+    number = int(input(prompt))
+
+    alp.load_single(alp.number_image(number))
+
+    assert yesno("Is number {0} displayed on the DMD".format(number))
+
+    # time.sleep(10)
+    alp.close()
 
 @pytest.mark.alp
 def test_alp_load_multiple():
     alp = pySLM2.util.ALPController()
     alp.initialize()
 
-    prompt = f'how many picutures? '
+    prompt = f'how many pictures? '
     num_pictures = int(input(prompt))
 
-    number_lst = [alp.number_image(random.randint(1, 100), alp.Nx, alp.Ny) for _ in range(num_pictures)]
-    alp.load_multiple(number_lst, picture_time=2000000)
+    number_lst = [random.randint(1, 100) for _ in range(num_pictures)]
+    number_img = [alp.number_image(num) for num in number_lst]
+    alp.load_multiple(number_img, picture_time=2000000)
 
     for number in number_lst:
         assert yesno("Is number {0} displayed on the DMD".format(number))
