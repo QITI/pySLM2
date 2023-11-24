@@ -24,6 +24,21 @@ def test_luxbeam_load_single(luxbeam_ip):
 
     assert yesno("Is number {0} displayed on the DMD".format(number))
 
+
+@pytest.mark.alp
+def test_alp_Nx(alp_ip):
+    alp = pySLM2.util.ALPController()
+    alp.initialize()
+
+    assert alp.Nx == 2560
+
+@pytest.mark.alp
+def test_alp_Ny(alp_ip):
+    alp = pySLM2.util.ALPController()
+    alp.initialize()
+
+    assert alp.Ny == 1600
+
 @pytest.mark.alp
 def test_alp_load_multiple():
     alp = pySLM2.util.ALPController()
