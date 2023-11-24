@@ -68,7 +68,7 @@ For profiles that are not included by default, users have the option to either i
 
 ![Hologram for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py`) \label{fig:lg}](lg.png)
 
-The arithmic operations of the profiles are also overloaded, so one can easily combine different profiles through addition or rescale the profiles through multiplication. Shown in Fig. \autoref{fig:multi}, we create a hologram to generate two Gaussian beams. In the source code, it is written as adding two Gaussian profiles together at different positions.
+The arithmetic operations of the profiles are also overloaded, so one can easily combine different profiles through addition or rescale the profiles through multiplication. Shown in Fig. \autoref{fig:multi}, we create a hologram to generate two Gaussian beams. In the source code, it is written as adding two Gaussian profiles together at different positions.
 
 ![Hologram for two Gaussian beams and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py)` \label{fig:multi}](multi.png)
 
