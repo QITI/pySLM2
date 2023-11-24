@@ -206,11 +206,12 @@
 <p>The dependencies of <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> in includes: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>.
 <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> uses <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
 In order to take advantage of the GPU, the correct version of <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> along with the cuda toolkits have to be installed.</p>
-<p>If you are using Anaconda as your python distribution, you can install the <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with GPU support by:</p>
+<p>For Anaconda users, it is recommended to install <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with conda first for better performance and compatibility.
+If you have a suitable GPU in the computer, you can install the <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with GPU support by:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">anaconda</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span>
 </pre></div>
 </div>
-<p>If you don’t have GPU available, you can isntall the <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with:</p>
+<p>Otherwise, if you don’t have GPU available, you can isntall the <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">anaconda</span> <span class="n">tensorflow</span>
 </pre></div>
 </div>
