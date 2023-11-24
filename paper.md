@@ -44,7 +44,7 @@ Holographic beam shaping using SLMs provides a potent tool for precise and adapt
 
 Secondly, holographic beam shaping can actively correct optical aberrations in the system, achieving diffraction-limited performance. This enables the faithful production of target beam profiles with high accuracy. It has been shown that residual aberrations can be corrected to less than $\lambda/20$ root-mean-square (RMS)[@shih2021reprogrammable;@zupancic2016ultra], which is smaller than most of the manufacturing tolerances of optical elements.
 
-At the time of writing, the pySLM2 package, as detailed in this manuscript, has been employed in the research of @shih2021reprogrammable, @motlakunta2023preserving, and @kotibhaskar2023programmable. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
+At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been employed in the research of @shih2021reprogrammable, @motlakunta2023preserving, and @kotibhaskar2023programmable. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
 
 
 # Fourier Holography Basics
@@ -62,7 +62,7 @@ The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. The SLM modulates the beam at Fourier plane to engineer the desired beam profiles at the image plane.
 
 # Usages
-pySLM2 offers a range of commonly used optics profiles right out of the box, including Hermite Gaussian, Laguerre Gaussian, super Gaussian (also known as "flat top"), and Zernike polynomials. These profiles are implemented as functional objects, and pySLM2 automatically handles the profile sampling during hologram calculations.
+`pySLM2` offers a range of commonly used optics profiles right out of the box, including Hermite Gaussian, Laguerre Gaussian, super Gaussian (also known as "flat top"), and Zernike polynomials. These profiles are implemented as functional objects, and `pySLM2` automatically handles the profile sampling during hologram calculations.
 
 For profiles that are not included by default, users have the option to either inherit from the base class and implement their custom profiles or generate the sampled profiles in an array format to pass them to the hologram calculation function. As illustrated in Fig. \autoref{fig:lg}, here's an example of creating a hologram to generate a Laguerre Gaussian beam with a mode of $l=1$, $p=0$, which often referred to as a "doughnut beam", from the fundamental Gaussian mode. Unless specified, the simulation shown in this paper is simulated with the following conditions: $\lambda=369~\mathrm{nm}$ wavelength, $f=200~\mathrm{mm}$ Fourier lens focal length, and with Texas Instrument DLP9500 as the SLM ($1~\mathrm{px} = 10~\mu \mathrm{m}$ micromirror size).
 
@@ -74,7 +74,7 @@ The arithmetic operations of the profiles are also overloaded, so one can easily
 
 
 ## Aberration Correction
-One of the key advantages of holographic beam shaping is its capability to correct optical aberrations, and pySLM2 provides an easy and efficient method to achieve this correction. By supplying the aberration information during the hologram calculation, pySLM2 generates a hologram imprinted with a phase profile opposite to the aberration, effectively canceling it out.
+One of the key advantages of holographic beam shaping is its capability to correct optical aberrations, and `pySLM2` provides an easy and efficient method to achieve this correction. By supplying the aberration information during the hologram calculation, `pySLM2` generates a hologram imprinted with a phase profile opposite to the aberration, effectively canceling it out.
 
 In the example depicted in \autoref{fig:aberration}, we simulate the beam profile at the image plane both with and without aberration correction. Without aberration correction, the beam profile becomes distorted and broadened. In this particular simulation, spherical aberration is used, but `pySLM2` is capable of correcting other types of aberrations as well.
 
@@ -84,9 +84,9 @@ In the example depicted in \autoref{fig:aberration}, we simulate the beam profil
 To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor[@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to @shih2021reprogrammable.
 
 ## Hardware Controls
-pySLM2 provides hardware controls for DMDs from both Visitech and Vialux. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the Vialux controller uses USB3.
+`pySLM2 provides hardware controls for DMDs from both Visitech and Vialux. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the Vialux controller uses USB3.
 
-One of the goals of pySLM2 is to abstract the hardware details and offer a unified application interface for interacting with these devices. As an illustration, we've implemented the same `load_single` and `load_multiple` functions within the controller class for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms, facilitating seamless switching with triggers.
+One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. As an illustration, we've implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms, facilitating seamless switching with triggers.
 
 
 <!-- 
