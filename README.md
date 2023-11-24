@@ -44,13 +44,10 @@ Optional Dependencies for Hardware Controls
 The DMDs from Vialux are communicated with the ALP library and a python binding, ALP4lib.
 
 * To install the ALP library, visit the vendors website: https://vialux.de/en/download.html
-* The python binding, ALP4lib, can be installed from git. Note that the ALP4lib used in pySLM2.util is a fork from the original page and curently maintined by the QITI lab.:
-```
-pip install https://github.com/QITI/ALP4lib
-```
+* The python binding, ALP4lib, can be installed from PyPi:
 
 ### Visitech
-The DMD from Visitech are communicates with UDP, and there no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed through git:
+The DMD from Visitech are communicates with UDP, and there no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
 ```
 pip install Luxbeam
 ```
