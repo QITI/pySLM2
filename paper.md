@@ -12,6 +12,8 @@ authors:
     equal-contrib: false
     affiliation: "1" # (Multiple affiliations must be quoted)
     corresponding: true # (This is how to denote the corresponding author)
+  - name: Jingwen Zhu
+    affiliation: "1"
   - name: Kazi Rajibul Islam
     affiliation: "1"
     
