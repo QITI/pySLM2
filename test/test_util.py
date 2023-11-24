@@ -26,14 +26,14 @@ def test_luxbeam_load_single(luxbeam_ip):
 
 
 @pytest.mark.alp
-def test_alp_Nx(alp_ip):
+def test_alp_Nx():
     alp = pySLM2.util.ALPController()
     alp.initialize()
 
     assert alp.Nx == 2560
 
 @pytest.mark.alp
-def test_alp_Ny(alp_ip):
+def test_alp_Ny():
     alp = pySLM2.util.ALPController()
     alp.initialize()
 

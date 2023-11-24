@@ -1,0 +1,27 @@
+from setuptools import setup, find_packages
+
+# Load project metadata from pyproject.toml
+try:
+    import toml
+    metadata = toml.load("pyproject.toml")["project"]
+except ImportError:
+    raise SystemExit("toml not found, please install toml and try again.")
+
+setup(
+    name=metadata['name'],
+    version=metadata['version'],
+    description=metadata.get('description', ''),
+    author=metadata['authors'][0]['name'],
+    author_email=metadata['authors'][0]['email'],
+    packages=find_packages(),
+    install_requires=metadata.get('dependencies', []),
+    entry_points={
+        'console_scripts': [
+            # Add any console scripts here if needed
+        ],
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        # Add other classifiers as needed
+    ],
+)
