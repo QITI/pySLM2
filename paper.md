@@ -86,9 +86,7 @@ To obtain the phase map of the aberration, one can either use a wavefront sensor
 ## Hardware Controls
 pySLM2 provides hardware controls for DMDs from both Visitech and Vialux. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the Vialux controller uses USB3.
 
-One of the goals of pySLM2 is to abstract the hardware details and offer an unified application interface for interacting with these devices. For example, we have implemented `load_single` and `load_multiple` functions for the controller class for the two manufactures' devices for displaying single holograms or loading multiple holograms for switching with triggers.
-
-One of the primary goals of pySLM2 is to abstract the intricacies of hardware management and provide a unified application interface for interacting with devices. As an illustration, we've implemented the same `load_single` and `load_multiple` functions within the controller class for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms, facilitating seamless switching with triggers.
+One of the goals of pySLM2 is to abstract the hardware details and offer a unified application interface for interacting with these devices. As an illustration, we've implemented the same `load_single` and `load_multiple` functions within the controller class for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms, facilitating seamless switching with triggers.
 
 
 <!-- 
