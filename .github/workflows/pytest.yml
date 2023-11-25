@@ -27,11 +27,10 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install build
         python -m pip install pytest
-        python -m pip install ALP4lib
         pip install .
     - name: Test with pytest
       run: |
-        pytest -v test
+        pytest -v -m "not alp" test
     - name: Test with pytest (64 bit backend)
       run: |
-        pytest -v test --backend64
+        pytest -v -m "not alp" test --backend64
