@@ -456,13 +456,13 @@ class LCOS_SLM(SLM):
 
     def __init__(self, wavelength, focal_length, Nx, Ny, pixel_size):
         super().__init__(wavelength, focal_length, Nx, Ny, pixel_size)
-        self.slm_state = np.zeros(shape=(Ny, Nx), dtype=np.complex)
+        self.slm_state = np.zeros(shape=(Ny, Nx), dtype=complex)
 
     def reset_slm_state(self):
-        self.slm_state = np.zeros(shape=(self.Ny, self.Nx), dtype=np.complex)
+        self.slm_state = np.zeros(shape=(self.Ny, self.Nx), dtype=complex)
 
     def _state_tensor(self):
-        return tf.constant(self.slm_state, dtype=BACKEND.dtype_complex)
+        return tf.exp(-1j *tf.cast(self.slm_state, dtype=BACKEND.dtype_complex))
 
     def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
         input_profile = self.profile_to_tensor(input_profile, complex=True)

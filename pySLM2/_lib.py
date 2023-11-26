@@ -161,6 +161,13 @@ def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", 
         N = kwargs.get("N", 200)
         N = tf.constant(N, dtype=BACKEND.dtype_int)
         return _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N)
+    elif method=="mraf":
+        N = kwargs.get("N", 200)
+        N = tf.constant(N, dtype=BACKEND.dtype_int)
+        signal_window = kwargs.get("signal_window")
+        mixing_factor = kwargs.get("mixing_factor", 0.4)
+        mixing_factor = tf.constant(mixing_factor, dtype=BACKEND.dtype)
+        return _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, signal_window, mixing_factor)
     else:
         raise ValueError("{0} is not a valid method!".format(method))
 
@@ -179,6 +186,25 @@ def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
         profile_angle = tf.math.angle(image_plane_profile)
         profile_angle = tf.cast(profile_angle, dtype=BACKEND.dtype_complex)
         profile_corrected = target_amp_profile * tf.exp(1j * profile_angle)
+        phase_profile = tf.math.angle(_fourier_transform(profile_corrected))
+
+    return phase_profile
+
+@tf.function
+def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, signal_window, mixing_factor):
+    phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
+
+    target_amp_profile = tf.signal.ifftshift(target_amp_profile)
+    target_amp_profile = tf.cast(target_amp_profile, dtype=BACKEND.dtype_complex)
+
+    for _ in tf.range(N):
+        phase_profile = tf.cast(phase_profile, dtype=BACKEND.dtype_complex)
+        modulated_profile = input_profile * tf.exp(1j * phase_profile)
+        image_plane_profile = _inverse_fourier_transform(modulated_profile)
+        profile_angle = tf.math.angle(image_plane_profile)
+        profile_angle = tf.cast(profile_angle, dtype=BACKEND.dtype_complex)
+        profile_corrected = mixing_factor * target_amp_profile * tf.exp(1j * profile_angle) * signal_window + \
+                            (1-mixing_factor) * image_plane_profile
         phase_profile = tf.math.angle(_fourier_transform(profile_corrected))
 
     return phase_profile
