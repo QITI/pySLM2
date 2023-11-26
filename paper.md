@@ -61,6 +61,12 @@ The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ 
 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. The SLM modulates the beam at Fourier plane to engineer the desired beam profiles at the image plane.
 
+# Hologram Generation Algorithm
+Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifing the the amplitude. As the time of writing, Gerchberg-Saxton (GS)[@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm[@gaunt2012robust] are included. 
+
+On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, the randomized algorithm from zupancic2016ultra and the iterative Fourier transformation algorithm from @shih2021reprogrammable and @motlakunta2023preserving are provided for hologram generation.
+
+
 # Usages
 `pySLM2` offers a range of commonly used optics profiles right out of the box, including Hermite Gaussian, Laguerre Gaussian, super Gaussian (also known as "flat top"), and Zernike polynomials. These profiles are implemented as functional objects, and `pySLM2` automatically handles the profile sampling during hologram calculations.
 
