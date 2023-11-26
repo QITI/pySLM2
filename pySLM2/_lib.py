@@ -196,6 +196,14 @@ def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, sign
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)
     target_amp_profile = tf.cast(target_amp_profile, dtype=BACKEND.dtype_complex)
+    
+    one_minus_m = 1 - mixing_factor
+
+    mixing_factor = tf.cast(mixing_factor, dtype=BACKEND.dtype_complex)
+    one_minus_m = tf.cast(one_minus_m, dtype=BACKEND.dtype_complex)
+
+    signal_window = tf.signal.ifftshift(signal_window)
+    inverse_signal_window = 1 - signal_window
 
     for _ in tf.range(N):
         phase_profile = tf.cast(phase_profile, dtype=BACKEND.dtype_complex)
@@ -204,7 +212,7 @@ def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, sign
         profile_angle = tf.math.angle(image_plane_profile)
         profile_angle = tf.cast(profile_angle, dtype=BACKEND.dtype_complex)
         profile_corrected = mixing_factor * target_amp_profile * tf.exp(1j * profile_angle) * signal_window + \
-                            (1-mixing_factor) * image_plane_profile
+                            one_minus_m * image_plane_profile * inverse_signal_window
         phase_profile = tf.math.angle(_fourier_transform(profile_corrected))
 
     return phase_profile

@@ -467,6 +467,14 @@ class LCOS_SLM(SLM):
     def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
         input_profile = self.profile_to_tensor(input_profile, complex=True)
         target_amp_profile = self.profile_to_tensor(target_amp_profile, at_fourier_plane=False)
+
+        if method == "mraf":
+            kwargs["signal_window"] = self.profile_to_tensor(
+                kwargs["signal_window"],
+                at_fourier_plane=False,
+                complex=True
+            )
+
         self.slm_state = np.array(_lib.calculate_lcos_slm_hologram(input_profile, target_amp_profile, method=method,
                                                                    **kwargs))
 
