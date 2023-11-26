@@ -64,7 +64,7 @@ The aberrations of the optical system can be modeled as a phase map $\Phi_{\math
 # Hologram Generation Algorithm
 Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifing the the amplitude. As the time of writing, Gerchberg-Saxton (GS)[@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm[@gaunt2012robust] are included. 
 
-On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, the randomized algorithm from zupancic2016ultra and the iterative Fourier transformation algorithm from @shih2021reprogrammable and @motlakunta2023preserving are provided for hologram generation.
+On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, the randomized algorithm from @zupancic2016ultra and the iterative Fourier transformation algorithm from @shih2021reprogrammable and @motlakunta2023preserving are provided for hologram generation.
 
 
 # Usages
