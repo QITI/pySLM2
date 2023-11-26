@@ -707,6 +707,14 @@
     <span class="k">def</span> <span class="nf">calculate_hologram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_profile</span><span class="p">,</span> <span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;gs&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">input_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">target_amp_profile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span><span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;mraf&quot;</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;signal_window&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">profile_to_tensor</span><span class="p">(</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;signal_window&quot;</span><span class="p">],</span>
+                <span class="n">at_fourier_plane</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="nb">complex</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">slm_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_lib</span><span class="o">.</span><span class="n">calculate_lcos_slm_hologram</span><span class="p">(</span><span class="n">input_profile</span><span class="p">,</span> <span class="n">target_amp_profile</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
                                                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
 </div>
