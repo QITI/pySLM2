@@ -14,7 +14,7 @@ authors:
     corresponding: true # (This is how to denote the corresponding author)
   - name: Jingwen Zhu
     affiliation: "1"
-  - name: Kazi Rajibul Islam
+  - name: Rajibul Islam
     affiliation: "1"
     
 
@@ -27,15 +27,15 @@ bibliography: paper.bib
 ---
 
 # Summary
-Holographic beam shaping using spatial light modulators (SLMs) as a reprogrammable hologram offers a powerful tool for precise and flexible optical controls. It has been adopted for a wide range of research, including atom trapping[@gaunt2012robust], optical addressing of individual quantum objects[@motlakunta2023preserving;@islam2015measuring], and multi-beam laser machining[@obata2010multi].
+Holographic beam shaping using spatial light modulators (SLMs) as a reprogrammable hologram offers a powerful tool for precise and flexible optical controls. It has been adopted for a wide range of research, including atom trapping[@gaunt2012robust], optical addressing of individual quantum objects[@motlakunta2023preserving], preparation of exotic quantum states[@islam2015measuring], and multi-beam laser machining[@obata2010multi].
 
 `pySLM2` is a python package designed for full-stack control of SLMs for holographic beam shaping, encompassing hologram generation, simulation, and hardware controls.
 
-The package implements the hologram generation algorithms of the Lee hologram[@lee1978iii] and its improved predecessors from @zupancic2016ultra and @shih2021reprogrammable, targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm[@gerhberg1972practical] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
+The package implements the hologram generation algorithms of the Lee hologram[@lee1978iii] and its improved predecessors[@zupancic2016ultra;@shih2021reprogrammable], targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm[@gerhberg1972practical] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
 
 Under the hood, the package uses `TensorFlow` for intensive numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that require robust numerical computation, such as many hologram generation algorithms relying on iterative Fourier transformations.
 
-Additionally, the package offers a universal interface for different SLMs, ensuring that code written for one device can be seamlessly adapted to another. As of this writing, the package supports DMDs from both Visitech and Vialux.
+Additionally, the package offers a universal interface for different SLMs, ensuring that code written for one device can be seamlessly adapted to another. As of this writing, the package supports DMD controllers from two commercial vendors, Visitech, INC and ViALUX GmbH.
 
 # Statement of need
 High-quality optical controls are crucial for numerous scientific and engineering applications. For instance, in atom-based quantum information processors, individual atom quantum states are often manipulated by individually addressable laser beams. The quality of these addressing beams directly impacts the fidelity of quantum operations[@motlakunta2023preserving].
@@ -44,12 +44,12 @@ Holographic beam shaping using SLMs provides a potent tool for precise and adapt
 
 Secondly, holographic beam shaping can actively correct optical aberrations in the system, achieving diffraction-limited performance. This enables the faithful production of target beam profiles with high accuracy. It has been shown that residual aberrations can be corrected to less than $\lambda/20$ root-mean-square (RMS)[@shih2021reprogrammable;@zupancic2016ultra], which is smaller than most of the manufacturing tolerances of optical elements.
 
-At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been employed in the research of @shih2021reprogrammable, @motlakunta2023preserving, and @kotibhaskar2023programmable. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
+At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been employed in the trapped ion quantum information processing research[@shih2021reprogrammable;@motlakunta2023preserving;@kotibhaskar2023programmable]. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
 
 
 # Fourier Holography Basics
 
-`pySLM2` is designed for holographic beam shaping using Fourier holography. The name "Fourier" comes from the fact that the hologram and the target beam profile are related by a Fourier transformation.
+`pySLM2` is designed for holographic beam shaping using Fourier holography. The name "Fourier" comes from the fact that the electric fields of the beam at the hologram plane and the target plane are related by a Fourier transformation.
 
  In a paraxial lens system, the lens act as a Fourier transform operator mapping the electric field in one focal plane to the electric field in the another focal plane. In the context of Fourier Holography, the two focal plane are referred as the image plane (IP) and the Fourier plane (FP). The electric field at the two planes, $E_{\mathrm{IP}}(\mathbf{x}')$ and $E_{\mathrm{FP}}(\mathbf{x})$ respectively, are related by the following equation:
 
@@ -57,14 +57,14 @@ $$
 E_{\mathrm{FP}}(\mathbf{x})\mathrm{e}^{\mathrm{i} \Phi_{ab}} = \left. \frac{\lambda f}{2 \pi}  \mathcal{F}\left [E_{\mathrm{IP}} (\mathbf{x}')\right ](\mathbf{k}') \right | _{\mathbf{k}'=\frac{2 \pi}{\lambda f} \mathbf{x}}
 $$
 In which, $\mathbf{x}'$ and $\mathbf{k}'$ denote the spatial coordinate and the wave vector at the image plane respectively, and $\mathcal{F}$ denotes Fourier transformation. 
-The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $\mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$. 
+The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ at FP by $\mathbf{x} = \frac{\lambda f}{2 \pi}\mathbf{k}'$ where $f$ is the effective focal length of lens and $\lambda$ is the wavelength of the light.
 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. The SLM modulates the beam at Fourier plane to engineer the desired beam profiles at the image plane.
 
 # Hologram Generation Algorithm
 Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifing the the amplitude. As the time of writing, Gerchberg-Saxton (GS)[@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm[@gaunt2012robust] are included. 
 
-On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, the randomized algorithm from @zupancic2016ultra and the iterative Fourier transformation algorithm from @shih2021reprogrammable and @motlakunta2023preserving are provided for hologram generation.
+On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, a randomized algorithm[@zupancic2016ultra] and an iterative Fourier transformation algorithm[@shih2021reprogrammable;@motlakunta2023preserving] are provided for hologram generation.
 
 
 # Usages
@@ -87,12 +87,12 @@ In the example depicted in \autoref{fig:aberration}, we simulate the beam profil
 
 ![Simulation of the beam profiles at the image plane with and without aberration correction. The source code of this example can be found in `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png)
 
-To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor[@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to @shih2021reprogrammable.
+To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor[@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to Shih et al.[@shih2021reprogrammable].
 
 ## Hardware Controls
-`pySLM2` provides hardware controls for DMDs from both Visitech and Vialux. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the Vialux controller uses USB3.
+`pySLM2` provides hardware controls for DMD controllers from both Visitech, INC and ViALUX GmbH. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the ViALUX controller uses USB3.
 
-One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we've implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers.
+One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers.
 
 
 <!-- 
@@ -141,7 +141,7 @@ Figure sizes can be customized by adding an optional second parameter:
 
 # Acknowledgements
 
-The hardware controls for the DMDs from Vialux in the package is built on top of the `AL4lib`[@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta for his constructive feedbacks on the package.
+The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib`[@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta for his constructive feedbacks on the package.
 
 <!-- We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
 Oh, and support from Kathryn Johnston during the genesis of this project. -->
