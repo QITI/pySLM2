@@ -125,8 +125,8 @@ class ALPController(DMDControllerBase):
         return self.alp.DevInquire(ALP4.ALP_DEV_DISPLAY_HEIGHT)
 
     @_check_initialization
-    def load_single(self, dmd_state, picture_time=2000):
-        """load and display a single binary image on the DMD.
+    def load_single(self, dmd_state):
+        """load and display a single binary image on the DMD until keyboard intervention.
 
         Parameters
         ----------
@@ -142,7 +142,7 @@ class ALPController(DMDControllerBase):
         # Send the image sequence as a 1D list/array/numpy array
         self.alp.SeqPut(imgData=dmd_state * self.MAX_UINT8)
 
-        self.alp.SetTiming(pictureTime=picture_time)
+        self.alp.SetTiming()
 
         self.alp.Run()
 
@@ -155,6 +155,7 @@ class ALPController(DMDControllerBase):
     @_check_initialization
     def load_multiple(self, dmd_states: List[np.ndarray], picture_time:int, rising_edge:bool=True, trigger_in_delay:int=0, num_rep:int=0):
         """load and display a list of binary images on the DMD.
+        
 
         Parameters
         ----------
@@ -162,12 +163,12 @@ class ALPController(DMDControllerBase):
             The dtype must be bool and have the same dimension as the DMD.
         picture_time: float
             The time between two frames in microseconds.
-        rising_edge: bool
-            If True, the trigger is a rising edge. Otherwise, it is a falling edge.
-        trigger_in_delay: int
-            The delay of the trigger in microseconds between picture_time and the trigger.
-        num_rep: int
-            The number of repetitions. If 0, the sequence will run forever.
+        rising_edge: bool, optional
+            If True, the trigger is a rising edge. Otherwise, it is a falling edge. Default is True.
+        trigger_in_delay: int, optional
+            The delay of the trigger in microseconds between picture_time and the trigger. Default is 0.
+        num_rep: int, optional
+            The number of repetitions. If 0, the sequence will run continuously until keyboard intervention. Default is 0.
         """
         # Set to slave mode
         self.alp.ProjControl(ALP4.ALP_PROJ_MODE, ALP4.ALP_SLAVE)
