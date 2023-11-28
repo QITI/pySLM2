@@ -45,6 +45,9 @@ The DMDs from Vialux are communicated with the ALP library and a python binding,
 
 * To install the ALP library, visit the vendors website: https://vialux.de/en/download.html
 * The python binding, ALP4lib, can be installed from PyPi:
+```
+pip install ALP4lib
+```
 
 ### Visitech
 The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
