@@ -100,13 +100,13 @@ class ALPController(DMDControllerBase):
         if ALP4 is None:
             raise ModuleNotFoundError("ALP4lib module is unavailable.")
 
-        # TODO add invert
         self.alp = ALP4.ALP4(version=version)
-
         super(ALPController, self).__init__(invert=invert)
 
     def initialize(self):
         self.alp.Initialize()
+        if self.invert:
+            self.alp.ProjControl(ALP.ALP_PROJ_INVERSION, ALP.ALP_ENABLE)
         super(ALPController, self).initialize()
 
     def close(self):
@@ -126,7 +126,7 @@ class ALPController(DMDControllerBase):
 
     @_check_initialization
     def load_single(self, dmd_state):
-        """load and display a single binary image on the DMD until keyboard intervention.
+        """load and display a single binary image on the DMD until program is closed, after which the DMD gets reset.
 
         Parameters
         ----------
@@ -146,38 +146,24 @@ class ALPController(DMDControllerBase):
 
         self.alp.Run()
 
-        input("Press any key to stop display")
-
-        self.alp.Halt()
-        self.alp.FreeSeq()
 
 
     @_check_initialization
-    def load_multiple(self, dmd_states: List[np.ndarray], picture_time:int, rising_edge:bool=True, trigger_in_delay:int=0, num_rep:int=0):
-        """load and display a list of binary images on the DMD.
+    def load_multiple(self, dmd_states: List[np.ndarray]):
+        """load and display a list of binary images on the DMD on the rising edge of the trigger signal.
+        All pictures are displayed once for the MIN_PICTURE_TIME.
         
 
         Parameters
         ----------
         dmd_states: List[numpy.ndarray]
             The dtype must be bool and have the same dimension as the DMD.
-        picture_time: float
-            The time between two frames in microseconds.
-        rising_edge: bool, optional
-            If True, the trigger is a rising edge. Otherwise, it is a falling edge. Default is True.
-        trigger_in_delay: int, optional
-            The delay of the trigger in microseconds between picture_time and the trigger. Default is 0.
-        num_rep: int, optional
-            The number of repetitions. If 0, the sequence will run continuously until keyboard intervention. Default is 0.
         """
         # Set to slave mode
         self.alp.ProjControl(ALP4.ALP_PROJ_MODE, ALP4.ALP_SLAVE)
 
-        # Set the trigger edge to be rising or falling
-        if rising_edge:
-            self.alp.DevControl(ALP4.ALP_TRIGGER_EDGE, ALP4.ALP_EDGE_RISING)
-        else:
-            self.alp.DevControl(ALP4.ALP_TRIGGER_EDGE, ALP4.ALP_EDGE_FALLING)
+        # Set the trigger edge to be rising
+        self.alp.DevControl(ALP4.ALP_TRIGGER_EDGE, ALP4.ALP_EDGE_RISING)
 
         # Allocate the onboard memory for the image sequence
         self.alp.SeqAlloc(nbImg=len(dmd_states), bitDepth=1)
@@ -189,17 +175,10 @@ class ALPController(DMDControllerBase):
         self.alp.SeqPut(imgData=np.concatenate(dmd_states)*self.MAX_UINT8)
         
         # Set the timing
-        self.alp.SetTiming(pictureTime=picture_time, triggerInDelay=trigger_in_delay)
+        self.alp.SetTiming(pictureTime=ALP.SeqInquire(ALP.ALP_MIN_PICTURE_TIME))
 
-        # Run the sequence, loop forever if num_rep == 0, otherwise run num_rep times
-        if num_rep == 0:
-            self.alp.Run(loop=True)
-            input("Press any key to stop")
-        else:
-            self.alp.SeqControl(ALP4.ALP_SEQ_REPEAT, num_rep)
-            self.alp.Run(loop=False)
-        self.alp.Halt()
-        self.alp.FreeSeq()
+        self.alp.Run(loop=True)
+
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.close()
@@ -230,7 +209,7 @@ class LuxbeamController(DMDControllerBase):
 
         super(LuxbeamController, self).__init__(invert=invert)
 
-    def initialize(self):
+    def initialize(self): 
         seq = Luxbeam.LuxbeamSequencer()
         # ======= Sequencer ============
         reg0 = seq.assign_var_reg(regno=0) # reg0 is the total number of images
