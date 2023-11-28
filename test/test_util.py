@@ -28,24 +28,24 @@ def test_luxbeam_load_single(luxbeam_ip):
 
 
 @pytest.mark.alp
-def test_alp_Nx():
-    alp = pySLM2.util.ALPController()
+def test_alp_Nx(alp_version):
+    alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
     assert alp.Nx == 2560
     alp.close()
 
 @pytest.mark.alp
-def test_alp_Ny():
-    alp = pySLM2.util.ALPController()
+def test_alp_Ny(alp_version):
+    alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
     assert alp.Ny == 1600
     alp.close()
 
 @pytest.mark.alp
-def test_alp_load_single():
-    alp = pySLM2.util.ALPController()
+def test_alp_load_single(alp_version):
+    alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
     prompt = f'give a number '
@@ -71,6 +71,7 @@ def test_alp_load_multiple():
     alp.load_multiple(number_img, picture_time=2000000)
 
     for number in number_lst:
+        # manually trigger the next image
         assert yesno("Is number {0} displayed on the DMD".format(number))
 
     alp.close()

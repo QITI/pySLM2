@@ -9,18 +9,17 @@ def pytest_addoption(parser):
     parser.addoption(
         "--luxbeam-ip", action="store", default=None, help="ip address of the DMD Luxbeam Controller",
     )
-    # parser.addoption(
-    #     "--alp-ip", action="store", default=None, help="ip address of the ALP Controller",
-    # )
+    parser.addoption(
+        "--alp-version", action="store", default=None, help="Version of the ALP library fom Vialux",
+    )
 
 @pytest.fixture
 def luxbeam_ip(request):
     return request.config.getoption("--luxbeam-ip")
 
-# @pytest.fixture
-# def alp_ip(request):
-#     return request.config.getoption("--alp-ip")
-
+@pytest.fixture
+def alp_version(request):
+    return request.config.getoption("--alp-version", default="4.3")
 
 def pytest_configure(config):
     backend64 = config.getoption("backend64")
@@ -42,8 +41,9 @@ def pytest_collection_modifyitems(config, items):
             if "luxbeam" in item.keywords:
                 item.add_marker(skip_luxbeam)
 
-    # if config.getoption("--alp-ip") is None:
-    #     skip_alp = pytest.mark.skip(reason="need --alp-ip option to run")
-    #     for item in items:
-    #         if "alp" in item.keywords:
-    #             item.add_marker(skip_alp)
+    if config.getoption("--alp", default=False):
+        return
+    skip_alp = pytest.mark.skip(reason="need --alp option to run")
+    for item in items:
+        if "alp" in item.keywords:
+            item.add_marker(skip_alp)
