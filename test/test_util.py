@@ -59,18 +59,18 @@ def test_alp_load_single(alp_version):
 
 @pytest.mark.alp
 def test_alp_load_multiple():
+    NUM_IMAGES = 2
+    PICTURE_TIME = 2000000
+
     alp = pySLM2.util.ALPController()
     alp.initialize()
 
-    prompt = f'how many pictures? '
-    num_pictures = int(input(prompt))
-
-    number_lst = [random.randint(1, 100) for _ in range(num_pictures)]
+    number_lst = [random.randint(1, 100) for _ in range(NUM_IMAGES)]
     number_img = [alp.number_image(num) for num in number_lst]
-    alp.load_multiple(number_img, picture_time=2000000)
+    alp.load_multiple(number_img, picture_time=PICTURE_TIME)
 
     for number in number_lst:
-        # manually trigger the next image
+        input('manually trigger the next image')
         assert yesno("Is number {0} displayed on the DMD".format(number))
 
     alp.close()
