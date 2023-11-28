@@ -48,8 +48,7 @@ def test_alp_load_single(alp_version):
     alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
-    prompt = f'give a number '
-    number = int(input(prompt))
+    number = random.randint(1, 100)
 
     alp.load_single(alp.number_image(number))
 
