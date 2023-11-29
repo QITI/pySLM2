@@ -12,8 +12,6 @@ two = number_image(2, 2560,1600) *(2**8-1)
 # four = write_image("I")*(2**8-1)
 # five = write_image("QITI")*(2**8-1)
 
-
-
 # Load the Vialux .dll
 DMD = ALP4(version = '4.3')
 # Initialize the device
@@ -22,8 +20,7 @@ DMD.ProjControl(ALP_PROJ_MODE, ALP_MASTER)
 
 # Binary amplitude image (0 or 1)
 bitDepth = 1    
-# imgBlack = np.zeros([DMD.nSizeY,DMD.nSizeX])
-# imgWhite = np.ones([DMD.nSizeY,DMD.nSizeX])*(2**8-1)
+# imgBlack = np.zeros([DMD.nSizeY,DMD.nSizeX])# imgWhite = np.ones([DMD.nSizeY,DMD.nSizeX])*(2**8-1)
 imgSeq  = np.concatenate([one.ravel(),two.ravel()])
 
 #imgSeq  = np.concatenate([four.ravel(),five.ravel()])
@@ -34,7 +31,9 @@ DMD.SeqAlloc(nbImg = 2, bitDepth = bitDepth)
 # Send the image sequence as a 1D list/array/numpy array
 DMD.SeqPut(imgData = imgSeq)
 # Set image rate to 50 Hz
-DMD.SetTiming(pictureTime = 2000000)
+#DMD.SetTiming(pictureTime = 2000000)
+DMD.SetTiming(pictureTime=DMD.SeqInquire(ALP_MIN_PICTURE_TIME))
+print(DMD.SeqInquire(ALP_MIN_PICTURE_TIME))
 #DMD.SeqControl(ALP_SEQ_REPEAT, 3)
 
 # Run the sequence in an infinite loop
@@ -52,3 +51,25 @@ DMD.Halt()
 DMD.FreeSeq()
 # De-allocate the device
 DMD.Free()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
