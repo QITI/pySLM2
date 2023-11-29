@@ -32,7 +32,7 @@ def test_alp_Nx(alp_version):
     alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
-    assert alp.Nx == 2560
+    assert yesno(f"Is the DMD width Nx = {alp.Nx} expected?")
     alp.close()
 
 @pytest.mark.alp
@@ -40,7 +40,7 @@ def test_alp_Ny(alp_version):
     alp = pySLM2.util.ALPController(version=alp_version)
     alp.initialize()
 
-    assert alp.Ny == 1600
+    assert yesno(f"Is the DMD height Ny = {alp.Ny} expected?")
     alp.close()
 
 @pytest.mark.alp
@@ -70,7 +70,8 @@ def test_alp_load_multiple():
     alp.load_multiple(number_img, picture_time=PICTURE_TIME)
 
     for number in number_lst:
-        input('manually trigger the next image')
+        input("manually trigger the next image ... press any key to continue")
+
         assert yesno("Is number {0} displayed on the DMD".format(number))
 
     alp.close()
