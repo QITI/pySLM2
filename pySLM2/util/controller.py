@@ -186,7 +186,7 @@ class ALPController(DMDControllerBase):
         # Set the timing
         self.alp.SetTiming(pictureTime=self.alp.SeqInquire(ALP4.ALP_MIN_PICTURE_TIME))
 
-        self.alp.Run(loop=True)
+        self.alp.Run()
 
 
     def __exit__(self, exc_type, exc_val, exc_tb):
