@@ -106,7 +106,7 @@ class ALPController(DMDControllerBase):
     def initialize(self):
         self.alp.Initialize()
         if self.invert:
-            self.alp.ProjControl(ALP.ALP_PROJ_INVERSION, ALP.ALP_ENABLE)
+            self.alp.ProjControl(ALP4.ALP_PROJ_INVERSION, ALP4.ALP_ENABLE)
         super(ALPController, self).initialize()
 
     def close(self):
@@ -174,8 +174,17 @@ class ALPController(DMDControllerBase):
         # Send the image sequence as a 1D list/array/numpy array
         self.alp.SeqPut(imgData=np.concatenate(dmd_states)*self.MAX_UINT8)
         
+
+
+
+
+
+
+
+
+
         # Set the timing
-        self.alp.SetTiming(pictureTime=ALP.SeqInquire(ALP.ALP_MIN_PICTURE_TIME))
+        self.alp.SetTiming(pictureTime=self.alp.SeqInquire(ALP4.ALP_MIN_PICTURE_TIME))
 
         self.alp.Run(loop=True)
 

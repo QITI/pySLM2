@@ -1,7 +1,7 @@
 import numpy as np
 from ALP4 import *
 import time
-from sample import *
+from sample import number_image
 
 one = number_image(1, 2560,1600) *(2**8-1)
 two = number_image(2, 2560,1600) *(2**8-1)
