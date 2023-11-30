@@ -19,7 +19,7 @@ def luxbeam_ip(request):
 
 @pytest.fixture
 def alp_version(request):
-    return request.config.getoption("--alp-version", default="4.3")
+    return request.config.getoption("--alp-version")
 
 def pytest_configure(config):
     backend64 = config.getoption("backend64")
@@ -41,9 +41,9 @@ def pytest_collection_modifyitems(config, items):
             if "luxbeam" in item.keywords:
                 item.add_marker(skip_luxbeam)
 
-    if config.getoption("--alp", default=False):
-        return
-    skip_alp = pytest.mark.skip(reason="need --alp option to run")
-    for item in items:
-        if "alp" in item.keywords:
-            item.add_marker(skip_alp)
+    if config.getoption("--alp-version") is None:
+        
+        skip_alp = pytest.mark.skip(reason="need --alp-version option to run")
+        for item in items:
+            if "alp" in item.keywords:
+                item.add_marker(skip_alp)
