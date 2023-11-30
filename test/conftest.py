@@ -9,11 +9,17 @@ def pytest_addoption(parser):
     parser.addoption(
         "--luxbeam-ip", action="store", default=None, help="ip address of the DMD Luxbeam Controller",
     )
+    parser.addoption(
+        "--alp-version", action="store", default=None, help="Version of the ALP library fom Vialux",
+    )
 
 @pytest.fixture
 def luxbeam_ip(request):
     return request.config.getoption("--luxbeam-ip")
 
+@pytest.fixture
+def alp_version(request):
+    return request.config.getoption("--alp-version")
 
 def pytest_configure(config):
     backend64 = config.getoption("backend64")
@@ -24,6 +30,8 @@ def pytest_configure(config):
 
 
     config.addinivalue_line("markers", "luxbeam: mark test that requires luxbeam controller.")
+    config.addinivalue_line("markers", "alp: mark test that requires ALP controller.")
+
 
 
 def pytest_collection_modifyitems(config, items):
@@ -32,3 +40,10 @@ def pytest_collection_modifyitems(config, items):
         for item in items:
             if "luxbeam" in item.keywords:
                 item.add_marker(skip_luxbeam)
+
+    if config.getoption("--alp-version") is None:
+        
+        skip_alp = pytest.mark.skip(reason="need --alp-version option to run")
+        for item in items:
+            if "alp" in item.keywords:
+                item.add_marker(skip_alp)

@@ -7,7 +7,7 @@ __all__ = ["number_image"]
 _font_path = os.path.join(os.path.dirname(__file__), "NotoMono-Regular.ttf")
 
 
-def number_image(i, Nx, Ny):
+def number_image(i, Nx: int, Ny: int):
     """Create a image that shows the number.
 
     Parameters
