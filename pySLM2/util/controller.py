@@ -110,6 +110,9 @@ class ALPController(DMDControllerBase):
         super(ALPController, self).initialize()
 
     def close(self):
+        self.alp.Halt()
+        if self.alp._lastDDRseq is not None:
+            self.alp.FreeSeq()
         self.alp.Free()
 
     @property
@@ -133,6 +136,9 @@ class ALPController(DMDControllerBase):
         dmd_state: numpy.ndarray
             The dtype must be bool and have the same dimension as the DMD.
         """
+        # Prepare the dmd in available state
+        self.alp.Halt()
+        
         # Allocate the onboard memory for the image sequence
         self.alp.SeqAlloc(nbImg=1, bitDepth=1)
 
@@ -147,7 +153,6 @@ class ALPController(DMDControllerBase):
         self.alp.Run()
 
 
-
     @_check_initialization
     def load_multiple(self, dmd_states: List[np.ndarray]):
         """load and display a list of binary images on the DMD on the rising edge of the trigger signal.
@@ -159,6 +164,9 @@ class ALPController(DMDControllerBase):
         dmd_states: List[numpy.ndarray]
             The dtype must be bool and have the same dimension as the DMD.
         """
+        # Prepare the dmd in available state
+        self.alp.Halt()
+
         # Set to slave mode
         self.alp.ProjControl(ALP4.ALP_PROJ_MODE, ALP4.ALP_SLAVE)
 
@@ -174,15 +182,6 @@ class ALPController(DMDControllerBase):
         # Send the image sequence as a 1D list/array/numpy array
         self.alp.SeqPut(imgData=np.concatenate(dmd_states)*self.MAX_UINT8)
         
-
-
-
-
-
-
-
-
-
         # Set the timing
         self.alp.SetTiming(pictureTime=self.alp.SeqInquire(ALP4.ALP_MIN_PICTURE_TIME))
 
