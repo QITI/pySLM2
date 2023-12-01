@@ -75,13 +75,13 @@ For profiles that are not included by default, users have the option to either i
 
 <!-- ![Hologram for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py`) \label{fig:lg}](create_donut_beam.png) -->
 
-![Hologram simulation for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode from fundamental mode. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represent "off". (b) Intensity profile of input fundamental Gaussian beam. (c) Intensity profile of the output Laguerre $l=1$, $p=0$ Gaussian beam at the image plane. (d) Phase map of the output beam. Phase vortex indicates the donut center. (Source code: `examples/create_donut_beam.py`)\label{fig:lg}](create_donut_beam.png) 
+![Hologram simulation for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode from fundamental mode. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represent "off". (b) Intensity profile of input fundamental Gaussian beam. (c) Intensity profile of the output Laguerre ($l=1$, $p=0$) Gaussian beam at the image plane. (d) Phase map of the output beam. Phase vortex indicates the donut center. (Source code: `examples/create_donut_beam.py`)\label{fig:lg}](create_donut_beam.png) 
 
 The arithmetic operations of the profiles are also overloaded, so one can easily combine different profiles through addition or rescale the profiles through multiplication. Shown in Fig. \autoref{fig:multi}, we create a hologram to generate two Gaussian beams. In the source code, it is written as adding two Gaussian profiles together at different positions.
 
 <!-- ![Hologram for two Gaussian beams and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py)` \label{fig:multi}](create_multiple_gaussian_beam.png) -->
 
-![Hologram simulation for creating two Gaussian beams from one input Gaussian beam. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represents "off". (b) Intensity profile of input single Gaussian beam. (c) Intensity profile of the two output Gaussian beams at image plane. (d) Phase map of the output beam. (Source code: `examples/create_donut_beam.py)` \label{fig:multi}](create_multiple_gaussian_beam.png)
+![Hologram simulation for creating two Gaussian beams from one input Gaussian beam. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represent "off". (b) Intensity profile of input single Gaussian beam. (c) Intensity profile of the two output Gaussian beams at the image plane. (d) Phase map of the output beam. An example of two Guassians beams having opposite phases is shown. (Source code: `examples/create_donut_beam.py`) \label{fig:multi}](create_multiple_gaussian_beam.png)
 
 
 ## Aberration Correction
@@ -92,7 +92,7 @@ In the example depicted in \autoref{fig:aberration}, we simulate the beam profil
 
 <!-- ![Simulation of the beam profiles at the image plane with and without aberration correction. The source code of this example can be found in `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png) -->
 
-![Simulation of the beam profiles at the image plane with and without aberration correction.  (Source code: `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png)
+![Simulation of the beam profiles at the image plane with and without aberration correction. (a) Phase map of the input beam with $\mathbb{Z}_4^0$ spherical abberation. (b) Intensity profile of the input beam. (c) Intensity profile of the first order beam without abberation correction. (d) Intensity profile of the first order beam with abberation correction. (Source code: `examples/aberration_correction.py`) \label{fig:aberration}](aberration_correction.png)
 
 
 To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor [@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to Shih et al. [@shih2021reprogrammable].
