@@ -381,8 +381,9 @@ class Zernike(FunctionProfile):
     def __init__(self, a, radius, n=0, m=0, normalize=True, extrapolate=False):
         if not n >= m:
             raise ValueError("Zernike index m must be >= index n")
+
         if (n - m) % 2 != 0:
-            print("Radial polynomial is zero for these inputs: m={}, n={} " +
+            raise ValueError("Radial polynomial is zero for these inputs: m={}, n={} " +
                   "(are you sure you wanted this Zernike?)".format(m, n))
 
         self._n = tf.constant(n, dtype=BACKEND.dtype_int)
