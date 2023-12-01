@@ -22,7 +22,7 @@ dmd = pySLM2.DLP9500(
 )
 
 # Aberration: Spherical aberration
-aberration = pySLM2.Zernike(10, 5 * milli, n=3, m=0) 
+aberration = pySLM2.Zernike(10, 5 * milli, n=4, m=0) 
 
 # The beam illumilating the DMD is an gaussian beam with a waist of 5 mm
 input_profile_unaware_of_aberration = pySLM2.HermiteGaussian(0,0,1,5*milli)
