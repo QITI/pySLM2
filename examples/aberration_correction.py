@@ -2,7 +2,17 @@ import pySLM2
 from scipy.constants import micro, nano, milli
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 from matplotlib.ticker import FuncFormatter
+
+
+def to_um(x, pos):
+    return f"{x/micro: .1f}"
+
+def to_rad(x, pos):
+    return f"{x/np.pi: .1f}π"
+
+
 
 dmd = pySLM2.DLP9500(
     369 * nano,  # wavelength
@@ -18,25 +28,24 @@ aberration = pySLM2.Zernike(10, 5 * milli, n=3, m=0)
 input_profile_unaware_of_aberration = pySLM2.HermiteGaussian(0,0,1,5*milli)
 input_profile = input_profile_unaware_of_aberration  * aberration.as_complex()
 
-
 # targeted profile at the image plane
 output_profile = pySLM2.HermiteGaussian(0,0,1,10*micro, n=0, m=0)
 
-pfig, axs = plt.subplots(2, 2)
+#==============================================================================
+fig = plt.figure(figsize=(12, 8))
+gs = fig.add_gridspec(2, 2, width_ratios=[1,1], height_ratios=[1,1])
 
-axs[0, 0].set_title("Aberration\n phase map")
-p = axs[0, 0].imshow(dmd.profile_to_tensor(aberration) / np.pi / 2)
-axs[0, 0].set_xlabel("x [px]")
-axs[0, 0].set_ylabel("y [px]")
-cbar = plt.colorbar(p, ax=axs[0, 0])
-cbar.set_label("$\lambda$")
+# Define subplots within the custom gridspec
+axs = [fig.add_subplot(gs[0, 0]), fig.add_subplot(gs[0, 1]), fig.add_subplot(gs[1, 0]), fig.add_subplot(gs[1, 1])]
 
+# Plot abberation phase map
+p0 = axs[0].imshow(dmd.profile_to_tensor(aberration) / np.pi / 2)
+axs[0].set_xlabel("x [px]", fontsize=10, ha='center')
+axs[0].set_ylabel("y [px]", fontsize=10, ha='center')
 
-axs[1, 0].set_title("Input beam\n intensity profile")
-p = axs[1, 0].imshow(np.abs(dmd.profile_to_tensor(input_profile, complex=True))**2)
-axs[1, 0].set_xlabel("x [px]")
-axs[1, 0].set_ylabel("y [px]")
-plt.colorbar(p, ax=axs[1, 0])
+p1 = axs[1].imshow(np.abs(dmd.profile_to_tensor(input_profile, complex=True))**2)
+axs[1].set_xlabel("x [px]", fontsize=10, ha='center')
+axs[1].set_ylabel("y [px]", fontsize=10, ha='center')
 
 sim = pySLM2.DMDSimulation(dmd, padding_x=0, padding_y=(dmd.Nx-dmd.Ny)//2)
 
@@ -51,17 +60,14 @@ dmd.calculate_dmd_state(
 sim.propagate_to_image(input_profile)
 sim.block_zeroth_order()
 
-def to_um(x, pos):
-    return f"{x/micro: .1f} $\mu$m"
-
-p = axs[0, 1].pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
-(x,y) = dmd.first_order_origin
-axs[0, 1].set_title("1st order beam intensity profile \n (aberration uncorrected)")
-axs[0, 1].set_xlim(x-100*micro, x+100*micro)
-axs[0, 1].set_ylim(y-100*micro, y+100*micro)
-axs[0, 1].xaxis.set_major_formatter(FuncFormatter(to_um))
-axs[0, 1].yaxis.set_major_formatter(FuncFormatter(to_um))
-plt.colorbar(p, ax=axs[0, 1])
+p2 = axs[2].pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
+(x, y) = dmd.first_order_origin
+axs[2].set_xlim(x-100*micro, x+100*micro)
+axs[2].set_ylim(y-100*micro, y+100*micro)
+axs[2].xaxis.set_major_formatter(FuncFormatter(to_um))
+axs[2].yaxis.set_major_formatter(FuncFormatter(to_um))
+axs[2].set_xlabel("x' [µm]", fontsize=10, ha='center')
+axs[2].set_ylabel("y' [µm]", fontsize=10, ha='center')
 
 # Calculate the hologram including the aberration
 dmd.calculate_dmd_state(
@@ -74,14 +80,35 @@ dmd.calculate_dmd_state(
 sim.propagate_to_image(input_profile)
 sim.block_zeroth_order()
 
-p = axs[1, 1].pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
-(x,y) = dmd.first_order_origin
-axs[1, 1].set_title("1st order beam intensity profile \n (aberration corrected)")
-axs[1, 1].set_xlim(x-100*micro, x+100*micro)
-axs[1, 1].set_ylim(y-100*micro, y+100*micro)
-axs[1, 1].xaxis.set_major_formatter(FuncFormatter(to_um))
-axs[1, 1].yaxis.set_major_formatter(FuncFormatter(to_um))
-plt.colorbar(p, ax=axs[1, 1])
+
+p3 = axs[3].pcolormesh(*sim.image_plane_padded_grid, sim.image_plane_intensity)
+(x, y) = dmd.first_order_origin
+axs[3].set_xlim(x-100*micro, x+100*micro)
+axs[3].set_ylim(y-100*micro, y+100*micro)
+axs[3].xaxis.set_major_formatter(FuncFormatter(to_um))
+axs[3].yaxis.set_major_formatter(FuncFormatter(to_um))
+axs[3].set_xlabel("x' [µm]", fontsize=10, ha='center')
+axs[3].set_ylabel("y' [µm]", fontsize=10, ha='center')
+
+# Add subcaptions below the subplots
+subcaptions = ["(a) Aberration phase map",
+               "(b) Input beam intensity profile",
+               "(c) 1st order beam intensity profile \n (aberration uncorrected)",
+               "(d) 1st order beam intensity profile \n (aberration corrected)"]
+
+for i, ax in enumerate(axs):
+    ax.set_title(subcaptions[i], fontsize=12,pad=10)
+
+# Add colorbars
+cbar_label = ['$\lambda$', 'Intensity [a.u.]', 'Intensity [a.u.]', 'Phase [rad]']
+for i, plot in enumerate([p0, p1, p2, p3]):
+    divider = make_axes_locatable(plot.axes)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    cbar = plt.colorbar(plot, cax=cax, orientation='vertical')
+    cbar.set_label(cbar_label[i])
+    if 'Phase' in cbar_label[i]:
+        cbar.formatter = FuncFormatter(to_rad)
+        cbar.update_ticks()
 
 plt.tight_layout()
 plt.show()
