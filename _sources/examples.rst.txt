@@ -16,6 +16,13 @@ This example shows how to create multiple beam spots with a digital mircromirror
 .. plot:: ../examples/create_multiple_gaussian_beam.py
    :include-source:
 
+Perform abberation correction with DMD
+--------------------------------------
+This example shows how to create abberation correction to a Gaussian with spherical abberation.
+
+.. plot:: ../examples/aberration_correction.py
+   :include-source:
+
 
 Load image to the Luxbeam DMD controller
 ----------------------------------------
