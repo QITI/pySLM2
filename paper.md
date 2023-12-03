@@ -86,9 +86,6 @@ One of the key advantages of holographic beam shaping is its capability to corre
 
 In the example depicted in \autoref{fig:aberration}, we simulate the beam profile at the image plane both with and without aberration correction. Without aberration correction, the beam profile becomes distorted and broadened. In this particular simulation, spherical aberration is used, but `pySLM2` is capable of correcting other types of aberrations as well.
 
-
-<!-- ![Simulation of the beam profiles at the image plane with and without aberration correction. The source code of this example can be found in `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png) -->
-
 ![Simulation of the beam profiles at the image plane with and without aberration correction. (a) Phase map of the input beam with $\mathbb{Z}_4^0$ spherical aberration. (b) Intensity profile of the input beam. (c) Intensity profile of the first order beam without aberration correction. (d) Intensity profile of the first order beam with aberration correction. (Source code: `examples/aberration_correction.py`) \label{fig:aberration}](aberration_correction.png)
 
 
@@ -103,6 +100,6 @@ One of the goals of `pySLM2` is to abstract the hardware details and offer a uni
 
 # Acknowledgements
 
-The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta for his constructive feedbacks on the package.
+The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta and Nikhil Kotibhaskar for the constructive feedbacks on the package.
 
 # References
