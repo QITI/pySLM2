@@ -63,7 +63,7 @@ The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. The SLM modulates the beam at Fourier plane to engineer the desired beam profiles at the image plane.
 
 # Hologram Generation Algorithm
-Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifing the the amplitude. As the time of writing, Gerchberg-Saxton (GS) [@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm [@gaunt2012robust] are included. 
+Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifying the amplitude. As the time of writing, Gerchberg-Saxton (GS) [@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm [@gaunt2012robust] are included. 
 
 On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, a randomized algorithm [@zupancic2016ultra] and an iterative Fourier transformation algorithm [@shih2021reprogrammable;@motlakunta2023preserving] are provided for hologram generation.
 
@@ -73,11 +73,12 @@ On the other hand, DMDs use micromirrors to locally turn on and off the light by
 
 For profiles that are not included by default, users have the option to either inherit from the base class and implement their custom profiles or generate the sampled profiles in an array format to pass them to the hologram calculation function. As illustrated in Fig. \autoref{fig:lg}, here's an example of creating a hologram to generate a Laguerre Gaussian beam with a mode of $l=1$, $p=0$, which often referred to as a "doughnut beam", from the fundamental Gaussian mode. Unless specified, the simulation shown in this paper is simulated with the following conditions: $\lambda=369~\mathrm{nm}$ wavelength, $f=200~\mathrm{mm}$ Fourier lens focal length, and with Texas Instrument DLP9500 as the SLM ($1~\mathrm{px} = 10~\mu \mathrm{m}$ micromirror size).
 
-![Hologram for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py`) \label{fig:lg}](create_donut_beam.png)
+![Hologram simulation for creating Laguerre Gaussian beam of $l=1$, $p=0$ mode from fundamental mode. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represent "off". (b) Intensity profile of input fundamental Gaussian beam. (c) Intensity profile of the output Laguerre ($l=1$, $p=0$) Gaussian beam at the image plane. (d) Phase map of the output beam. An optical vortex can be observed at the center of the Laguerre $l=1$, $p=0$ mode (Source code: `examples/create_donut_beam.py`)\label{fig:lg}](create_donut_beam.png) 
 
 The arithmetic operations of the profiles are also overloaded, so one can easily combine different profiles through addition or rescale the profiles through multiplication. Shown in Fig. \autoref{fig:multi}, we create a hologram to generate two Gaussian beams. In the source code, it is written as adding two Gaussian profiles together at different positions.
 
-![Hologram for two Gaussian beams and simulation of its beam profiles at the image plane. (Source code: `examples/create_donut_beam.py)` \label{fig:multi}](create_multiple_gaussian_beam.png)
+
+![Hologram simulation for creating two Gaussian beams from one input Gaussian beam. (a) DMD mirror configuration. Bright pixels represent "on" and dark pixels represent "off". (b) Intensity profile of input single Gaussian beam. (c) Intensity profile of the two output Gaussian beams at the image plane. (d) Phase map of the output beam. An example of two Gaussian beams having opposite phases is shown. (Source code: `examples/create_donut_beam.py`) \label{fig:multi}](create_multiple_gaussian_beam.png)
 
 
 ## Aberration Correction
@@ -86,7 +87,9 @@ One of the key advantages of holographic beam shaping is its capability to corre
 In the example depicted in \autoref{fig:aberration}, we simulate the beam profile at the image plane both with and without aberration correction. Without aberration correction, the beam profile becomes distorted and broadened. In this particular simulation, spherical aberration is used, but `pySLM2` is capable of correcting other types of aberrations as well.
 
 
-![Simulation of the beam profiles at the image plane with and without aberration correction. The source code of this example can be found in `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png)
+<!-- ![Simulation of the beam profiles at the image plane with and without aberration correction. The source code of this example can be found in `examples/aberration_correction.py`. \label{fig:aberration}](aberration_correction.png) -->
+
+![Simulation of the beam profiles at the image plane with and without aberration correction. (a) Phase map of the input beam with $\mathbb{Z}_4^0$ spherical aberration. (b) Intensity profile of the input beam. (c) Intensity profile of the first order beam without aberration correction. (d) Intensity profile of the first order beam with aberration correction. (Source code: `examples/aberration_correction.py`) \label{fig:aberration}](aberration_correction.png)
 
 
 To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor [@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to Shih et al. [@shih2021reprogrammable].
@@ -97,55 +100,9 @@ To obtain the phase map of the aberration, one can either use a wavefront sensor
 One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers.
 
 
-<!-- 
-# Usage -->
-
-<!-- 
-# Mathematics
-
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
-
-Double dollars make self-standing equations:
-
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
-
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
-
-# Citations
-
-Citations to entries in paper.bib should be in
- [rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
-
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- ` [@author:2001]` -> "(Author et al., 2001)"
-- ` [@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
-
-# Figures
-
-Figures can be included like this:
-! [Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-! [Caption for example figure.](figure.png){ width=20% } -->
 
 # Acknowledgements
 
 The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta for his constructive feedbacks on the package.
-
-<!-- We acknowledge contributions from Brigitta Sipocz, Syrtis Major, and Semyeong
-Oh, and support from Kathryn Johnston during the genesis of this project. -->
 
 # References
