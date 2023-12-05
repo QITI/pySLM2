@@ -13,6 +13,7 @@ authors:
     affiliation: "1" # (Multiple affiliations must be quoted)
     corresponding: true # (This is how to denote the corresponding author)
   - name: Jingwen Zhu
+    orcid: 0009-0009-0699-8258
     affiliation: "1"
   - name: Rajibul Islam
     orcid: 0000-0002-6483-8932
