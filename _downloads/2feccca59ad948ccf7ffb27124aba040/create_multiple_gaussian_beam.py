@@ -24,7 +24,7 @@ input_profile = pySLM2.HermiteGaussian(0,0,1,5*milli)
 
 # targeted profile at the image plane
 # Here we create two gaussian spots separated by 30 microns
-output_profile = pySLM2.HermiteGaussian(0,0,1,10*micro, n=0, m=0) + pySLM2.HermiteGaussian(30*micro,0,1,10*micro, n=0, m=0)
+output_profile = pySLM2.HermiteGaussian(0,0,1,10*micro, n=0, m=0) - pySLM2.HermiteGaussian(30*micro,0,1,10*micro, n=0, m=0)
 
 dmd.calculate_dmd_state(
     input_profile,
