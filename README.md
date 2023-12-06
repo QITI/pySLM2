@@ -10,17 +10,7 @@ Installation
 ------------
 The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
 `pySLM2` uses `tensorflow` for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
-In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed.
-
-For Anaconda users, it is recommended to install `tensorflow` with conda first for better performance and compatibility.
-If you have a suitable GPU in the computer, you can install the `tensorflow` with GPU support by:
-```
-conda install -c anaconda tensorflow-gpu
-```
-Otherwise, if you don't have GPU available, you can isntall the `tensorflow` with:
-```
-conda install -c anaconda tensorflow
-```
+In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed. Follow the [instructions](https://www.tensorflow.org/install/pip#step-by-step_instructions) on Tensorflow's website for more details.
 
 ### With setuptools
 
