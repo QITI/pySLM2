@@ -34,25 +34,26 @@ Holographic beam shaping using spatial light modulators (SLMs) as a reprogrammab
 
 The package implements the hologram generation algorithms of the Lee hologram [@lee1978iii] and its improved predecessors [@zupancic2016ultra;@shih2021reprogrammable], targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm [@gerhberg1972practical] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
 
-Under the hood, the package uses `TensorFlow` for intensive numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that require robust numerical computation, such as many hologram generation algorithms relying on iterative Fourier transformations.
+Under the hood, the package uses `TensorFlow` for numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that are computationally expensive but benefit from parallelization, such as many hologram generation algorithms relying on iterative Fourier transformations.
 
 Additionally, the package offers a universal interface for different SLMs, ensuring that code written for one device can be seamlessly adapted to another. As of this writing, the package supports DMD controllers from two commercial vendors, Visitech, INC and ViALUX GmbH.
 
 # Statement of need
-High-quality optical controls are crucial for numerous scientific and engineering applications. For instance, in atom-based quantum information processors, individual atom quantum states are often manipulated by individually addressable laser beams. The quality of these addressing beams directly impacts the fidelity of quantum operations [@motlakunta2023preserving].
+High-quality optical controls are crucial for numerous scientific and engineering applications. For instance, in atom-based quantum information processors, quantum states of individual atoms are often manipulated by individually addressing laser beams. The quality of these addressing beams directly impacts the fidelity of quantum operations [@motlakunta2023preserving].
 
-Holographic beam shaping using SLMs provides a potent tool for precise and adaptive optical controls. Compared to conventional optical elements, holographic beam shaping has several advantages. Firstly, it can generate arbitrary beam profiles that are challenging to create with standard optical elements. For example, the Laguerre-Gaussian beam with a non-zero azimuthal index (often referred to as a doughnut beam), which can be used to trap atoms in a tube-like potential [@kuga1997novel], apply angular momentum to Bose-Einstein Condensation [@andersen2006quantized], or achieve super-resolution imaging [@qian2021super;@drechsler2021optical].
+Holographic beam shaping using SLMs provides a way for precise and adaptive optical controls. Compared to using conventional optical elements, holographic beam shaping has several advantages. Firstly, it can generate arbitrary beam profiles that are challenging to create with standard optical elements. For example, the Laguerre-Gaussian beam with a non-zero azimuthal index (often referred to as a doughnut beam), which can be used to trap atoms in a tube-like potential [@kuga1997novel], apply angular momentum to Bose-Einstein Condensation [@andersen2006quantized], or achieve super-resolution imaging [@qian2021super;@drechsler2021optical].
 
-Secondly, holographic beam shaping can actively correct optical aberrations in the system, achieving diffraction-limited performance. This enables the faithful production of target beam profiles with high accuracy. It has been shown that residual aberrations can be corrected to less than $\lambda/20$ root-mean-square (RMS) [@shih2021reprogrammable;@zupancic2016ultra], which is smaller than most of the manufacturing tolerances of optical elements.
 
-At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been employed in the trapped ion quantum information processing research [@shih2021reprogrammable;@motlakunta2023preserving;@kotibhaskar2023programmable]. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
+Secondly, holographic beam shaping can actively correct optical aberrations in the system, thereby achieving diffraction-limited performance. This enables the faithful production of target beam profiles with high accuracy. It has been shown that residual aberrations can be corrected to less than $\lambda/20$ root-mean-square (RMS) [@shih2021reprogrammable;@zupancic2016ultra], which is smaller than most of the manufacturing tolerances of optical elements.
+
+At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been used in the trapped ion quantum information processing research [@shih2021reprogrammable;@motlakunta2023preserving;@kotibhaskar2023programmable]. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
 
 
 # Fourier Holography Basics
 
 `pySLM2` is designed for holographic beam shaping using Fourier holography. The name "Fourier" comes from the fact that the electric fields of the beam at the hologram plane and the target plane are related by a Fourier transformation.
 
- In a paraxial lens system, the lens act as a Fourier transform operator mapping the electric field in one focal plane to the electric field in the another focal plane. In the context of Fourier Holography, the two focal plane are referred as the image plane (IP) and the Fourier plane (FP). The electric field at the two planes, $E_{\mathrm{IP}}(\mathbf{x}')$ and $E_{\mathrm{FP}}(\mathbf{x})$ respectively, are related by the following equation:
+In a paraxial lens system, the lens act as a Fourier transform operator mapping the electric field in one focal plane to the electric field in the another focal plane. In the context of Fourier Holography, the two focal plane are referred as the image plane (IP) and the Fourier plane (FP). The electric field at the two planes, $E_{\mathrm{IP}}(\mathbf{x}')$ and $E_{\mathrm{FP}}(\mathbf{x})$ respectively, are related by the following equation:
 
 $$
 E_{\mathrm{FP}}(\mathbf{x})\mathrm{e}^{\mathrm{i} \Phi_{ab}} = \left. \frac{\lambda f}{2 \pi}  \mathcal{F}\left  [E_{\mathrm{IP}} (\mathbf{x}')\right ](\mathbf{k}') \right | _{\mathbf{k}'=\frac{2 \pi}{\lambda f} \mathbf{x}}
@@ -65,11 +66,11 @@ The aberrations of the optical system can be modeled as a phase map $\Phi_{\math
 # Hologram Generation Algorithm
 Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifying the amplitude. As the time of writing, Gerchberg-Saxton (GS) [@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm [@gaunt2012robust] are included. 
 
-On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating profiles, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, a randomized algorithm [@zupancic2016ultra] and an iterative Fourier transformation algorithm [@shih2021reprogrammable;@motlakunta2023preserving] are provided for hologram generation.
+On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating patterns, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, a randomized algorithm [@zupancic2016ultra] and an iterative Fourier transformation algorithm [@shih2021reprogrammable;@motlakunta2023preserving] are provided for hologram generation.
 
 
 # Usages
-`pySLM2` offers a range of commonly used optics profiles right out of the box, including Hermite Gaussian, Laguerre Gaussian, super Gaussian (also known as "flat top"), and Zernike polynomials. These profiles are implemented as functional objects, and `pySLM2` automatically handles the profile sampling during hologram calculations.
+`pySLM2` offers commonly used optics profiles right out of the box, including Hermite Gaussian, Laguerre Gaussian, super Gaussian (also known as "flat top"), and Zernike polynomials. These profiles are implemented as functional objects, and `pySLM2` automatically handles the profile sampling during hologram calculations.
 
 For profiles that are not included by default, users have the option to either inherit from the base class and implement their custom profiles or generate the sampled profiles in an array format to pass them to the hologram calculation function. As illustrated in Fig. \autoref{fig:lg}, here's an example of creating a hologram to generate a Laguerre Gaussian beam with a mode of $l=1$, $p=0$, which often referred to as a "doughnut beam", from the fundamental Gaussian mode. Unless specified, the simulation shown in this paper is simulated with the following conditions: $\lambda=369~\mathrm{nm}$ wavelength, $f=200~\mathrm{mm}$ Fourier lens focal length, and with Texas Instrument DLP9500 as the SLM ($1~\mathrm{px} = 10~\mu \mathrm{m}$ micromirror size).
 
@@ -82,7 +83,7 @@ The arithmetic operations of the profiles are also overloaded, so one can easily
 
 
 ## Aberration Correction
-One of the key advantages of holographic beam shaping is its capability to correct optical aberrations, and `pySLM2` provides an easy and efficient method to achieve this correction. By supplying the aberration information during the hologram calculation, `pySLM2` generates a hologram imprinted with a phase profile opposite to the aberration, effectively canceling it out.
+One of the key advantages of holographic beam shaping is its capability to correct optical aberrations, and `pySLM2` provides an easy method to achieve this correction. By supplying the aberration information during the hologram calculation, `pySLM2` generates a hologram imprinted with a phase profile opposite to the aberration, effectively canceling the aberration out.
 
 In the example depicted in \autoref{fig:aberration}, we simulate the beam profile at the image plane both with and without aberration correction. Without aberration correction, the beam profile becomes distorted and broadened. In this particular simulation, spherical aberration is used, but `pySLM2` is capable of correcting other types of aberrations as well.
 
@@ -94,12 +95,10 @@ To obtain the phase map of the aberration, one can either use a wavefront sensor
 ## Hardware Controls
 `pySLM2` provides hardware controls for DMD controllers from both Visitech, INC and ViALUX GmbH. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the ViALUX controller uses USB3.
 
-One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers.
-
+One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers. Apart from the hardware agnostic functions, it also exposed the lower-level access for advanced users to implement device specific controls.
 
 
 # Acknowledgements
-
-The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We thank Kaleb Ruscitti in helping the hardware testings. We thank Sainath Motlakunta and Nikhil Kotibhaskar for the constructive feedbacks on the package.
+The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We express gratitude to Kaleb Ruscitti for assisting with hardware testing and to Sainath Motlakunta and Nikhil Kotibhaskar for providing valuable feedback on the package. 
 
 # References
