@@ -92,7 +92,7 @@ In the example depicted in \autoref{fig:aberration}, we simulate the beam profil
 
 To obtain the phase map of the aberration, one can either use a wavefront sensor, such as a Shack–Hartmann sensor [@shack1971production], to measure the wavefront, or one can allow light from different parts of the Fourier plane to interfere with each other to reconstruct the aberration phase profile from the resulting interference patterns. For a detailed description of the latter method, one can refer to Shih et al. [@shih2021reprogrammable].
 
-## Hardware Controls
+## Hardware Controls [not-reviewed]
 `pySLM2` provides hardware controls for DMD controllers from both Visitech, INC and ViALUX GmbH. The controllers from these two companies use different communication protocols and architectures. The Visitech controller uses UDP over Ethernet, while the ViALUX controller uses USB3.
 
 One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers. Apart from the hardware agnostic functions, it also exposed the lower-level access for advanced users to implement device specific controls.
