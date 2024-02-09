@@ -28,7 +28,7 @@ pip install -e .
 ```
 To view pySLM2 documentation, some additional packages are required. In the pySLM2 directory, do
 ```
-pip install -r requirements.txt
+pip install -r docs/requirements.txt
 ```
 This will install the necessary packages for building the documentation. Then  `cd` to the docs directory and in command line do 
 ```
