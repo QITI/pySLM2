@@ -7,6 +7,7 @@ pySLM2
 
 `pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping. 
 
+* API Docs: https://pyslm2.pages.dev/
 
 Installation
 ------------
