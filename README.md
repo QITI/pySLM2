@@ -26,6 +26,15 @@ Or, if you wish to edit the pySLM2 source code without re-installing each time
 ```
 pip install -e .
 ```
+To view pySLM2 documentation, some additional packages are required. In the pySLM2 directory, do
+```
+pip install -r docs/requirements.txt
+```
+This will install the necessary packages for building the documentation. Then  `cd` to the docs directory and in command line do 
+```
+make html
+```
+HTML files for the documentation will be generated and can be viewed in browser.
 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
