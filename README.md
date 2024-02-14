@@ -2,6 +2,7 @@ pySLM2
 ======
 [![Test](https://github.com/QITI/pySLM2/actions/workflows/pytest.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/pytest.yml)
 [![Build Documentation HTML](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg)](https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml)
+[![status](https://joss.theoj.org/papers/70246ad674d3806798e343f6ecffa686/status.svg)](https://joss.theoj.org/papers/70246ad674d3806798e343f6ecffa686)
 
 **We are writing a paper for [Journal of Open Source Software (JOSS)](https://joss.theoj.org/)! Read the manuscript here: https://drive.proton.me/urls/T92N7SMT5M#nBvZvODDgZCc**
 
