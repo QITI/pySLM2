@@ -10,7 +10,7 @@ pySLM2
 
 * API Docs: https://pyslm2.pages.dev/
 
-Instructions to build documentation locally can be found in [`doc/README.md`](doc/README.md).
+Instructions to build documentation locally can be found in [`docs/README.md`](docs/README.md).
 
 
 Dependencies
