@@ -15,14 +15,13 @@ Instructions to build documentation locally can be found in [`docs/README.md`](d
 
 Dependencies
 ------------
+pySLM2 supports Python 3.9+. 
 
+The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
 
 
 Installation
 ------------
-The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
-`pySLM2` uses `tensorflow` for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
-In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed. Follow the [instructions](https://www.tensorflow.org/install/pip#step-by-step_instructions) on Tensorflow's website for more details.
 
 ### With setuptools
 
@@ -37,6 +36,15 @@ Or, if you wish to edit the pySLM2 source code without re-installing each time
 pip install -e .
 ```
 
+Tensorflow Installation for GPU Support
+---------------------------------------
+
+`pySLM2` primarily relies on `tensorflow` for most of its numerical computations. For machines with compatible hardware, `tensorflow` can seamlessly utilize GPU acceleration to enhance performance, provided it is installed correctly.
+#### Linux and Windows WLS2 users please use the following line to install tensorflow for gpu support. 
+```
+python3 -m pip install tensorflow[and-cuda]
+```
+For more detailes about machine compatibility and correct version of tensorflow, please refer to the [instructions](https://www.tensorflow.org/install/pip#step-by-step_instructions) on Tensorflow's website for more details.
 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
