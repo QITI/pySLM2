@@ -30,7 +30,9 @@ def task(method):
 # Disable GPU for the first run
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
+
 # Run the task on CPU
+print("Running on CPU")
 start_time = time.time()
 task('gs')
 cpu_time = time.time() - start_time
