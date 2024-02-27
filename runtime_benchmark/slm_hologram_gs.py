@@ -21,7 +21,7 @@ def task(method):
     lcos_slm.calculate_hologram(
         input_profile,
         output_profile,
-        method="mraf",
+        method=method,
         N=200,
     )
     end = time.time()
