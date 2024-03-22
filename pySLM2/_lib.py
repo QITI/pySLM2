@@ -39,6 +39,32 @@ def _inverse_fourier_transform(profile_tensor):
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
+    ''' Calculate the hologram for a DMD. The method can be "ideal", "ideal_square", "simple", "random" or "ifta".
+
+
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating.
+    method : str
+        The method to use. Options are "ideal", "ideal_square", "simple", "random" or "ifta".
+    negative_order : bool
+        If True, the negative order is used.
+    **kwargs : dict
+        Additional keyword arguments for the method.
+    '''
     negative_order = tf.constant(negative_order, dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
@@ -72,6 +98,28 @@ def _grating_phase(x, y, theta, p):
 
 @tf.function
 def _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=False):
+    ''' Generate an ideal grating for a DMD.
+
+    
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating.
+    negative_order : bool
+        If True, the negative order is used.
+    '''
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
@@ -82,6 +130,28 @@ def _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negat
 
 @tf.function
 def _calculate_dmd_grating_ideal_square(amp, phase_in, phase_out, x, y, p, theta, negative_order=False):
+    ''' Generate an ideal square grating for a DMD.
+
+
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating.
+    negative_order : bool
+        If True, the negative order is used.
+    '''
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
@@ -92,6 +162,28 @@ def _calculate_dmd_grating_ideal_square(amp, phase_in, phase_out, x, y, p, theta
 
 @tf.function
 def _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, negative_order=False):
+    ''' Generate a simple grating for a DMD.
+
+
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor   
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating.
+    negative_order : bool
+        If True, the negative order is used.
+    '''
     grating_ideal = _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
                                                  negative_order=negative_order)
     return grating_ideal > 0.5
@@ -99,6 +191,30 @@ def _calculate_dmd_grating_simple(amp, phase_in, phase_out, x, y, p, theta, nega
 
 @tf.function
 def _calculate_dmd_grating_random(amp, phase_in, phase_out, x, y, p, theta, negative_order=False, r=1.0):
+    '''Generate a random grating for a DMD.
+
+
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating.
+    negative_order : bool
+        If True, the negative order is used.
+    r : float
+        The width of the transition region.
+    '''
     grating_phase = _grating_phase(x, y, theta, p)
     if negative_order:
         phase_in = -phase_in
@@ -129,6 +245,36 @@ def _ifta_binarize_hologram(hologram, threthold):
 @tf.function
 def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
                                 negative_order=False, N=200, s=tf.constant(1.0)):
+    '''Iterative Fourier Transform Algorithm (IFTA) for calculating the hologram for a DMD.
+    
+    
+    Parameters
+    ----------
+    amp : tf.Tensor
+        The amplitude of the grating.
+    phase_in : tf.Tensor
+        The phase of the input beam.
+    phase_out : tf.Tensor
+        The phase of the output beam.
+    x : tf.Tensor
+        The x coordinate.
+    y : tf.Tensor
+        The y coordinate.
+    p : tf.Tensor
+        The periodicity of the grating.
+    theta : tf.Tensor
+        The angle of the grating. 
+    input_profile : tf.Tensor
+        The input profile.
+    signal_window : tf.Tensor
+        The signal window.
+    negative_order : bool
+        If True, the negative order is used.
+    N : int
+        Number of iterations.
+    s : float
+        The scaling factor. Default is 1.0. 
+    '''
     grating_ideal = s * _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
                                                     negative_order=negative_order)
 
@@ -157,6 +303,20 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
 
 
 def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", **kwargs):
+    '''Calculate the hologram for an LCOS SLM. The method can be either the Gerchberg-Saxton algorithm (gs) or the Modulated Residual Amplitude Fourier Algorithm (mraf).
+
+
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        The input profile.
+    target_amp_profile : tf.Tensor
+        The target amplitude profile.
+    method : str
+        The method to use. Options are "gs" (Gerchberg-Saxton algorithm) and "mraf" (Modulated Residual Amplitude Fourier Algorithm).
+    **kwargs : dict
+        Additional keyword arguments for the method.
+    '''
     if method=="gs":
         N = kwargs.get("N", 200)
         N = tf.constant(N, dtype=BACKEND.dtype_int)
@@ -174,6 +334,18 @@ def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", 
 
 @tf.function
 def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
+    '''Gerchberg-Saxton algorithm for calculating the hologram for an LCOS SLM.
+
+
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        The input profile.
+    target_amp_profile : tf.Tensor
+        The target amplitude profile.
+    N : int
+        Number of iterations.
+    '''
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)
@@ -192,6 +364,21 @@ def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
 
 @tf.function
 def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, signal_window, mixing_factor):
+    '''Modulated Residual Amplitude Fourier Algorithm (MRAF) for calculating the hologram for an LCOS SLM.
+
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        The input profile.
+    target_amp_profile : tf.Tensor
+        The target amplitude profile.
+    N : int 
+        Number of iterations.
+    signal_window : tf.Tensor
+        The signal window.
+    mixing_factor : float
+        The mixing factor.
+    '''
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)
