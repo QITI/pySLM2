@@ -28,7 +28,8 @@ def task(method):
         N=200,
     )
     end = time.time()
-    print("time used:", end-start)
+    total_time = end-start
+    return total_time
 
 
 

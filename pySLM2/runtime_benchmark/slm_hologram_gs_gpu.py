@@ -28,7 +28,8 @@ def task(method):
         N=200,
     )
     end = time.time()
-    print("time used:", end-start)
+    total_time = end-start
+    return total_time
 
 
 
@@ -40,8 +41,14 @@ if num_gpu ==0:
 else:
     print("Is Built with CUDA: ", tf.test.is_built_with_cuda())
 
-# Re-enable GPU for the second run (if available)
-task('gs')
+num_test = 10
+result = []
+print(f'Total {num_test}  Tests Running on GPU')
+for i in range(num_test):
+    ti = task('gs')
+    print(f'test {i} runtime: {ti:0.02f}s')
+    result.append(ti)
+print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')
 
 
 

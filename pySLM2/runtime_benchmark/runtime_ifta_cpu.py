@@ -36,7 +36,8 @@ def task(method):
         **kwargs
     )
     end = time.time()
-    print("time used:", end-start)
+    total_time = end-start
+    return total_time
 
 num_gpu  = len(tf.config.list_physical_devices('GPU'))
 print("Num GPUs Available: ", num_gpu)
@@ -48,5 +49,13 @@ else:
     exit()
 # Run the task on CPU
 print("Running on CPU")
-task('ifta')
+
+num_test = 10
+result = []
+print(f'Total {num_test}  Tests Running on CPU')
+for i in range(num_test):
+    ti = task('ifta')
+    print(f'test {i} runtime: {ti:0.02f}s')
+    result.append(ti)
+print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')
 
