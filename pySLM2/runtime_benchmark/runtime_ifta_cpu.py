@@ -52,7 +52,7 @@ print("Running on CPU")
 
 num_test = 10
 result = []
-print(f'Total {num_test}  Tests Running on CPU')
+print(f'Total {num_test} Tests Running on CPU')
 for i in range(num_test):
     ti = task('ifta')
     print(f'test {i} runtime: {ti:0.02f}s')

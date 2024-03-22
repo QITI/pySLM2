@@ -43,7 +43,7 @@ else:
 
 num_test = 10
 result = []
-print(f'Total {num_test}  Tests Running on GPU')
+print(f'Total {num_test} Tests Running on GPU')
 for i in range(num_test):
     ti = task('gs')
     print(f'test {i} runtime: {ti:0.02f}s')

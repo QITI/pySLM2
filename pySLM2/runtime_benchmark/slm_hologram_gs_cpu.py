@@ -42,8 +42,15 @@ else:
     print("Found GPU. Exit.")
     exit()
 
-# Re-enable GPU for the second run (if available)
-task('gs')
+num_test = 10
+result = []
+
+print(f'Total {num_test} Tests Running on CPU')
+for i in range(num_test):
+    ti = task('gs')
+    print(f'test {i} runtime: {ti:0.02f}s')
+    result.append(ti)
+print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')
 
 
 
