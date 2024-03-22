@@ -46,17 +46,3 @@ From our testing, we observed:
 - Case 2: Around 7 minutes on CPU only, and 20 seconds with one GPU.
 
 These findings indicate that the algorithms are accelerated by about 20 times when using the GPU with our system specifications.
-
-
-Notes for Tensorflow Installation
----------------------------------
-The exact package dependencies vary depending on each system and the GPU card. Please refer to the TensorFlow website for step-by-step instructions, and consult the NVIDIA website to check the CUDA compatibility of your GPU. 
-
- As a reference, in our setup with Windows 10 Build 17763 and an NVIDIA Quadro M4000 GPU, we executed the following commands to install TensorFlow-related packages in a Conda environment with `python` version 3.7.
-```
-conda install -c conda-forge cudnn==7.6.5
-conda install -c conda-forge cudatoolkit=10.1.243
- 
-pip install tensorflow==2.1 
-pip install tensorflow-gpu==2.1 
-```

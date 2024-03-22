@@ -40,11 +40,18 @@ Tensorflow Installation for GPU Support
 ---------------------------------------
 
 `pySLM2` primarily relies on `tensorflow` for most of its numerical computations. For machines with compatible hardware, `tensorflow` can seamlessly utilize GPU acceleration to enhance performance, provided it is installed correctly.
-#### Linux and Windows WLS2 users please use the following line to install tensorflow for gpu support. 
+
+The exact package dependencies vary depending on each system configuration and the GPU card. For details about machine compatibility and correct version of tensorflow, please refer to the [Tensorflow's website](https://www.tensorflow.org/install/pip#step-by-step_instructions), which provides installation guide for different operating systems. Another authors' recommended `tensorflow` installation guide can also be found in this [website](https://medium.com/@shaikhmuhammad/installing-tensorflow-cuda-cudnn-with-anaconda-for-geforce-gtx-1050-ti-79c1eb94eb7a) which provides thorough information about package dependecies such as `cuda` and `cudnn` versions. 
+
+
+ As a reference, in our setup with Windows 10 Build 17763 and an NVIDIA Quadro M4000 GPU, we executed the following commands to install `tensorflow`-related packages in a Conda environment with `python=3.7`.
 ```
-python3 -m pip install tensorflow[and-cuda]
+conda install -c conda-forge cudnn==7.6.5
+conda install -c conda-forge cudatoolkit=10.1.243
+ 
+pip install tensorflow==2.1 
+pip install tensorflow-gpu==2.1 
 ```
-For more detailes about machine compatibility and correct version of tensorflow, please refer to the [instructions](https://www.tensorflow.org/install/pip#step-by-step_instructions) on Tensorflow's website for more details.
 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
