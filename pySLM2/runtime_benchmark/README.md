@@ -16,33 +16,10 @@ Our setup uses Windows 10 Build 17763 and an NVidia Quadro M4000 GPU. Key packag
 - `cudnn`: 7.6.5
 - `cudatookkit`: 10.1.243
 
-For an example, results for case (1) are displayed as follows:
-```
-(env) [path]\runtime_benchmark>python slm_hologram_gs_cpu.py 2>NUL
-Num GPUs Available: 0
-No GPU found. Running on CPU.
-time used: 44.43152475357056
-
-(env) [path]\runtime_benchmark>python slm_hologram_gs_gpu.py 2>NUL
-Num GPUs Available: 1
-Is Built with CUDA: True
-time used: 2.934244155883789
-```
-<!-- ```
-(env) [path]\runtime_benchmark>python runtime_ifta_cpu.py 2>NUL
-Num GPUs Available: 0
-No GPU found. Running on CPU.
-Running on CPU
-time used: 420.37334179878235
-
-(pySLM2) [path]\runtime_benchmark>python runtime_ifta_gpu.py 2>NUL
-Num GPUs Available: 1
-Is Built with CUDA: True
-time used: 20.420279026031494
-``` -->
-
 From our testing, we observed:
-- Case 1: Approximately 45 seconds execution time using only the CPU, and 3 seconds with one GPU.
-- Case 2: Around 7 minutes on CPU only, and 20 seconds with one GPU.
+|  | Case 1 (gs)   | Case 2 (ifta)  |
+|-------------|-------------|-------------|
+| GPU  | $1.40 \pm 0.26$ s | $13.09 \pm 0.57$ s |
+| CPU |$44.09 \pm 0.37$ s | $412.04 \pm 1.00$ s  |
 
-These findings indicate that the algorithms are accelerated by about 20 times when using the GPU with our system specifications.
+These findings show that the algorithms can be greatly accelerated GPU usage.
