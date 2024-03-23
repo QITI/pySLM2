@@ -10,11 +10,18 @@ pySLM2
 
 * API Docs: https://pyslm2.pages.dev/
 
+Instructions to build documentation locally can be found in [`docs/README.md`](docs/README.md).
+
+
+Dependencies
+------------
+pySLM2 supports Python 3.9+. 
+
+The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
+
+
 Installation
 ------------
-The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
-`pySLM2` uses `tensorflow` for most of the numeric computation, so it can seamlessly use GPU to accelerate the computation without extra configuration.
-In order to take advantage of the GPU, the correct version of `tensorflow` along with the cuda toolkits have to be installed. Follow the [instructions](https://www.tensorflow.org/install/pip#step-by-step_instructions) on Tensorflow's website for more details.
 
 ### With setuptools
 
@@ -28,15 +35,23 @@ Or, if you wish to edit the pySLM2 source code without re-installing each time
 ```
 pip install -e .
 ```
-To view pySLM2 documentation, some additional packages are required. In the pySLM2 directory, do
+
+Tensorflow Installation for GPU Support
+---------------------------------------
+
+`pySLM2` primarily relies on `tensorflow` for most of its numerical computations. For machines with compatible hardware, `tensorflow` can seamlessly utilize GPU acceleration to enhance performance, provided it is installed correctly.
+
+The exact package dependencies vary depending on each system configuration and the GPU card. For details about machine compatibility and correct version of tensorflow, please refer to the [Tensorflow's website](https://www.tensorflow.org/install/pip#step-by-step_instructions), which provides installation guide for different operating systems. Another authors' recommended `tensorflow` installation guide can also be found in this [website](https://medium.com/@shaikhmuhammad/installing-tensorflow-cuda-cudnn-with-anaconda-for-geforce-gtx-1050-ti-79c1eb94eb7a) which provides thorough information about package dependecies such as `cuda` and `cudnn` versions. 
+
+
+ As a reference, in our setup with Windows 10 Build 17763 and an NVIDIA Quadro M4000 GPU, we executed the following commands to install `tensorflow`-related packages in a Conda environment with `python=3.7`.
 ```
-pip install -r docs/requirements.txt
+conda install -c conda-forge cudnn==7.6.5
+conda install -c conda-forge cudatoolkit=10.1.243
+ 
+pip install tensorflow==2.1 
+pip install tensorflow-gpu==2.1 
 ```
-This will install the necessary packages for building the documentation. Then  `cd` to the docs directory and in command line do 
-```
-make html
-```
-HTML files for the documentation will be generated and can be viewed in browser.
 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
