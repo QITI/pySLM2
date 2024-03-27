@@ -8,7 +8,7 @@ import pySLM2
 import tensorflow as tf
 
 
-def task(method):
+def task(method, N):
     lcos_slm = pySLM2.PLUTO_2(
     369 * nano,  # wavelength
     200 * milli, # effective focal length
@@ -25,7 +25,7 @@ def task(method):
         input_profile,
         output_profile,
         method=method,
-        N=200,
+        N=N,
     )
     end = time.time()
     total_time = end-start
@@ -41,11 +41,12 @@ if num_gpu ==0:
 else:
     print("Is Built with CUDA: ", tf.test.is_built_with_cuda())
 
+N=1000
 num_test = 10
 result = []
 print(f'Total {num_test} Tests Running on GPU')
 for i in range(num_test):
-    ti = task('gs')
+    ti = task('gs', N)
     print(f'test {i} runtime: {ti:0.02f}s')
     result.append(ti)
 print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')

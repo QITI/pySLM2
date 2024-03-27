@@ -9,7 +9,7 @@ import tensorflow as tf
 
 
 
-def task(method):
+def task(method, N):
     dmd = pySLM2.DLP9500(
         369 * nano,  # wavelength
         200 * milli, # effective focal length
@@ -29,7 +29,7 @@ def task(method):
 
     kwargs = dict()
     kwargs["signal_window"] = signal_window
-    kwargs["N"] = 2000
+    kwargs["N"] = N
     dmd.calculate_dmd_state(
         input_profile,
         output_profile,
@@ -50,11 +50,12 @@ if num_gpu ==0:
 else:
     print("Is Built with CUDA: ", tf.test.is_built_with_cuda())
 
+N=1000
 num_test = 10
 result = []
 print(f'Total {num_test} Tests Running on GPU')
 for i in range(num_test):
-    ti = task('ifta')
+    ti = task('ifta',N)
     print(f'test {i} runtime: {ti:0.02f}s')
     result.append(ti)
 print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')

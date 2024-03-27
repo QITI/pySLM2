@@ -8,7 +8,7 @@ import pySLM2
 import tensorflow as tf
 
 
-def task(method):
+def task(method, N):
     lcos_slm = pySLM2.PLUTO_2(
     369 * nano,  # wavelength
     200 * milli, # effective focal length
@@ -20,18 +20,21 @@ def task(method):
     # targeted profile at the image plane
     output_profile = pySLM2.HermiteGaussian(0,0,1,30*micro, n=1, m=1)
 
+    # other parameters
+    x0, y0 = lcos_slm.Nx//2, lcos_slm.Ny//2
+    signal_window = pySLM2.RectangularWindowRectangle(x0, y0, 100 * micro, 100 * micro)
+
     start = time.time()
     lcos_slm.calculate_hologram(
         input_profile,
         output_profile,
         method=method,
-        N=200,
+        signal_window=signal_window,
+        N=N,
     )
     end = time.time()
     total_time = end-start
     return total_time
-
-
 
 num_gpu  = len(tf.config.list_physical_devices('GPU'))
 print("Num GPUs Available: ", num_gpu)
@@ -42,12 +45,13 @@ else:
     print("Found GPU. Exit.")
     exit()
 
+N=1000
 num_test = 10
 result = []
 
 print(f'Total {num_test} Tests Running on CPU')
 for i in range(num_test):
-    ti = task('gs')
+    ti = task('gs', N)
     print(f'test {i} runtime: {ti:0.02f}s')
     result.append(ti)
 print(f'runtime for {num_test} runs: {np.mean(result):0.2f}s +- {np.std(result):0.2f}s')
