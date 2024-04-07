@@ -97,6 +97,7 @@ To obtain the phase map of the aberration, one can either use a wavefront sensor
 
 One of the goals of `pySLM2` is to abstract the hardware details and offer a unified application interface for interacting with these devices. For instance, we have implemented the same `load_single` and `load_multiple` functions within the controller classes for both manufacturers' devices. These functions allow for the display of single holograms or the loading of multiple holograms that can be switched by triggers. Apart from the hardware agnostic functions, it also exposed the lower-level access for advanced users to implement device specific controls.
 
+As of the current writing, the package's hardware support is limited to DMD controllers. For users interested in using LCoS-SLM, open-source tools such as [`slmsuite`](https://slmsuite.readthedocs.io/) and [`slmPy`](https://github.com/wavefrontshaping/slmPy) are available options.
 
 # Author Contributions
 C.-Y.S. designed and implemented the package. J.Z. contributed to implementing the hardware controls and performance benchmarking. R.I. advised on the scientific aspects of the package. All authors contributed to writing the manuscript and documenting the package.
