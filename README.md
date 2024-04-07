@@ -10,12 +10,11 @@ pySLM2
 
 * API Docs: https://pyslm2.pages.dev/
 
-Instructions to build documentation locally can be found in [`docs/README.md`](docs/README.md).
+Instructions to build documentation locally can be found in `docs/README.md`.
 
 
 Dependencies
 ------------
-pySLM2 supports Python 3.9+. 
 
 The dependencies of `pySLM2` in includes: `numpy`, `scipy`, `matplotlib`, and `tensorflow`.
 
@@ -55,7 +54,7 @@ pip install tensorflow-gpu==2.1
 ```
 
 ### Runtime Benckmarking: CPU vs GPU 
-Several runtime benchmarking scripts for iterative hologram generations algorithms are included in a separate foler `pySLM2/runtime_benchmark`. Instructions for running those tests can be found in [`pySLM2/runtime_benchmark/README.md`](pySLM2/runtime_benchmark/README.md).
+Several runtime benchmarking scripts for iterative hologram generations algorithms are included in a separate foler `pySLM2/runtime_benchmark`. Instructions for running those tests can be found in `pySLM2/runtime_benchmark/README.md`.
 
 #### Runtime Benckmarking Example
 ##### Algorithm performance comparision: Intel Core i9-9900K CPU vs NVidia Quadro M4000 GPU
@@ -67,10 +66,11 @@ Our machine has Windows 10 Build 17763 with Intel Core i9-9900K CPU and an NVidi
 - `cudatookkit`: 10.1.243
 
 From our testing, we observed:
+
 |  | Case 1 (gs)   | Case 2 (mraf)  | Case 3 (ifta)
 |-------------|-------------|-------------|-------------|
 | CPU |$225.11 \pm 3.98$ s | $221.64 \pm 1.78$ s  | $206.44 \pm 0.49$ s|
-| GPU  | $6.48 \pm 0.29 $ s | $8.29 \pm 0.31$ s |$6.76 \pm 0.50$ s|
+| GPU  | $6.48 \pm 0.29$ s | $8.29 \pm 0.31$ s |$6.76 \pm 0.50$ s|
 
 These findings show that the iterative algorithms can be greatly accelerated by GPU usage.
 
@@ -89,7 +89,7 @@ pip install ALP4lib
 ```
 
 ### Visitech
-The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
+The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. `pySLM.util` relies on the [Luxbeam](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
 ```
 pip install Luxbeam
 ```
