@@ -39,7 +39,7 @@ GPU Support via Tensorflow
 ---------------------------------------
 ### Tensorflow installation tips
 
-`pySLM2` primarily relies on `tensorflow` for most of its numerical computations. For machines with compatible hardware, `tensorflow` can seamlessly utilize GPU acceleration to enhance performance, provided it is installed correctly.
+`pySLM2` primarily relies on tensorflow for most of its numerical computations. For machines with compatible hardware, tensorflow can seamlessly utilize GPU acceleration to enhance the performance of some numerically heavy tasks, provided it is installed correctly. Algorithms or operations that heavily rely on numerical Fourier transformation especially benefit from GPU acceleration.
 
 The exact package dependencies vary depending on each system configuration and the GPU card. For details about machine compatibility and correct version of tensorflow, please refer to the [Tensorflow's website](https://www.tensorflow.org/install/pip#step-by-step_instructions), which provides installation guide for different operating systems. Another authors' recommended `tensorflow` installation guide can also be found in this [website](https://medium.com/@shaikhmuhammad/installing-tensorflow-cuda-cudnn-with-anaconda-for-geforce-gtx-1050-ti-79c1eb94eb7a) which provides thorough information about package dependecies such as `cuda` and `cudnn` versions. 
 
