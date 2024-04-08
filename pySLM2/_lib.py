@@ -39,6 +39,32 @@ def _inverse_fourier_transform(profile_tensor):
 
 
 def calculate_dmd_grating(amp, phase_in, phase_out, x, y, p, theta, method="random", negative_order=False, **kwargs):
+    '''
+    Calculate a DMD grating pattern. Algorithms available are "ideal", "ideal_square", "simple", "random" and "ifta".
+    
+    Parameters
+    ----------
+    amp : float
+        Amplitude of the grating pattern.
+    phase_in : float
+        Phase of the grating pattern at the input plane.
+    phase_out : float
+        Phase of the grating pattern at the output plane.
+    x : tf.Tensor
+        X coordinate of the plane.
+    y : tf.Tensor
+        Y coordinate of the plane.
+    p : float
+        Period of the grating pattern.
+    theta : float
+        Angle of the grating pattern.
+    method : str
+        Method to calculate the grating pattern. Options are "ideal", "ideal_square", "simple", "random", "ifta".
+    negative_order : bool
+        If True, the grating pattern will be calculated for the negative order.
+    **kwargs : dict
+        Additional parameters for the selected method.
+    '''
     negative_order = tf.constant(negative_order, dtype=tf.bool)
     if method == "ideal":
         return _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta, negative_order=negative_order)
