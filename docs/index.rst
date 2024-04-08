@@ -13,6 +13,7 @@ Welcome to pySLM2's documentation!
    readme_link
    pySLM2
    pySLM2.util
+   algorithm
    examples
 
 
