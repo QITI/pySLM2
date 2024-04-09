@@ -155,6 +155,36 @@ def _ifta_binarize_hologram(hologram, threthold):
 @tf.function
 def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_profile, signal_window,
                                 negative_order=False, N=200, s=tf.constant(1.0)):
+    '''
+    Inverse Fourier Transform Algorithm (IFTA) for the calculation of the DMD grating pattern.
+
+    Parameters
+    ----------
+    amp : float
+        Amplitude of the grating pattern.
+    phase_in : float
+        Phase of the grating pattern at the input plane.
+    phase_out : float
+        Phase of the grating pattern at the output plane.
+    x : tf.Tensor
+        X coordinate of the plane.
+    y : tf.Tensor
+        Y coordinate of the plane.
+    p : float
+        Period of the grating pattern.
+    theta : float
+        Angle of the grating pattern.
+    input_profile : tf.Tensor
+        Input profile.
+    signal_window : tf.Tensor
+        Signal window, in which the input profile is applied.
+    negative_order : bool
+        If True, the grating pattern will be calculated for the negative order.
+    N : int
+        Number of iterations.
+    s : float
+        Step size.
+    '''
     grating_ideal = s * _calculate_dmd_grating_ideal(amp, phase_in, phase_out, x, y, p, theta,
                                                     negative_order=negative_order)
 
@@ -183,6 +213,20 @@ def _calculate_dmd_grating_ifta(amp, phase_in, phase_out, x, y, p, theta, input_
 
 
 def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", **kwargs):
+    '''
+    Calculate the hologram phase profile for an LCOS SLM. Algorithms available are "gs" and "mraf".
+    
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        Input profile.
+    target_amp_profile : tf.Tensor
+        Target amplitude profile.
+    method : str
+        Method to calculate the hologram phase profile. Options are "gs" and "mraf".
+    **kwargs : dict
+        Additional parameters for the selected method.
+    '''
     if method=="gs":
         N = kwargs.get("N", 200)
         N = tf.constant(N, dtype=BACKEND.dtype_int)
@@ -200,6 +244,18 @@ def calculate_lcos_slm_hologram(input_profile, target_amp_profile, method="gs", 
 
 @tf.function
 def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
+    '''
+    Gerchberg-Saxton (GS) algorithm for the calculation of the hologram phase profile.
+
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        Input profile.
+    target_amp_profile : tf.Tensor
+        Target amplitude profile.
+    N : int
+        Number of iterations.
+    '''
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)
@@ -218,6 +274,22 @@ def _calculate_lcos_slm_hologram_gs(input_profile, target_amp_profile, N):
 
 @tf.function
 def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, signal_window, mixing_factor):
+    '''
+    Mixed Random Amplitude and Phase (MRAF) algorithm for the calculation of the hologram phase profile.
+    
+    Parameters
+    ----------
+    input_profile : tf.Tensor
+        Input profile. 
+    target_amp_profile : tf.Tensor 
+        Target amplitude profile.
+    N : int
+        Number of iterations.
+    signal_window : tf.Tensor
+        Signal window, in which the target amplitude profile is applied.
+    mixing_factor : float
+        Mixing factor. The value is between 0 and 1. It means the proportion of the target amplitude profile in the final hologram.
+    '''
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
     target_amp_profile = tf.signal.ifftshift(target_amp_profile)
