@@ -308,8 +308,8 @@ class DMD(SLM):
             The input profile of the beam at Fourier plane. 
         target_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
             The target profile of the beam at image plane.
-        method: str (Default: "random")
-            Method to calculate the DMD grating.
+        method: str
+            Method to calculate the DMD grating. Available methods are "random", "ideal", "ideal_square", "simple", "ifta".
         window: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
             The window function to be applied to the input_profile.
         kwargs: dict
@@ -465,6 +465,20 @@ class LCOS_SLM(SLM):
         return tf.exp(-1j *tf.cast(self.slm_state, dtype=BACKEND.dtype_complex))
 
     def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
+        '''
+        Calculate the hologram for the LCOS SLM.
+
+        Parameters
+        ----------
+        input_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
+            The input profile of the beam at Fourier plane.
+        target_amp_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
+            The target amplitude profile of the beam at image plane.
+        method: str
+            The method to calculate the hologram. Available methods are "gs", "mraf".
+        kwargs: dict
+            Additional arguments for the method.
+        '''
         input_profile = self.profile_to_tensor(input_profile, complex=True)
         target_amp_profile = self.profile_to_tensor(target_amp_profile, at_fourier_plane=False)
 
