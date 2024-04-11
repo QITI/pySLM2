@@ -246,8 +246,9 @@ class DMD(SLM):
         d: float
             Diameter of the patch in the unit of pixel.
         method: str
-            (Default: "random")
-        kwargs
+            (Default: "random") Available methods are "random", "ideal", "simple", "ifta".
+        kwargs: dict
+            Additional arguments for the method.
 
         """
 
@@ -269,6 +270,29 @@ class DMD(SLM):
     @staticmethod
     @tf.function
     def _calc_amp_phase(input_profile: tf.Tensor, target_profile: tf.Tensor, window=None):
+        '''
+        Calculate the amplitude scaling and phase difference between the input and target profiles.
+        
+        Parameters
+        ----------
+        input_profile: tf.Tensor
+            The input profile of the beam at Fourier plane.
+        target_profile: tf.Tensor
+            The target profile of the beam at image plane.
+        window: tf.Tensor
+            The window function to be applied to the input_profile.
+
+        Returns
+        -------
+        amp_scaled: tf.Tensor
+            The amplitude scaling factor.
+        phase_in: tf.Tensor
+            The phase of the input profile.
+        phase_out: tf.Tensor
+            The phase of the target profile.
+        one_over_eta_fft: tf.Tensor
+            The efficiency of mode matching.
+        '''
         target_profile_fp = _lib._fourier_transform(tf.signal.ifftshift(target_profile))
         target_profile_fp = tf.signal.fftshift(target_profile_fp)
 
@@ -309,7 +333,7 @@ class DMD(SLM):
         target_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
             The target profile of the beam at image plane.
         method: str
-            Method to calculate the DMD grating. Available methods are "random", "ideal", "ideal_square", "simple", "ifta".
+            Method to calculate the DMD grating. Available methods are "random", "ideal", "simple", "ifta".
         window: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
             The window function to be applied to the input_profile.
         kwargs: dict
@@ -381,10 +405,6 @@ class DMD(SLM):
 
         return packed_bits.tobytes()
 
-
-
-
-# TODO Find a way to reuse the docstring
 
 class DLP9500(DMD):
     """This class implements the DLP9500 model and DLP9500UV model from Texas Instruments.
