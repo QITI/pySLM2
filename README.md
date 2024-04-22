@@ -89,7 +89,7 @@ pip install ALP4lib
 ```
 
 ### Visitech
-The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. `pySLM.util` relies on the [`Luxbeam`](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
+The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. `pySLM.util` relies on the [Luxbeam](https://pypi.org/project/Luxbeam/) library which can be installed from PyPi:
 ```
 pip install Luxbeam
 ```
