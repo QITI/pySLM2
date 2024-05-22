@@ -48,6 +48,8 @@ Secondly, holographic beam shaping can actively correct optical aberrations in t
 
 At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been used in the trapped ion quantum information processing research [@shih2021reprogrammable;@motlakunta2023preserving;@kotibhaskar2023programmable]. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
 
+Comparing to the exising open-source projects, `pySLM2` provides more inclusive support for binay-amplitude holograms suitable for DMDs. On the other hand, [`slmsuite`](https://slmsuite.readthedocs.io/) provides a comprehensive suite of hologram algorithms tailored for phase-only Spatial Light Modulators (SLMs), featuring GPU acceleration via `CuPy` [@nishino2017cupy]. Additionally, `slmsuite` includes hardware control capabilities for Liquid Crystal on Silicon (LCoS) SLMs. [`CGH-diff`](https://github.com/DigitalNatureGroup/CGH-autodiff) offers scripts for an automatic differentiation-based algorithm [@yamamoto2021gradient] for generating DMD hologram gerenation. [`SLMLayout`](https://github.com/wavefrontshaping/Layout) is a package focusing on wavefront shaping with macopixel method [@matthes2019optical] with DMD. 
+
 
 # Fourier Holography Basics
 
