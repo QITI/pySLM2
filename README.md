@@ -6,12 +6,13 @@ pySLM2
 
 **We are writing a paper for [Journal of Open Source Software (JOSS)](https://joss.theoj.org/)! Read the manuscript here: https://drive.proton.me/urls/T92N7SMT5M#nBvZvODDgZCc**
 
-`pySLM2` is a python package for full stack control of using spatial light modulators (SLMs) for holographic beam shaping. 
+`pySLM2` is a Python package designed for using spatial light modulators (SLMs) in holographic beam shaping. It includes modules for hologram generation, simulation, and hardware control, making it a comprehensive toolkit for high-quality optical control.
+
+The goal of pySLM2 is to provide a tool box for for engineering high-quality optical controls, which are essential for various scientific and engineering applications. These applications include atom trapping, addressing individual quantum objects, preparing exotic quantum states, and multi-beam laser machining. `pySLM2` was originally developed for and is actively used in the trapped ion quantum information processing research at the Quantum Information with Trapped Ions Lab at the University of Waterloo.
 
 * API Docs: https://pyslm2.pages.dev/
 
 Instructions to build documentation locally can be found in [`docs/README.md`](docs/README.md).
-
 
 Dependencies
 ------------
