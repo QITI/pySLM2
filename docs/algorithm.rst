@@ -30,7 +30,10 @@ pySLM2.slm.LCOS_SLM.calculate_hologram()
 pySLM2.slm.DMD.calculate_dmd_state()
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- ``ideal``: It is used when having continuous amplitude control, generating grey scale hologram.
-- ``simple``: It binarize the grey scale hologram from ``ideal`` method with a 0.5 threshold.
-- ``random``: It utilizes hyperbolic tangent functions for smooth grating transition, followed by random threshold application for stochastic binary hologram generation.
+- ``ideal``: It is used when having continuous amplitude control, generating an ideal grey-scale hologram with no binarization induced errors.
+- ``simple``: It binarize the grey scale hologram from ``ideal`` method with a 0.5 threshold. However, the hard cut-off can induce significant binarization induced errors.
+- ``random``: It utilizes hyperbolic tangent functions for smooth grating transition, followed by random threshold application for stochastic binary hologram generation to reduce binarization errors.
 - ``ifta``: It employs an iterative process to refine a grating pattern, progressively adjusting it towards a desired profile within a defined signal window using a dynamic thresholding strategy.
+
+
+#TODO: Add examples for each algorithm
