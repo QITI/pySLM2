@@ -1,1 +1,4 @@
-.. mdinclude:: ../README.md
+README
+===========
+
+.. mdinclude:: README.md
