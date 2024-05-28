@@ -371,6 +371,12 @@ def _calculate_lcos_slm_hologram_mraf(input_profile, target_amp_profile, N, sign
         Signal window, in which the target amplitude profile is applied.
     mixing_factor : float
         Mixing factor. The value is between 0 and 1. It means the proportion of the target amplitude profile in the final hologram.
+    
+    
+    Returns
+    -------
+    tf.Tensor
+        Hologram phase profile.
     '''
     phase_profile = 2 * math.pi * tf.random.uniform(shape=input_profile.shape, dtype=BACKEND.dtype)
 
