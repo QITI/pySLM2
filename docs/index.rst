@@ -11,7 +11,7 @@ Welcome to pySLM2's documentation!
    :caption: Contents:
 
    readme_link
-   md_alg
+   algorithm
    pySLM2
    pySLM2.util
    examples
