@@ -486,16 +486,18 @@ class LCOS_SLM(SLM):
 
     def calculate_hologram(self, input_profile, target_amp_profile, method="gs", **kwargs):
         '''
-        Calculate the hologram for the LCOS SLM.
+        Calculate the hologram displayed on the LCOS SLM.
 
         Parameters
         ----------
         input_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
             The input profile of the beam at Fourier plane.
         target_amp_profile: FunctionProfile or numpy.ndarray or tensorflow.Tensor or float or int or complex
-            The target amplitude profile of the beam at image plane.
+            The target profile of the beam at image plane.
         method: str
-            The method to calculate the hologram. Available methods are "gs", "mraf".
+            The method to calculate the hologram.
+            'gs': Gerchberg-Saxton algorithm.
+            'mraf': Modified Random Amplitude Fourier Transform Algorithm.
         kwargs: dict
             Additional arguments for the method.
         '''
