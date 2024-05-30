@@ -24,7 +24,7 @@ For DMDs, use the method keyword argument in the `slm.calculate_dmd_state` funct
 - `ideal`: It assumes continuous amplitude control, generating the ideal grey-scale hologram with no binarization induced errors.
 - `simple`: It binarizes the ideal hologram with a 0.5 threshold for the grating phase. However, the hard cut-off can induce significant binarization induced errors.
 - `random`: It binarizes the ideal hologram with random threshold by probabilisticly turn on or off pixel mirrors based on the grating phase. [[3]](#ref3)  It reduces binarization artifacts compared to the `simple` method. The user can set the kwarg `r` to adjust the steepness of the binarization function. The larger the `r`, the sharper the binarization would be.
-- `ifta`: It iteratively binarizes the holgram within a signal window by deterministic the pixel mirror with adaptive binarizaitno threshold. [[4]](#ref1) This method yields lower RMS error within the signal window compared to the `random` method.  The user can use kwarg `N` to define number of iterations desired, and `s` to adjust the step size at which the adpative binazation threshold increment by after each iteration.
+- `ifta`: It iteratively binarizes the holgram within a signal window by deterministic the pixel mirror with adaptive binarizaitno threshold. [[4]](#ref4) This method yields lower RMS error within the signal window compared to the `random` method.  The user can use kwarg `N` to define number of iterations desired, and `s` to adjust the step size at which the adpative binazation threshold increment by after each iteration.
 
 
 ## References
