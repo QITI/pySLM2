@@ -4,3 +4,4 @@ m2r2
 sphinx
 sphinx-math-dollar
 sphinx_pyproject
+docutils==0.16
