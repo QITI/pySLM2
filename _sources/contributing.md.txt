@@ -1,4 +1,4 @@
-# Contributing to [Your Package Name]
+# Contributing to pySLM2
 
 Thank you for considering contributing to `pySLM2`! Here are a few guidelines to help you get started.
 

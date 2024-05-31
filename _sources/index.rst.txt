@@ -15,6 +15,7 @@ Welcome to pySLM2's documentation!
    pySLM2
    pySLM2.util
    examples
+   contributing_link
 
 
 Indices and tables
