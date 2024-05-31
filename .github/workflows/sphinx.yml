@@ -27,7 +27,7 @@ jobs:
         python -m pip install pytest
         python -m pip install build
         pip install .
-        python -m pip install matplotlib furo m2r2 sphinx sphinx-math-dollar sphinx_pyproject
+        python -m pip install -r docs/requirements.txt
     - name: Build Document
       working-directory: docs/
       run: make html
