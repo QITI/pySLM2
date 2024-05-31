@@ -28,7 +28,6 @@ jobs:
         python -m pip install build
         python -m pip install pytest
         pip install .
-        pip install -r docs/requirements.txt
     - name: Test with pytest
       run: |
         pytest -v test
