@@ -3,12 +3,12 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API: pySLM2.util package" href="pySLM2.util.html" /><link rel="prev" title="pySLM2" href="readme_link.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API: pySLM2.util package" href="pySLM2.util.html" /><link rel="prev" title="Fourier Hologram Generation Algorithms" href="algorithm.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2024.01.29 -->
+    <!-- Generated with Sphinx 7.2.3 and Furo 2024.05.06 -->
         <title>API: pySLM2 package - pySLM2 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=36a5483c" />
@@ -70,7 +70,7 @@
   <symbol id="svg-sun" viewBox="0 0 24 24">
     <title>Light mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
       <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -85,7 +85,7 @@
   <symbol id="svg-moon" viewBox="0 0 24 24">
     <title>Dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
     </svg>
@@ -93,7 +93,7 @@
   <symbol id="svg-sun-half" viewBox="0 0 24 24">
     <title>Auto light/dark mode</title>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
       <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
       <circle cx="12" cy="12" r="9" />
       <path d="M13 12h5" />
@@ -101,6 +101,60 @@
       <path d="M13 18h1" />
       <path d="M13 9h4" />
       <path d="M13 6h1" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" /
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
     </svg>
   </symbol>
 </svg>
@@ -113,6 +167,8 @@
 <label class="overlay toc-overlay" for="__toc">
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
 
 
 
@@ -131,7 +187,8 @@
       <div class="theme-toggle-container theme-toggle-header">
         <button class="theme-toggle">
           <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
           <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
@@ -158,7 +215,8 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="readme_link.html">pySLM2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme_link.html">Building the pySLM2 docs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithm.html">Fourier Hologram Generation Algorithms</a></li>
 <li class="toctree-l1 current current-page"><a class="current reference internal" href="#">API: pySLM2 package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pySLM2.util.html">API: pySLM2.util package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -181,11 +239,17 @@
           <span>Back to top</span>
         </a>
         <div class="content-icon-container">
-          
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/pySLM2.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
 <div class="theme-toggle-container theme-toggle-content">
             <button class="theme-toggle">
               <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
               <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
@@ -195,14 +259,14 @@
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
-        <article role="main">
+        <article role="main" id="furo-main-content">
           <section id="api-pyslm2-package">
-<h1>API: pySLM2 package<a class="headerlink" href="#api-pyslm2-package" title="Link to this heading">#</a></h1>
-<section id="module-pySLM2.slm">
-<span id="pyslm2-slm-module"></span><h2>pySLM2.slm module<a class="headerlink" href="#module-pySLM2.slm" title="Link to this heading">#</a></h2>
-<dl class="py class">
+<h1>API: pySLM2 package<a class="headerlink" href="#api-pyslm2-package" title="Link to this heading">¶</a></h1>
+<section id="pyslm2-slm-module">
+<h2>pySLM2.slm module<a class="headerlink" href="#pyslm2-slm-module" title="Link to this heading">¶</a></h2>
+<dl class="py class" id="module-pySLM2.slm">
 <dt class="sig sig-object py" id="pySLM2.slm.DLP7000">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP7000</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP7000"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP7000" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP7000</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP7000"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP7000" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.DMD" title="pySLM2.slm.DMD"><code class="xref py py-class docutils literal notranslate"><span class="pre">DMD</span></code></a></p>
 <p>This class implements the DLP7000 model and DLP7000UV model from Texas Instruments.</p>
 <dl class="field-list simple">
@@ -220,7 +284,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.DLP9000">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP9000</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP9000"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP9000" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP9000</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP9000"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP9000" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.DMD" title="pySLM2.slm.DMD"><code class="xref py py-class docutils literal notranslate"><span class="pre">DMD</span></code></a></p>
 <p>This class implements the DLP9000 model, DLP9000X model, and DLP9000XUV model from Texas Instruments.</p>
 <dl class="field-list simple">
@@ -238,7 +302,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.DLP9500">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP9500</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP9500"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP9500" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DLP9500</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DLP9500"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DLP9500" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.DMD" title="pySLM2.slm.DMD"><code class="xref py py-class docutils literal notranslate"><span class="pre">DMD</span></code></a></p>
 <p>This class implements the DLP9500 model and DLP9500UV model from Texas Instruments.</p>
 <dl class="field-list simple">
@@ -256,7 +320,7 @@
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DMD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">DMD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">periodicity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">negative_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.SLM" title="pySLM2.slm.SLM"><code class="xref py py-class docutils literal notranslate"><span class="pre">SLM</span></code></a></p>
 <p>Base class for a Digital Micromirror Device (DMD).</p>
 <dl class="field-list simple">
@@ -275,14 +339,14 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.calculate_dmd_state">
-<span class="sig-name descname"><span class="pre">calculate_dmd_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.calculate_dmd_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.calculate_dmd_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">calculate_dmd_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.calculate_dmd_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.calculate_dmd_state" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the DMD grating state based on the input and target profiles.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_profile</strong> (<a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><em>FunctionProfile</em></a><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em><em> or </em><em>float</em><em> or </em><em>int</em><em> or </em><em>complex</em>) – The input profile of the beam at Fourier plane.</p></li>
 <li><p><strong>target_profile</strong> (<a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><em>FunctionProfile</em></a><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em><em> or </em><em>float</em><em> or </em><em>int</em><em> or </em><em>complex</em>) – The target profile of the beam at image plane.</p></li>
-<li><p><strong>method</strong> (<em>str</em><em> (</em><em>Default: &quot;random&quot;</em><em>)</em>) – Method to calculate the DMD grating.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – Method to calculate the DMD grating. Available methods are “random”, “ideal”, “simple”, “ifta”.</p></li>
 <li><p><strong>window</strong> (<a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><em>FunctionProfile</em></a><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em><em> or </em><em>float</em><em> or </em><em>int</em><em> or </em><em>complex</em>) – The window function to be applied to the input_profile.</p></li>
 <li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for the method.</p></li>
 </ul>
@@ -302,7 +366,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.circular_patch">
-<span class="sig-name descname"><span class="pre">circular_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.circular_patch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.circular_patch" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">circular_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_in</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.circular_patch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.circular_patch" title="Link to this definition">¶</a></dt>
 <dd><p>Create a circular grating patch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -314,8 +378,8 @@ The valid range is between 0 and 1.</p></li>
 <li><p><strong>phase_in</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em>) – The input phase map (aberration correction) of the beam.</p></li>
 <li><p><strong>phase_out</strong> (<em>float</em><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em>) – The output phase map of the beam.</p></li>
 <li><p><strong>d</strong> (<em>float</em>) – Diameter of the patch in the unit of pixel.</p></li>
-<li><p><strong>method</strong> (<em>str</em>) – (Default: “random”)</p></li>
-<li><p><strong>kwargs</strong> – </p></li>
+<li><p><strong>method</strong> (<em>str</em>) – (Default: “random”) Available methods are “random”, “ideal”, “simple”, “ifta”.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for the method.</p></li>
 </ul>
 </dd>
 </dl>
@@ -323,7 +387,7 @@ The valid range is between 0 and 1.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.first_order_origin">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_order_origin</span></span><a class="headerlink" href="#pySLM2.slm.DMD.first_order_origin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_order_origin</span></span><a class="headerlink" href="#pySLM2.slm.DMD.first_order_origin" title="Link to this definition">¶</a></dt>
 <dd><p>The origin of the first order beam in images plane.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -334,7 +398,7 @@ The valid range is between 0 and 1.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.pack_dmd_state">
-<span class="sig-name descname"><span class="pre">pack_dmd_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.pack_dmd_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.pack_dmd_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">pack_dmd_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.pack_dmd_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.pack_dmd_state" title="Link to this definition">¶</a></dt>
 <dd><p>Pack the dmd state to bytes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -348,24 +412,24 @@ The valid range is between 0 and 1.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.set_dmd_grating_state">
-<span class="sig-name descname"><span class="pre">set_dmd_grating_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_grating_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_grating_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_dmd_grating_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phase_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'random'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_grating_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_grating_state" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.set_dmd_state_off">
-<span class="sig-name descname"><span class="pre">set_dmd_state_off</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_state_off"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_state_off" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_dmd_state_off</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_state_off"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_state_off" title="Link to this definition">¶</a></dt>
 <dd><p>Reset dmd_state to be an array (Ny, Nx) of zeros.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.set_dmd_state_on">
-<span class="sig-name descname"><span class="pre">set_dmd_state_on</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_state_on"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_state_on" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">set_dmd_state_on</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#DMD.set_dmd_state_on"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.DMD.set_dmd_state_on" title="Link to this definition">¶</a></dt>
 <dd><p>Reset dmd_state to be an array (Ny, Nx) of ones.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.DMD.theta">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theta</span></span><a class="headerlink" href="#pySLM2.slm.DMD.theta" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">theta</span></span><a class="headerlink" href="#pySLM2.slm.DMD.theta" title="Link to this definition">¶</a></dt>
 <dd><p>float</p>
 </dd></dl>
 
@@ -373,24 +437,37 @@ The valid range is between 0 and 1.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.LCOS_SLM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">LCOS_SLM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">LCOS_SLM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.SLM" title="pySLM2.slm.SLM"><code class="xref py py-class docutils literal notranslate"><span class="pre">SLM</span></code></a></p>
 <p>Base class for a Liquid Crystal on Silicon (LCOS) spatial light modulators.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.LCOS_SLM.calculate_hologram">
-<span class="sig-name descname"><span class="pre">calculate_hologram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_amp_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gs'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM.calculate_hologram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM.calculate_hologram" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">calculate_hologram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_amp_profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gs'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM.calculate_hologram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM.calculate_hologram" title="Link to this definition">¶</a></dt>
+<dd><p>Calculate the hologram displayed on the LCOS SLM.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_profile</strong> (<a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><em>FunctionProfile</em></a><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em><em> or </em><em>float</em><em> or </em><em>int</em><em> or </em><em>complex</em>) – The input profile of the beam at Fourier plane.</p></li>
+<li><p><strong>target_amp_profile</strong> (<a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><em>FunctionProfile</em></a><em> or </em><em>numpy.ndarray</em><em> or </em><em>tensorflow.Tensor</em><em> or </em><em>float</em><em> or </em><em>int</em><em> or </em><em>complex</em>) – The target profile of the beam at image plane.</p></li>
+<li><p><strong>method</strong> (<em>str</em>) – The method to calculate the hologram.
+‘gs’: Gerchberg-Saxton algorithm.
+‘mraf’: Modified Random Amplitude Fourier Transform Algorithm.</p></li>
+<li><p><strong>kwargs</strong> (<em>dict</em>) – Additional arguments for the method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.LCOS_SLM.reset_slm_state">
-<span class="sig-name descname"><span class="pre">reset_slm_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM.reset_slm_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM.reset_slm_state" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">reset_slm_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#LCOS_SLM.reset_slm_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.LCOS_SLM.reset_slm_state" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.PLUTO_2">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">PLUTO_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#PLUTO_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.PLUTO_2" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">PLUTO_2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#PLUTO_2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.PLUTO_2" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.slm.LCOS_SLM" title="pySLM2.slm.LCOS_SLM"><code class="xref py py-class docutils literal notranslate"><span class="pre">LCOS_SLM</span></code></a></p>
 <p>This class implements the PLUTO-2 families from HOLOEYE Photonics AG.</p>
 <dl class="field-list simple">
@@ -405,7 +482,7 @@ The valid range is between 0 and 1.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">SLM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#SLM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.SLM" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.slm.</span></span><span class="sig-name descname"><span class="pre">SLM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">focal_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Ny</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel_size</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#SLM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.SLM" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Base class for a spatial light modulators.</p>
 <dl class="field-list simple">
@@ -440,39 +517,39 @@ The valid range is between 0 and 1.</p></li>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.Nx">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Nx</span></span><a class="headerlink" href="#pySLM2.slm.SLM.Nx" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Nx</span></span><a class="headerlink" href="#pySLM2.slm.SLM.Nx" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.Ny">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ny</span></span><a class="headerlink" href="#pySLM2.slm.SLM.Ny" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ny</span></span><a class="headerlink" href="#pySLM2.slm.SLM.Ny" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.focal_length">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">focal_length</span></span><a class="headerlink" href="#pySLM2.slm.SLM.focal_length" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">focal_length</span></span><a class="headerlink" href="#pySLM2.slm.SLM.focal_length" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.fourier_plane_grid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_grid</span></span><a class="headerlink" href="#pySLM2.slm.SLM.fourier_plane_grid" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_grid</span></span><a class="headerlink" href="#pySLM2.slm.SLM.fourier_plane_grid" title="Link to this definition">¶</a></dt>
 <dd><p>(numpy.ndarray, numpy.ndarray) The x and y coordinates of all the pixels on the SLM.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.image_plane_grid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_grid</span></span><a class="headerlink" href="#pySLM2.slm.SLM.image_plane_grid" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_grid</span></span><a class="headerlink" href="#pySLM2.slm.SLM.image_plane_grid" title="Link to this definition">¶</a></dt>
 <dd><p>(numpy.ndarray, numpy.ndarray) The x and y coordinates of the coorsponding.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.pixel_size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pixel_size</span></span><a class="headerlink" href="#pySLM2.slm.SLM.pixel_size" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pixel_size</span></span><a class="headerlink" href="#pySLM2.slm.SLM.pixel_size" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.profile_to_tensor">
-<span class="sig-name descname"><span class="pre">profile_to_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">at_fourier_plane</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#SLM.profile_to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.SLM.profile_to_tensor" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">profile_to_tensor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><span class="pre">FunctionProfile</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">complex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">at_fourier_plane</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">complex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/slm.html#SLM.profile_to_tensor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.slm.SLM.profile_to_tensor" title="Link to this definition">¶</a></dt>
 <dd><p>This function covert a profile into into tensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -498,22 +575,22 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.scaling_factor">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scaling_factor</span></span><a class="headerlink" href="#pySLM2.slm.SLM.scaling_factor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scaling_factor</span></span><a class="headerlink" href="#pySLM2.slm.SLM.scaling_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.slm.SLM.wavelength">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wavelength</span></span><a class="headerlink" href="#pySLM2.slm.SLM.wavelength" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wavelength</span></span><a class="headerlink" href="#pySLM2.slm.SLM.wavelength" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="module-pySLM2.simulation">
-<span id="pyslm2-simulation-module"></span><h2>pySLM2.simulation module<a class="headerlink" href="#module-pySLM2.simulation" title="Link to this heading">#</a></h2>
-<dl class="py class">
+<section id="pyslm2-simulation-module">
+<h2>pySLM2.simulation module<a class="headerlink" href="#pyslm2-simulation-module" title="Link to this heading">¶</a></h2>
+<dl class="py class" id="module-pySLM2.simulation">
 <dt class="sig sig-object py" id="pySLM2.simulation.DMDSimulation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.simulation.</span></span><span class="sig-name descname"><span class="pre">DMDSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#DMDSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.DMDSimulation" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.simulation.</span></span><span class="sig-name descname"><span class="pre">DMDSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#DMDSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.DMDSimulation" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.simulation.SLMSimulation" title="pySLM2.simulation.SLMSimulation"><code class="xref py py-class docutils literal notranslate"><span class="pre">SLMSimulation</span></code></a></p>
 <p>The class implements a Simulation plan for the DMD.</p>
 <dl class="field-list simple">
@@ -527,20 +604,20 @@ The dtyoe of the tensor can be set by complex.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.DMDSimulation.block_zeroth_order">
-<span class="sig-name descname"><span class="pre">block_zeroth_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#DMDSimulation.block_zeroth_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.DMDSimulation.block_zeroth_order" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">block_zeroth_order</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#DMDSimulation.block_zeroth_order"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.DMDSimulation.block_zeroth_order" title="Link to this definition">¶</a></dt>
 <dd><p>On the DMDSimulation.image_plane array, set the centre values (0th order diffraction) to zero.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.DMDSimulation.first_order_origin">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_order_origin</span></span><a class="headerlink" href="#pySLM2.simulation.DMDSimulation.first_order_origin" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">first_order_origin</span></span><a class="headerlink" href="#pySLM2.simulation.DMDSimulation.first_order_origin" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.simulation.</span></span><span class="sig-name descname"><span class="pre">SLMSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.slm.SLM" title="pySLM2.slm.SLM"><span class="pre">SLM</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.simulation.</span></span><span class="sig-name descname"><span class="pre">SLMSimulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">slm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#pySLM2.slm.SLM" title="pySLM2.slm.SLM"><span class="pre">SLM</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">padding_y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The class implements a Simulation plan for the SLM.</p>
 <dl class="field-list simple">
@@ -571,34 +648,34 @@ The dtyoe of the tensor can be set by complex.</p>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.Nx">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Nx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.Nx" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Nx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.Nx" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.Ny">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.Ny" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Ny</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.Ny" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.clear">
-<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.clear" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.clear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.clear" title="Link to this definition">¶</a></dt>
 <dd><p>Clear the simulation result.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.fourier_plane_padded_grid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_padded_grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.fourier_plane_padded_grid" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_padded_grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.fourier_plane_padded_grid" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.fourier_plane_pixel_area">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_pixel_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.fourier_plane_pixel_area" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fourier_plane_pixel_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.fourier_plane_pixel_area" title="Link to this definition">¶</a></dt>
 <dd><p>float</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.get_image_plane_power">
-<span class="sig-name descname"><span class="pre">get_image_plane_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_image_plane_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_image_plane_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_image_plane_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_image_plane_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_image_plane_power" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates and returns the total power at the images plane.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -612,7 +689,7 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.get_input_power">
-<span class="sig-name descname"><span class="pre">get_input_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_input_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_input_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_input_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_input_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_input_power" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates and returns the total power incident on the SLM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -626,7 +703,7 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.get_output_power">
-<span class="sig-name descname"><span class="pre">get_output_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_output_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_output_power" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_output_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.get_output_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.get_output_power" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates and returns the total power output from the SLM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -640,61 +717,61 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.image_plane_field">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_field" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_field" title="Link to this definition">¶</a></dt>
 <dd><p>np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.image_plane_intensity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_intensity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_intensity" title="Link to this definition">¶</a></dt>
 <dd><p>np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.image_plane_padded_grid">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_padded_grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_padded_grid" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_padded_grid</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_padded_grid" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.image_plane_pixel_area">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_pixel_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_pixel_area" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">image_plane_pixel_area</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.image_plane_pixel_area" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.input_field">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.input_field" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.input_field" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.input_intensity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.input_intensity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">input_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.input_intensity" title="Link to this definition">¶</a></dt>
 <dd><p>np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.output_field">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.output_field" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_field</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.output_field" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.output_intensity">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.output_intensity" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">output_intensity</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ndarray</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.output_intensity" title="Link to this definition">¶</a></dt>
 <dd><p>np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.padding_x">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">padding_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.padding_x" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">padding_x</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.padding_x" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.padding_y">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">padding_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.padding_y" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">padding_y</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.padding_y" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.propagate_to_image">
-<span class="sig-name descname"><span class="pre">propagate_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.propagate_to_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.propagate_to_image" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">propagate_to_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_profile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/simulation.html#SLMSimulation.propagate_to_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.propagate_to_image" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>input_profile</strong> – </p>
@@ -704,32 +781,32 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.simulation.SLMSimulation.scaling_factor">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scaling_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.scaling_factor" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">scaling_factor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#pySLM2.simulation.SLMSimulation.scaling_factor" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="module-pySLM2.profile">
-<span id="pyslm2-profile-module"></span><h2>pySLM2.profile module<a class="headerlink" href="#module-pySLM2.profile" title="Link to this heading">#</a></h2>
-<dl class="py class">
+<section id="pyslm2-profile-module">
+<h2>pySLM2.profile module<a class="headerlink" href="#pyslm2-profile-module" title="Link to this heading">¶</a></h2>
+<dl class="py class" id="module-pySLM2.profile">
 <dt class="sig sig-object py" id="pySLM2.profile.ConstantProfile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">ConstantProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#ConstantProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.ConstantProfile" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">ConstantProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#ConstantProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.ConstantProfile" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.ConstantProfile.c">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pySLM2.profile.ConstantProfile.c" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">c</span></span><a class="headerlink" href="#pySLM2.profile.ConstantProfile.c" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">FunctionProfile</span></span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">FunctionProfile</span></span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.as_complex">
-<span class="sig-name descname"><span class="pre">as_complex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.as_complex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.as_complex" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">as_complex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.as_complex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.as_complex" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns the complex form of the profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -747,17 +824,17 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.rescale_x">
-<span class="sig-name descname"><span class="pre">rescale_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rescale_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rescale_x" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rescale_x</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rescale_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rescale_x" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.rescale_y">
-<span class="sig-name descname"><span class="pre">rescale_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rescale_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rescale_y" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rescale_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rescale_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rescale_y" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.rotate">
-<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rotate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.rotate" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns a rotated version of the original profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -778,7 +855,7 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.shift">
-<span class="sig-name descname"><span class="pre">shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.shift" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">shift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.shift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.shift" title="Link to this definition">¶</a></dt>
 <dd><p>This function returns a shifted version of the original profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -804,7 +881,7 @@ The dtyoe of the tensor can be set by complex.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">HermiteGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#HermiteGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.HermiteGaussian" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">HermiteGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#HermiteGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.HermiteGaussian" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a></p>
 <p>Beam profiles of Hermite-Gaussian modes.</p>
 <div class="math-wrapper docutils container">
@@ -833,45 +910,45 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.a">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.a" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.a" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.m">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.m" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.m" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.n">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.n" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.n" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.w">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.w" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.w" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.x0">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x0</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.x0" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x0</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.x0" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.HermiteGaussian.y0">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y0</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.y0" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y0</span></span><a class="headerlink" href="#pySLM2.profile.HermiteGaussian.y0" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.profile.LaguerreGaussian">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">LaguerreGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#LaguerreGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.LaguerreGaussian" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">LaguerreGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#LaguerreGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.LaguerreGaussian" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">SuperGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#SuperGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.SuperGaussian" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">SuperGaussian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#SuperGaussian"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.SuperGaussian" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a></p>
 <p>Beam profiles of super Gaussian function.</p>
 <div class="math-wrapper docutils container">
@@ -891,73 +968,73 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian.a">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.a" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.a" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian.p">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">p</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.p" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">p</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.p" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian.w">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.w" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">w</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.w" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian.x0">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x0</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.x0" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">x0</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.x0" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.SuperGaussian.y0">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y0</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.y0" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">y0</span></span><a class="headerlink" href="#pySLM2.profile.SuperGaussian.y0" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">Zernike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#Zernike"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.Zernike" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">Zernike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#Zernike"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.Zernike" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pySLM2.profile.FunctionProfile" title="pySLM2.profile.FunctionProfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.a">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.a" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.a" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.is_normalized">
-<span class="sig-name descname"><span class="pre">is_normalized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#Zernike.is_normalized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.Zernike.is_normalized" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">is_normalized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#Zernike.is_normalized"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.Zernike.is_normalized" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.m">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.m" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.m" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.n">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.n" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.n" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.normalization">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalization</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.normalization" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">normalization</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.normalization" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="pySLM2.profile.Zernike.radius">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radius</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.radius" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">radius</span></span><a class="headerlink" href="#pySLM2.profile.Zernike.radius" title="Link to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 </section>
-<section id="module-pySLM2.analysis">
-<span id="pyslm2-analysis-module"></span><h2>pySLM2.analysis module<a class="headerlink" href="#module-pySLM2.analysis" title="Link to this heading">#</a></h2>
-<dl class="py function">
+<section id="pyslm2-analysis-module">
+<h2>pySLM2.analysis module<a class="headerlink" href="#pyslm2-analysis-module" title="Link to this heading">¶</a></h2>
+<dl class="py function" id="module-pySLM2.analysis">
 <dt class="sig sig-object py" id="pySLM2.analysis.ansi_j_to_n_m">
-<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">ansi_j_to_n_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#ansi_j_to_n_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.ansi_j_to_n_m" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">ansi_j_to_n_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#ansi_j_to_n_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.ansi_j_to_n_m" title="Link to this definition">¶</a></dt>
 <dd><p>Convert ANSI single term to (n,m) two-term index.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
@@ -971,7 +1048,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pySLM2.analysis.remove_trivial_phase">
-<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">remove_trivial_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_defocus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#remove_trivial_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.remove_trivial_phase" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">remove_trivial_phase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_defocus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#remove_trivial_phase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.remove_trivial_phase" title="Link to this definition">¶</a></dt>
 <dd><p>Remove the trivial phase map from the profile within the aperture.</p>
 <p>The trivial phase maps include piston and tilt by default.</p>
 <dl class="field-list simple">
@@ -994,7 +1071,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pySLM2.analysis.zernike_decomposition">
-<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">zernike_decomposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_terms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#zernike_decomposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.zernike_decomposition" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">pySLM2.analysis.</span></span><span class="sig-name descname"><span class="pre">zernike_decomposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_terms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reconstruct</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrapolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/analysis.html#zernike_decomposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.analysis.zernike_decomposition" title="Link to this definition">¶</a></dt>
 <dd><p>Extract Zernike coefficients of a phase profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1031,14 +1108,14 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="readme_link.html">
+          <a class="prev-page" href="algorithm.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">pySLM2</div>
+                <div class="title">Fourier Hologram Generation Algorithms</div>
                 
               </div>
             </a>
@@ -1073,7 +1150,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">API: pySLM2 package</a><ul>
-<li><a class="reference internal" href="#module-pySLM2.slm">pySLM2.slm module</a><ul>
+<li><a class="reference internal" href="#pyslm2-slm-module">pySLM2.slm module</a><ul>
 <li><a class="reference internal" href="#pySLM2.slm.DLP7000"><code class="docutils literal notranslate"><span class="pre">DLP7000</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.slm.DLP9000"><code class="docutils literal notranslate"><span class="pre">DLP9000</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.slm.DLP9500"><code class="docutils literal notranslate"><span class="pre">DLP9500</span></code></a></li>
@@ -1108,7 +1185,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pySLM2.simulation">pySLM2.simulation module</a><ul>
+<li><a class="reference internal" href="#pyslm2-simulation-module">pySLM2.simulation module</a><ul>
 <li><a class="reference internal" href="#pySLM2.simulation.DMDSimulation"><code class="docutils literal notranslate"><span class="pre">DMDSimulation</span></code></a><ul>
 <li><a class="reference internal" href="#pySLM2.simulation.DMDSimulation.block_zeroth_order"><code class="docutils literal notranslate"><span class="pre">DMDSimulation.block_zeroth_order()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.simulation.DMDSimulation.first_order_origin"><code class="docutils literal notranslate"><span class="pre">DMDSimulation.first_order_origin</span></code></a></li>
@@ -1139,7 +1216,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pySLM2.profile">pySLM2.profile module</a><ul>
+<li><a class="reference internal" href="#pyslm2-profile-module">pySLM2.profile module</a><ul>
 <li><a class="reference internal" href="#pySLM2.profile.ConstantProfile"><code class="docutils literal notranslate"><span class="pre">ConstantProfile</span></code></a><ul>
 <li><a class="reference internal" href="#pySLM2.profile.ConstantProfile.c"><code class="docutils literal notranslate"><span class="pre">ConstantProfile.c</span></code></a></li>
 </ul>
@@ -1181,7 +1258,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-pySLM2.analysis">pySLM2.analysis module</a><ul>
+<li><a class="reference internal" href="#pyslm2-analysis-module">pySLM2.analysis module</a><ul>
 <li><a class="reference internal" href="#pySLM2.analysis.ansi_j_to_n_m"><code class="docutils literal notranslate"><span class="pre">ansi_j_to_n_m()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.analysis.remove_trivial_phase"><code class="docutils literal notranslate"><span class="pre">remove_trivial_phase()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.analysis.zernike_decomposition"><code class="docutils literal notranslate"><span class="pre">zernike_decomposition()</span></code></a></li>
@@ -1201,7 +1278,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </div><script src="_static/documentation_options.js?v=01f34227"></script>
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="_static/scripts/furo.js?v=4e2eecee"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
