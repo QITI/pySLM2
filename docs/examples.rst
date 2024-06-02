@@ -1,6 +1,10 @@
 Examples
 ========
 
+Here are a few examples to get you started with the ``dmd`` package.
+More examples can be found in the `examples directory of the source code <https://github.com/QITI/pySLM2/tree/master/examples>`_.
+
+
 Create a donut beam (Laguerre-Gauss mode) with DMD
 --------------------------------------------------
 This example shows how to create a donut beam with a digital mircromirror device (DMD). The input beam profile has fundamental Gaussian mode. However, with the hologram displayed on the DMD, the beam profile at the image plane becomes a donut beam (Laguerre-Gaussian $l=1$, $p=0$, mode). 
