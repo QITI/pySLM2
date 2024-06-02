@@ -32,7 +32,7 @@ Holographic beam shaping using spatial light modulators (SLMs) as a reprogrammab
 
 `pySLM2` is a python package designed for full-stack control of SLMs for holographic beam shaping, encompassing hologram generation, simulation, and hardware controls.
 
-The package implements the hologram generation algorithms of the Lee hologram [@lee1978iii] and its improved predecessors [@zupancic2016ultra;@shih2021reprogrammable], targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm [@gerhberg1972practical] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
+The package implements the hologram generation algorithms of the Lee hologram [@lee1978iii] and its improved alternatives [@zupancic2016ultra;@shih2021reprogrammable], specifically targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm [@gerhberg1972practical] and its improved alternatives[@gaunt2012robust;@pasienski2008high] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
 
 Under the hood, the package uses `TensorFlow` for numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that are computationally expensive but benefit from parallelization, such as many hologram generation algorithms relying on iterative Fourier transformations.
 
@@ -66,7 +66,7 @@ The wave vector $\mathbf{k}'$ is related to the spatial coordinate $\mathbf{x}$ 
 The aberrations of the optical system can be modeled as a phase map $\Phi_{\mathrm{ab}}$ in the Fourier plane. In `pySLM2`'s convention, the plane SLM is placed is Fourier plane, and the image plane is where the targeted beam profile is desired. The SLM modulates the beam at Fourier plane to engineer the desired beam profiles at the image plane.
 
 # Hologram Generation Algorithm
-Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifying the amplitude. As the time of writing, Gerchberg-Saxton (GS) [@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm [@gaunt2012robust] are included. 
+Currently, `pySLM2` supports two type of the spatial light modulator (SLM), liquid crystal on silicon (LCoS) SLM and digital micromirror device (DMD). The LCoS SLM modulates the phase profile purely without modifying the amplitude. As the time of writing, Gerchberg-Saxton (GS) [@gerhberg1972practical] algorithm and the mixed-region amplitude freedom (MRAF) algorithm [@gaunt2012robust;@pasienski2008high] are included. 
 
 On the other hand, DMDs use micromirrors to locally turn on and off the light by toggling the micromirrors between two directions. This allows binary amplitude control. By periodically turning on and off the micromirrors across the DMD to form grating patterns, diffracted beams with controllable phase and amplitude can be engineered to have the desired beam profiles. As the time of writing, a randomized algorithm [@zupancic2016ultra] and an iterative Fourier transformation algorithm [@shih2021reprogrammable;@motlakunta2023preserving] are provided for hologram generation.
 
