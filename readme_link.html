@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="Fourier Hologram Generation Algorithms" href="algorithm.html" /><link rel="prev" title="Welcome to pySLM2’s documentation!" href="index.html" />
 
     <!-- Generated with Sphinx 7.2.3 and Furo 2024.05.06 -->
-        <title>Building the pySLM2 docs - pySLM2 0.1.0 documentation</title>
+        <title>pySLM2 - pySLM2 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=387cc868" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
@@ -193,7 +193,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -215,7 +215,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Building the pySLM2 docs</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">pySLM2</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithm.html">Fourier Hologram Generation Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pySLM2.html">API: pySLM2 package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pySLM2.util.html">API: pySLM2.util package</a></li>
@@ -255,23 +255,126 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="building-the-pyslm2-docs">
-<h1>Building the pySLM2 docs<a class="headerlink" href="#building-the-pyslm2-docs" title="Link to this heading">¶</a></h1>
-<p>To view pySLM2 documentation, some additional packages are required. In the <code class="docutils literal notranslate"><span class="pre">pySLM2/docs</span></code> directory, do</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+          <section id="pyslm2">
+<h1>pySLM2<a class="headerlink" href="#pyslm2" title="Link to this heading">¶</a></h1>
+<a class="reference external image-reference" href="https://github.com/QITI/pySLM2/actions/workflows/pytest.yml"><img alt="Test" src="https://github.com/QITI/pySLM2/actions/workflows/pytest.yml/badge.svg" /></a>
+<a class="reference external image-reference" href="https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml"><img alt="Build Documentation HTML" src="https://github.com/QITI/pySLM2/actions/workflows/sphinx.yml/badge.svg" /></a>
+<a class="reference external image-reference" href="https://joss.theoj.org/papers/70246ad674d3806798e343f6ecffa686"><img alt="status" src="https://joss.theoj.org/papers/70246ad674d3806798e343f6ecffa686/status.svg" /></a>
+<p><strong>We are writing a paper for `Journal of Open Source Software (JOSS) &lt;https://joss.theoj.org/&gt;`_! Read the manuscript here: https://drive.proton.me/urls/T92N7SMT5M#nBvZvODDgZCc</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> is a Python package designed for using spatial light modulators (SLMs) in holographic beam shaping. It includes modules for hologram generation, simulation, and hardware control, making it a comprehensive toolkit for high-quality optical control.</p>
+<p>The goal of pySLM2 is to provide a tool box for for engineering high-quality optical controls, which are essential for various scientific and engineering applications. These applications include atom trapping, addressing individual quantum objects, preparing exotic quantum states, and multi-beam laser machining. <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> was originally developed for and is actively used in the trapped ion quantum information processing research at the Quantum Information with Trapped Ions Lab at the University of Waterloo.</p>
+<ul class="simple">
+<li><p>API Docs: <a class="reference external" href="https://pyslm2.pages.dev/">https://pyslm2.pages.dev/</a></p></li>
+</ul>
+<p>Instructions to build documentation locally can be found in <cite>``docs/README.md`</cite> &lt;docs/README.md&gt;`_.</p>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h2>
+<p>pySLM2 supports Python 3.9+.</p>
+<p>The dependencies of <code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> in includes: <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, <code class="docutils literal notranslate"><span class="pre">scipy</span></code>, <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, and <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>.</p>
+</section>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h2>
+<section id="pyslm2-installation-with-setuptools">
+<h3>pySLM2 installation with setuptools<a class="headerlink" href="#pyslm2-installation-with-setuptools" title="Link to this heading">¶</a></h3>
+<p>If you prefer the development version from GitHub, download it here, <code class="docutils literal notranslate"><span class="pre">cd</span></code> to the pySLM2 directory, and use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">.</span>
 </pre></div>
 </div>
-<p>This will install the necessary packages for building the documentation. Then in command line do</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+<p>Or, if you wish to edit the pySLM2 source code without re-installing each time</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
 </pre></div>
 </div>
-<p>HTML files for the documentation will be generated and can be viewed in browser.</p>
+</section>
+</section>
+<section id="gpu-support-via-tensorflow">
+<h2>GPU Support via Tensorflow<a class="headerlink" href="#gpu-support-via-tensorflow" title="Link to this heading">¶</a></h2>
+<section id="tensorflow-installation-tips">
+<h3>Tensorflow installation tips<a class="headerlink" href="#tensorflow-installation-tips" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">pySLM2</span></code> primarily relies on <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> for most of its numerical computations. For machines with compatible hardware, <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> can seamlessly utilize GPU acceleration to enhance performance, provided it is installed correctly.</p>
+<p>The exact package dependencies vary depending on each system configuration and the GPU card. For details about machine compatibility and correct version of tensorflow, please refer to the <a class="reference external" href="https://www.tensorflow.org/install/pip#step-by-step_instructions">Tensorflow’s website</a>, which provides installation guide for different operating systems. Another authors’ recommended <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code> installation guide can also be found in this <a class="reference external" href="https://medium.com/&#64;shaikhmuhammad/installing-tensorflow-cuda-cudnn-with-anaconda-for-geforce-gtx-1050-ti-79c1eb94eb7a">website</a> which provides thorough information about package dependecies such as <code class="docutils literal notranslate"><span class="pre">cuda</span></code> and <code class="docutils literal notranslate"><span class="pre">cudnn</span></code> versions.</p>
+<blockquote>
+<div><p>As a reference, in our setup with Windows 10 Build 17763 and an NVIDIA Quadro M4000 GPU, we executed the following commands to install <code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>-related packages in a Conda environment with <code class="docutils literal notranslate"><span class="pre">python=3.7</span></code>.</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">cudnn</span><span class="o">==</span><span class="mf">7.6.5</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">cudatoolkit</span><span class="o">==</span><span class="mf">10.1.243</span>
+
+<span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">==</span><span class="mf">2.1</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">tensorflow</span><span class="o">-</span><span class="n">gpu</span><span class="o">==</span><span class="mf">2.1</span>
+</pre></div>
+</div>
+</section>
+<section id="runtime-benckmarking-cpu-vs-gpu">
+<h3>Runtime Benckmarking: CPU vs GPU<a class="headerlink" href="#runtime-benckmarking-cpu-vs-gpu" title="Link to this heading">¶</a></h3>
+<p>Several runtime benchmarking scripts for iterative hologram generations algorithms are included in a separate foler <code class="docutils literal notranslate"><span class="pre">pySLM2/runtime_benchmark</span></code>. Instructions for running those tests can be found in <cite>``pySLM2/runtime_benchmark/README.md`</cite> &lt;pySLM2/runtime_benchmark/README.md&gt;`_.</p>
+<section id="runtime-benckmarking-example">
+<h4>Runtime Benckmarking Example<a class="headerlink" href="#runtime-benckmarking-example" title="Link to this heading">¶</a></h4>
+<section id="algorithm-performance-comparision-intel-core-i9-9900k-cpu-vs-nvidia-quadro-m4000-gpu">
+<h5>Algorithm performance comparision: Intel Core i9-9900K CPU vs NVidia Quadro M4000 GPU<a class="headerlink" href="#algorithm-performance-comparision-intel-core-i9-9900k-cpu-vs-nvidia-quadro-m4000-gpu" title="Link to this heading">¶</a></h5>
+<p>Our machine has Windows 10 Build 17763 with Intel Core i9-9900K CPU and an NVidia Quadro M4000 GPU. Key package dependencies are:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">python</span></code>: 3.7.1</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tensorflow</span></code>: 2.1.0</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tensorflow-gpu</span></code>: 2.1.0</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cudnn</span></code>: 7.6.5</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cudatookkit</span></code>: 10.1.243</p></li>
+</ul>
+<p>From our testing, we observed:
+|  | Case 1 (gs)   | Case 2 (mraf)  | Case 3 (ifta)
+<a href="#id1"><span class="problematic" id="id2">|-------------|</span></a>————-<a href="#id3"><span class="problematic" id="id4">|-------------|</span></a>————-|
+| CPU <a href="#id5"><span class="problematic" id="id6">|<span class="math notranslate nohighlight">\(225.11 \pm 3.98\)</span> s | <span class="math notranslate nohighlight">\(221.64 \pm 1.78\)</span> s  | <span class="math notranslate nohighlight">\(206.44 \pm 0.49\)</span> s|</span></a>
+| GPU  | <span class="math notranslate nohighlight">\(6.48 \pm 0.29 \)</span> s | <span class="math notranslate nohighlight">\(8.29 \pm 0.31\)</span> s <a href="#id7"><span class="problematic" id="id8">|<span class="math notranslate nohighlight">\(6.76 \pm 0.50\)</span> s|</span></a></p>
+<p>These findings show that the iterative algorithms can be greatly accelerated by GPU usage.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="optional-dependencies-for-hardware-controls">
+<h2>Optional Dependencies for Hardware Controls<a class="headerlink" href="#optional-dependencies-for-hardware-controls" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">pySLM2.util</span></code> includes provides an universal interface for interacting with different SLM controllers from different vendors.
+<code class="docutils literal notranslate"><span class="pre">pySLM2.util</span></code> itself doesn’t implement the communication protocal. Instead, it relies on different libraries and wraps them with a universal interface.</p>
+<section id="vialux">
+<h3>Vialux<a class="headerlink" href="#vialux" title="Link to this heading">¶</a></h3>
+<p>The DMDs from Vialux are communicated with the ALP library and a python binding, ALP4lib.</p>
+<ul>
+<li><p>To install the ALP library, visit the vendors website: <a class="reference external" href="https://vialux.de/en/download.html">https://vialux.de/en/download.html</a></p></li>
+<li><p>The python binding, ALP4lib, can be installed from PyPi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">ALP4lib</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="visitech">
+<h3>Visitech<a class="headerlink" href="#visitech" title="Link to this heading">¶</a></h3>
+<p>The DMD from Visitech are communicates with UDP, and therefore no driver is needed to be installed. <code class="docutils literal notranslate"><span class="pre">pySLM.util</span></code> relies on the <a class="reference external" href="https://pypi.org/project/Luxbeam/">Luxbeam</a> library which can be installed from PyPi:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">Luxbeam</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="floating-point-precision">
+<h2>Floating Point Precision<a class="headerlink" href="#floating-point-precision" title="Link to this heading">¶</a></h2>
+<p>Since not all the graphic cards are optimized for double-precision computation, the default precision of pySLM2 is set to single-precision.
+If you wish to use double-precision, you can configure the backend right after you import the package :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pySLM2</span><span class="o">.</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype</span> <span class="o">=</span> <span class="n">pySLM2</span><span class="o">.</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">TENSOR_64BITS</span>
+</pre></div>
+</div>
+<p>In practice, the single-precision is sufficient for most of the applications. However, if you are suspecting the precision is not enough, you can change the precision to double-precision and see if the results are different.</p>
+</section>
+<section id="research-using-pyslm2">
+<h2>Research using pySLM2<a class="headerlink" href="#research-using-pyslm2" title="Link to this heading">¶</a></h2>
+<p>If you used pySLM2 in your research, we’d like to hear from you!</p>
+<ul class="simple">
+<li><p>Shih, Chung-You, et al. “Reprogrammable and high-precision holographic optical addressing of trapped ions for scalable quantum control.” npj Quantum Information 7.1 (2021): 57. <a class="reference external" href="https://doi.org/10.1038/s41534-021-00396-0">https://doi.org/10.1038/s41534-021-00396-0</a></p></li>
+<li><p>Motlakunta, Sainath, et al. “Preserving a qubit during adjacent measurements at a few micrometers distance.” arXiv preprint arXiv:2306.03075 (2023). <a class="reference external" href="https://doi.org/10.48550/arXiv.2306.03075">https://doi.org/10.48550/arXiv.2306.03075</a></p></li>
+</ul>
+</section>
 </section>
 
         </article>
@@ -317,8 +420,49 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">pySLM2</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#pyslm2-installation-with-setuptools">pySLM2 installation with setuptools</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gpu-support-via-tensorflow">GPU Support via Tensorflow</a><ul>
+<li><a class="reference internal" href="#tensorflow-installation-tips">Tensorflow installation tips</a></li>
+<li><a class="reference internal" href="#runtime-benckmarking-cpu-vs-gpu">Runtime Benckmarking: CPU vs GPU</a><ul>
+<li><a class="reference internal" href="#runtime-benckmarking-example">Runtime Benckmarking Example</a><ul>
+<li><a class="reference internal" href="#algorithm-performance-comparision-intel-core-i9-9900k-cpu-vs-nvidia-quadro-m4000-gpu">Algorithm performance comparision: Intel Core i9-9900K CPU vs NVidia Quadro M4000 GPU</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optional-dependencies-for-hardware-controls">Optional Dependencies for Hardware Controls</a><ul>
+<li><a class="reference internal" href="#vialux">Vialux</a></li>
+<li><a class="reference internal" href="#visitech">Visitech</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#floating-point-precision">Floating Point Precision</a></li>
+<li><a class="reference internal" href="#research-using-pyslm2">Research using pySLM2</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
@@ -327,5 +471,6 @@
     <script src="_static/doctools.js?v=888ff710"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/furo.js?v=4e2eecee"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>
