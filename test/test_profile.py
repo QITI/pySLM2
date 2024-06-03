@@ -57,9 +57,9 @@ def test_neg(profile, profile2):
 
 def test_as_complex():
     phase = pySLM2.Zernike(a=1, radius=radius, n=5, m=-3, extrapolate=True)
-    np.testing.assert_array_almost_equal(phase.as_complex()(x, y), np.exp(1j * phase(x, y)))
+    np.testing.assert_array_almost_equal(phase.as_complex_profile()(x, y), np.exp(1j * phase(x, y)))
     np.testing.assert_array_almost_equal(
-        (phase.as_complex() * (-phase).as_complex())(x, y),
+        (phase.as_complex_profile() * (-phase).as_complex_profile())(x, y),
         np.ones_like(x)
     )
 

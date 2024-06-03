@@ -153,8 +153,9 @@ class FunctionProfile(object):
         ))
         return func_profile
 
-    def as_complex(self):
-        """This function returns the complex form of the profile.
+    def as_complex_profile(self):
+        """This function returns the complex form of the profile by applying the exponential function with an imaginary unit 
+        to the original profile.
 
         Returns
         -------
@@ -163,7 +164,6 @@ class FunctionProfile(object):
 
         .. note:: complex_profile(x, y) = exp(1j * original_profile(x, y))
         """
-        #TODO  Write a better docstring
         func_profile = FunctionProfile()
         func_profile._func = tf.function(func=lambda x, y: tf.exp(1j*tf.cast(self._func(x, y),
                                                                              dtype=BACKEND.dtype_complex)))
