@@ -27,23 +27,32 @@ If you find a bug or have a feature request, please create an issue on our [GitH
 We welcome contributions in the form of pull requests (PRs). Here is how you can submit your changes:
 
 1. **Fork the repository**: Click the "Fork" button on the top right corner of the repository page.
+
 2. **Clone your fork**: 
+
     ```bash
     git clone https://github.com/QITI/pySLM2.git
     ```
+
 3. **Create a new branch**: 
+
     ```bash
     git checkout -b your-feature-branch
     ```
+
 4. **Make your changes**: Implement your feature, fix the bug, or improve the documentation.
+
 5. **Commit your changes**: 
+
     ```bash
     git commit -m "Description of the changes"
     ```
 6. **Push to your fork**: 
+
     ```bash
     git push origin your-feature-branch
     ```
+    
 7. **Submit a pull request**: Go to the original repository, click the "New Pull Request" button, and follow the instructions.
 
 **Please make sure your pull request:**
