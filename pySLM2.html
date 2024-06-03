@@ -806,9 +806,10 @@ The dtyoe of the tensor can be set by complex.</p>
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pySLM2.profile.</span></span><span class="sig-name descname"><span class="pre">FunctionProfile</span></span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.as_complex">
-<span class="sig-name descname"><span class="pre">as_complex</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.as_complex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.as_complex" title="Link to this definition">¶</a></dt>
-<dd><p>This function returns the complex form of the profile.</p>
+<dt class="sig sig-object py" id="pySLM2.profile.FunctionProfile.as_complex_profile">
+<span class="sig-name descname"><span class="pre">as_complex_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pySLM2/profile.html#FunctionProfile.as_complex_profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pySLM2.profile.FunctionProfile.as_complex_profile" title="Link to this definition">¶</a></dt>
+<dd><p>This function returns the complex form of the profile by applying the exponential function with an imaginary unit
+to the original profile.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>complex_profile</strong></p>
@@ -1223,7 +1224,7 @@ H_n(x) &amp;= (-1)^n e^{x^2}\frac{d^n}{dx^n}e^{-x^2}.\end{split}\]</div>
 </ul>
 </li>
 <li><a class="reference internal" href="#pySLM2.profile.FunctionProfile"><code class="docutils literal notranslate"><span class="pre">FunctionProfile</span></code></a><ul>
-<li><a class="reference internal" href="#pySLM2.profile.FunctionProfile.as_complex"><code class="docutils literal notranslate"><span class="pre">FunctionProfile.as_complex()</span></code></a></li>
+<li><a class="reference internal" href="#pySLM2.profile.FunctionProfile.as_complex_profile"><code class="docutils literal notranslate"><span class="pre">FunctionProfile.as_complex_profile()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.profile.FunctionProfile.rescale_x"><code class="docutils literal notranslate"><span class="pre">FunctionProfile.rescale_x()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.profile.FunctionProfile.rescale_y"><code class="docutils literal notranslate"><span class="pre">FunctionProfile.rescale_y()</span></code></a></li>
 <li><a class="reference internal" href="#pySLM2.profile.FunctionProfile.rotate"><code class="docutils literal notranslate"><span class="pre">FunctionProfile.rotate()</span></code></a></li>

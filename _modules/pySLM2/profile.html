@@ -424,10 +424,11 @@
         <span class="k">return</span> <span class="n">func_profile</span></div>
 
 
-<div class="viewcode-block" id="FunctionProfile.as_complex">
-<a class="viewcode-back" href="../../pySLM2.html#pySLM2.profile.FunctionProfile.as_complex">[docs]</a>
-    <span class="k">def</span> <span class="nf">as_complex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function returns the complex form of the profile.</span>
+<div class="viewcode-block" id="FunctionProfile.as_complex_profile">
+<a class="viewcode-back" href="../../pySLM2.html#pySLM2.profile.FunctionProfile.as_complex_profile">[docs]</a>
+    <span class="k">def</span> <span class="nf">as_complex_profile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This function returns the complex form of the profile by applying the exponential function with an imaginary unit </span>
+<span class="sd">        to the original profile.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -436,7 +437,6 @@
 
 <span class="sd">        .. note:: complex_profile(x, y) = exp(1j * original_profile(x, y))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1">#TODO  Write a better docstring</span>
         <span class="n">func_profile</span> <span class="o">=</span> <span class="n">FunctionProfile</span><span class="p">()</span>
         <span class="n">func_profile</span><span class="o">.</span><span class="n">_func</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">function</span><span class="p">(</span><span class="n">func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span><span class="o">*</span><span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
                                                                              <span class="n">dtype</span><span class="o">=</span><span class="n">BACKEND</span><span class="o">.</span><span class="n">dtype_complex</span><span class="p">)))</span>
