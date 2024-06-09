@@ -97,7 +97,7 @@ pip install Luxbeam
 
 ### Notes for LCOS-SLMs
 
-For LCoS-SLMs, most models can be directly controlled via standard monitor connections. To display holograms, one might consider using slmPy. Since pySLM2 calculates hologram values in radians, one will need a conversion table to determine the corresponding grayscale values for output. This conversion typically varies based on the light wavelength and the specific model of the LCoS-SLM.
+For LCoS-SLMs, most models can be directly controlled via standard monitor connections. To display holograms, one might consider using [slmPy](https://github.com/wavefrontshaping/slmPy). Since pySLM2 calculates hologram values in radians, one will need a conversion table to determine the corresponding grayscale values for output. This conversion typically varies based on the light wavelength and the specific model of the LCoS-SLM.
 
 Floating Point Precision
 ------------------------
