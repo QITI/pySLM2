@@ -30,13 +30,15 @@ bibliography: paper.bib
 # Summary
 Holographic beam shaping using spatial light modulators (SLMs) as a reprogrammable hologram offers a powerful tool for precise and flexible optical controls. It has been adopted for a wide range of research, including atom trapping [@gaunt2012robust], optical addressing of individual quantum objects [@motlakunta2023preserving], preparation of exotic quantum states [@islam2015measuring], and multi-beam laser machining [@obata2010multi].
 
-`pySLM2` is a python package designed for full-stack control of SLMs for holographic beam shaping, encompassing hologram generation, simulation, and hardware controls.
+`pySLM2` is a python package designed for holographic beam shaping application, encompassing hologram generation, simulation, and hardware controls.
 
 The package implements the hologram generation algorithms of the Lee hologram [@lee1978iii] and its improved alternatives [@zupancic2016ultra;@shih2021reprogrammable], specifically targeting the digital micromirror device (DMD) based SLM with binary amplitude controls. It also implements the Gerchberg-Saxton algorithm [@gerhberg1972practical] and its improved alternatives[@gaunt2012robust;@pasienski2008high] suitable for liquid crystal on silicon (LCoS) based SLMs with pure phase controls.
 
-Under the hood, the package uses `TensorFlow` for numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that are computationally expensive but benefit from parallelization, such as many hologram generation algorithms relying on iterative Fourier transformations.
+At its core, the package uses `TensorFlow` for numerical computations. By leveraging `TensorFlow`, the package harnesses the power of GPUs for faster computation without the need for code modification. This results in a significant speed-up for algorithms that are computationally expensive but benefit from parallelization, such as many hologram generation algorithms relying on iterative Fourier transformations.
 
-Additionally, the package offers a universal interface for different SLMs, ensuring that code written for one device can be seamlessly adapted to another. As of this writing, the package supports DMD controllers from two commercial vendors, Visitech, INC and ViALUX GmbH.
+In addition to hologram generation, the package provides functions to simulate beam profiles created by holograms, aiding users in evaluating algorithm performance. It also includes a variety of pre-defined optical profiles, such as Hermite-Gaussian, Laguerre-Gaussian, super-Gaussian, and Zernike polynomials, enabling users to construct target beam profiles with ease.
+
+For hardware control, pySLM2 offers a unified application interface (API) compatible with various SLMs, ensuring seamless adaptation of code across different devices. Currently, the package supports DMD controllers from two commercial vendors: Visitech, INC and ViALUX GmbH.
 
 # Statement of need
 High-quality optical controls are crucial for numerous scientific and engineering applications. For instance, in atom-based quantum information processors, quantum states of individual atoms are often manipulated by individually addressing laser beams. The quality of these addressing beams directly impacts the fidelity of quantum operations [@motlakunta2023preserving].
