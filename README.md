@@ -56,7 +56,7 @@ pip install tensorflow-gpu==2.1
 ```
 
 ### Runtime Benckmarking: CPU vs GPU 
-Several runtime benchmarking scripts for iterative hologram generations algorithms are included in a separate foler `pySLM2/runtime_benchmark`. Instructions for running those tests can be found in [`pySLM2/runtime_benchmark/README.md`](pySLM2/runtime_benchmark/README.md).
+Several runtime benchmarking scripts for iterative hologram generations algorithms are included in a separate folder `pySLM2/runtime_benchmark`. Instructions for running those tests can be found in [`pySLM2/runtime_benchmark/README.md`](pySLM2/runtime_benchmark/README.md).
 
 #### Runtime Benckmarking Example
 ##### Algorithm performance comparision: Intel Core i9-9900K CPU vs NVidia Quadro M4000 GPU
@@ -78,7 +78,7 @@ These findings show that the iterative algorithms can be greatly accelerated by 
 Optional Dependencies for Hardware Controls
 -------------------------------------------
 `pySLM2.util` includes provides an universal interface for interacting with different SLM controllers from different vendors.
-`pySLM2.util` itself doesn't implement the communication protocal. Instead, it relies on different libraries and wraps them with a universal interface.
+`pySLM2.util` itself doesn't implement the communication protocol. Instead, it relies on different libraries and wraps them with a universal interface.
 
 ### Vialux
 The DMDs from Vialux are communicated with the ALP library and a python binding, ALP4lib.
