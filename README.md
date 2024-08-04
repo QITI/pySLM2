@@ -116,7 +116,7 @@ If you used pySLM2 in your research, we'd like to hear from you!
 
 * Shih, Chung-You, et al. "Reprogrammable and high-precision holographic optical addressing of trapped ions for scalable quantum control." npj Quantum Information 7.1 (2021): 57. [https://doi.org/10.1038/s41534-021-00396-0](https://doi.org/10.1038/s41534-021-00396-0)
 
-* Motlakunta, Sainath, et al. "Preserving a qubit during adjacent measurements at a few micrometers distance." arXiv preprint arXiv:2306.03075 (2023). [https://doi.org/10.48550/arXiv.2306.03075](https://doi.org/10.48550/arXiv.2306.03075)
+* Motlakunta, S., Kotibhaskar, N., Shih, CY. et al. Preserving a qubit during state-destroying operations on an adjacent qubit at a few micrometers distance. Nat Commun 15, 6575 (2024). https://doi.org/10.1038/s41467-024-50864-2
 
 
 
