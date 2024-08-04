@@ -47,9 +47,6 @@ Holographic beam shaping using SLMs provides a way for precise and adaptive opti
 
 
 Secondly, holographic beam shaping can actively correct cumulative optical aberrations in the system arising from almost inevitable causes, such as surface irregularities, misalignment, and imperfect lens curvature, thereby achieving diffraction-limited performance at the target image plane. This enables the faithful production of target beam profiles with high accuracy, relieving the stringent requirement on optics quality and alignment precision. It has been shown that residual wavefront aberrations can be corrected to less than $\lambda/20$ root-mean-square (RMS) [@shih2021reprogrammable;@zupancic2016ultra], which meets the Maréchal criteria (wavefront RMS error < $\lambda/14$) for optical performance. 
-<!-- 
-It is important to note that our method's strength lies in its ability to achieve this level of correction regardless of the initial beam quality. Even when cumulative aberrations from various optical components exceed λ/20, our approach ensures that the final corrected beam meets or exceeds this threshold, providing high-quality performance that is comparable to or better than what can be achieved with high-precision optical elements. -->
-
 
 
 At the time of writing, the `pySLM2` package, as detailed in this manuscript, has been used in the trapped ion quantum information processing research [@shih2021reprogrammable;@motlakunta2024;@kotibhaskar2023programmable]. The authors believe that the package will benefit a broader community of researchers and engineers by offering turnkey solutions for applying holographic beam shaping to their work. Moreover, the primitives included in the package can assist researchers in rapidly prototyping new hologram generation algorithms.
