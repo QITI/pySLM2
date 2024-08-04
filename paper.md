@@ -113,4 +113,6 @@ C.-Y.S. designed and implemented the package. J.Z. contributed to implementing t
 # Acknowledgements
 The hardware controls for the DMDs from ViALUX GmbH in the package is built on top of the `AL4lib` [@sebastien_m_popoff_2022_6121191]. We appreciate the work of the authors of `AL4lib`. We express gratitude to Kaleb Ruscitti for assisting with hardware testing and to Sainath Motlakunta and Nikhil Kotibhaskar for providing valuable feedback on the package. 
 
+We acknowledge financial support from the Natural Sciences and Engineering Research Council of Canada (NSERC) Discovery program (RGPIN-2018-05250) and the Institute for Quantum Computing for this work. 
+
 # References
