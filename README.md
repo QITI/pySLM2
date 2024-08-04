@@ -71,7 +71,7 @@ From our testing, we observed:
 |  | Case 1 (gs)   | Case 2 (mraf)  | Case 3 (ifta)
 |-------------|-------------|-------------|-------------|
 | CPU |$225.11 \pm 3.98$ s | $221.64 \pm 1.78$ s  | $206.44 \pm 0.49$ s|
-| GPU  | $6.48 \pm 0.29 $ s | $8.29 \pm 0.31$ s |$6.76 \pm 0.50$ s|
+| GPU  | $6.48 \pm 0.29$ s | $8.29 \pm 0.31$ s |$6.76 \pm 0.50$ s|
 
 These findings show that the iterative algorithms can be greatly accelerated by GPU usage.
 
