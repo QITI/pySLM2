@@ -14,6 +14,8 @@ The goal of pySLM2 is to provide a tool box for for engineering high-quality opt
 
 Instructions to build documentation locally can be found in [`docs/README.md`](docs/README.md).
 
+To cite the work, please use [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14025567.svg)](https://doi.org/10.5281/zenodo.14025567)
+
 Dependencies
 ------------
 pySLM2 supports Python 3.9+. 
